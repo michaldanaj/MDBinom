@@ -84,6 +84,14 @@
 #		+ Zabezpieczenie przed brakami danych w \code{buckety_stat} i \code{buckety_stat2}
 #		+ Zmiana przypisania bucketu w funkcji buckety_stat2 z funkcji \code{cut} na
 #		  \code{findInterval}, w celu zachowania spójnoœci z ca³¹ reszt¹ pakietu
+# v.4.5 2016-02-22
+#		+ buckety_br - doana wersja z wagami
+#		+ usun_konce - dodana wersja z wagami
+#		+ wydzielenie pliku bdclassing
+#		+ dodanie lub nowa wersja funkcji do pliku bdclassing:
+#			- przypisz2
+#			- mapuj
+#			- polacz_buckety
 
 
 #' Ró¿ne dzia³ania na zmiennych dwumianowych.
@@ -761,6 +769,9 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 #'		
 #'		reg_nieparam(x1,y, buckets=20)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
+# TODO Dodaæ opcjê subset.
+# TODO Co z b³edem out of vertex space?
+
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
 		col_line = "darkblue", index = FALSE, ...)
@@ -803,6 +814,7 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 #' i w próbie znajduje siê 10\% takich obserwacji, a my chcemy usun¹æ tylko 1\%.
 #' @param score Wektor wartoœci numerycznych. 
 #' @param prob Jak¹ czêœæ obserwacj nale¿y usun¹æ z jednego krañca. 
+#' @param weights Wagi.
 #' @return Zwraca wektor z indeksami elementów, które powinny zostaæ usuniête.
 #' @author Micha³ Danaj
 #' @examples
@@ -817,9 +829,14 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 #' usun<-usun_konce(x2, prob=0.01);
 #' x2[-usun]
 
-usun_konce<-function (score, prob = 0.01)
+usun_konce<-function (score, prob = 0.01, weights=NULL)
 {
-	s <- cumsum(table(score)/length(score))
+	
+	if (is.null(weights))
+		weights<-rep(1,length(score))
+	
+	po_score<-tapply(weights, score, sum)
+	s <- cumsum(po_score/sum(weights))
 	
 	new_min <- as.numeric(names(which.max(s[s <= prob])))
 	
