@@ -1,14 +1,19 @@
 Package: MDBinom
 Type: Package
 Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi.
-Version: 4.5.1
-Date: 2016-02-22
+Version: 5.0.0.9000
+Date: 2016-02-24
 Author: Micha³ Danaj
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyLoad: yes
 Imports:
     locfit,
-    Hmisc
+    Hmisc,
+    reshape,
+    R2HTML,
+    lattice
+ Suggests:  
+    sqldf
 Encoding: cp1250
 RoxygenNote: 5.0.1

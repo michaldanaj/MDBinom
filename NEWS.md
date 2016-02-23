@@ -1,5 +1,5 @@
 
-# development
+# v.5.0.0.9000 2016-02-24
 Przenoszenie funkcji z pliku "funkcje do analiz.r"
 
 * Rozbicie pliku bdclassing na classing_assign i classing_make

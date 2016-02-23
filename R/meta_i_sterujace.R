@@ -9,6 +9,33 @@ NA_substit=-.Machine$integer.max;
 special_val=c(-99999999, -10000001, -10000000, -9999999,  -9999998,  -9999997, -9999996);
 
 
+numeric_var_treatment.params<-list(
+		#przy jakiej wartoœci unikalnych wartoœci zmiennej ma j¹ traktowaæ jako dyskretn¹
+		discret_threshold=15,
+		
+		#kody ró¿nych wartoœci specjalnych. Bêd¹ one traktowane osobno, jako wartoœci dyskretne
+		spcial_val=-.Machine$integer.max,
+		
+		#wartoœæ do zast¹pienia missing value
+		NA_substit=-.Machine$integer.max,
+		
+		#Graniczny udzia³ wartoœci, powy¿ej której traktujemy j¹ jako wartoœæ specjaln¹ 
+		#(w sposób dyskretny, wydzielon¹ z pozosta³ych).
+		separate_value_thr=0.1,		
+		
+		#maksymalna g³êbokoœæ budowy drzewa moim algorytmem
+		max_gleb=3,
+		
+		#minimalna liczba obserwacji - do sprawdzenia - w liœciu/w wêŸle do podzia³u
+		min_bucket=200,
+		
+		#wartoœæ graniczna nulli. Poni¿ej robimy imputacjê, powy¿ej traktujemy je jako osobn¹ grupê
+		nulle_do_imp_thr=0.0
+
+)
+
+
+
 #generuje kod do zmiany roli zmiennych
 #gen_code - jeœli TRUE, wynikiem funkcji jest kod do zmiany wartoœci. W przeciwnym razie, zwracany
 #			jest data.frame ze zmienionymi rolami
@@ -47,30 +74,4 @@ editVariablesRole<-function(zmienne_rola, pattern=NULL, gen_code=TRUE){
 
 
 #########################################
-
-
-numeric_var_treatment.params<-list(
-		#przy jakiej wartoœci unikalnych wartoœci zmiennej ma j¹ traktowaæ jako dyskretn¹
-		discret_threshold=15,
-		
-		#kody ró¿nych wartoœci specjalnych. Bêd¹ one traktowane osobno, jako wartoœci dyskretne
-		spcial_val=-.Machine$integer.max,
-		
-		#wartoœæ do zast¹pienia missing value
-		NA_substit=-.Machine$integer.max,
-		
-		#Graniczny udzia³ wartoœci, powy¿ej której traktujemy j¹ jako wartoœæ specjaln¹ 
-		#(w sposób dyskretny, wydzielon¹ z pozosta³ych).
-		separate_value_thr=0.1,		
-		
-		#maksymalna g³êbokoœæ budowy drzewa moim algorytmem
-		max_gleb=3,
-		
-		#minimalna liczba obserwacji - do sprawdzenia - w liœciu/w wêŸle do podzia³u
-		min_bucket=200,
-		
-		#wartoœæ graniczna nulli. Poni¿ej robimy imputacjê, powy¿ej traktujemy je jako osobn¹ grupê
-		nulle_do_imp_thr=0.0
-
-)
 
