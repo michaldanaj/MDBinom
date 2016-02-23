@@ -8,6 +8,10 @@ Przenoszenie funkcji z pliku "funkcje do analiz.r"
   * classing_make_tree - do tworzenia drzew
   * raport - do generowania raportu HTML 
   * univariate - funkcje zaczynające się na univariate
+  * meta_i_sterujace - parametry sterujące funkcjami i procesem oraz funkcje zarządzające metadanymi
+  * util - drobne funkcje pomocnicze 
+  * ScoreCard - funkcje dla klasy ScoreCard
+  * other - pozostałe funkcje, które nie wiem jeszcze gdzie umieścić
 
 # v.4.5.1 2016-02-22
 

@@ -1,0 +1,76 @@
+# TODO: Add comment
+# 
+# Author: Piotr
+###############################################################################
+
+
+
+NA_substit=-.Machine$integer.max;
+special_val=c(-99999999, -10000001, -10000000, -9999999,  -9999998,  -9999997, -9999996);
+
+
+#generuje kod do zmiany roli zmiennych
+#gen_code - jeœli TRUE, wynikiem funkcji jest kod do zmiany wartoœci. W przeciwnym razie, zwracany
+#			jest data.frame ze zmienionymi rolami
+editVariablesRole<-function(zmienne_rola, pattern=NULL, gen_code=TRUE){
+	
+	rola<-c("rejected", "explanatory", "target", "keep");
+	
+	if (is.null(pattern))
+		wynik<-edit(zmienne_rola)
+	else{
+		indeksy<-grep(pattern, rownames(zmienne_rola), ignore.case = TRUE)
+		wynik<-zmienne_rola
+		wynik[indeksy,]<-edit(zmienne_rola[indeksy,])
+		
+		if (any(!(wynik$rola%in%rola))){
+			blad<-"Niepoprawne wartoœci ról!"
+			#stop(rownames(zmienne_rola)[!wynik$rola%in%rola])
+			stop(blad)
+		}
+	}
+	
+	#sprawdzam, których zmiennych role siê zmieni³y
+	zmiany<- zmienne_rola$rola!=wynik$rola
+	nazwy_zmienionych<-rownames(zmienne_rola)[zmiany]
+	nowe_wartosci<-wynik$rola[zmiany]
+	
+	#dla tych zmiennych generujê kod do zmiany ich ról
+	nazwy_przecinek<-paste("c('", paste(nazwy_zmienionych, collapse = "','"), "')", sep="")
+	wartosci_przecinek<-paste("c('", paste(nowe_wartosci, collapse = "','"), "')", sep="")
+	
+	if (gen_code==TRUE)
+		paste(deparse(substitute(zmienne_rola)),"[",nazwy_przecinek,",'rola']<-", wartosci_przecinek, sep="")
+	else
+		wynik
+}
+
+
+#########################################
+
+
+numeric_var_treatment.params<-list(
+		#przy jakiej wartoœci unikalnych wartoœci zmiennej ma j¹ traktowaæ jako dyskretn¹
+		discret_threshold=15,
+		
+		#kody ró¿nych wartoœci specjalnych. Bêd¹ one traktowane osobno, jako wartoœci dyskretne
+		spcial_val=-.Machine$integer.max,
+		
+		#wartoœæ do zast¹pienia missing value
+		NA_substit=-.Machine$integer.max,
+		
+		#Graniczny udzia³ wartoœci, powy¿ej której traktujemy j¹ jako wartoœæ specjaln¹ 
+		#(w sposób dyskretny, wydzielon¹ z pozosta³ych).
+		separate_value_thr=0.1,		
+		
+		#maksymalna g³êbokoœæ budowy drzewa moim algorytmem
+		max_gleb=3,
+		
+		#minimalna liczba obserwacji - do sprawdzenia - w liœciu/w wêŸle do podzia³u
+		min_bucket=200,
+		
+		#wartoœæ graniczna nulli. Poni¿ej robimy imputacjê, powy¿ej traktujemy je jako osobn¹ grupê
+		nulle_do_imp_thr=0.0
+
+)
+

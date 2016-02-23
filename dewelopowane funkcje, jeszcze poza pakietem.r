@@ -189,6 +189,78 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc, min_spli
 }
 
 
+wtd.reg_nieparam<-function (score, default, buckets = 100, subset=NULL, wytnij = 0, span = 0.7,
+		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
+		col_line = "darkblue", index = FALSE, weights=NULL, estim=NULL, ...)
+{
+	dane <- data.frame(score, default)
+	
+	if (is.null(weights)){
+		weights=rep(1,length(score))
+		weighst_locfit=weights	
+	}
+	else{
+		
+		# TODO zmieniæ to!
+		# na cele tego zadania przyhardkorzy³em i obchodzê b³¹d locfita w ten sposób,
+		# ¿e ustalam wagê 1 dla obserwacji z target=1
+		
+		waga_1<-weights[which(default==1)[1]]
+		weights_locfit<-weights/waga_1
+	}
+	
+	#jeœli okreœlono subset, to ograniczam dane na których pracujemy 
+	if (!is.null(subset)){
+		dane<-dane[subset,]
+		weights<-weigths[subset]
+		estim<-estim[subset]
+	}
+	
+	if (wytnij > 0){
+		do_usuniecia<-usun_konce(dane$score, prob = wytnij, weights=weights);
+		if (length(do_usuniecia)>0)
+			dane <- dane[-do_usuniecia,]
+	}
+	bucket <- buckety_br(x=dane$score, y=dane$default, n=buckets, method = "eq_count", weights=weights)
+	
+	
+	
+	#jeœli s¹ dwie wartoœci y, to uznaje to jest to zmienna binarna, i stosuje regresjê logistyczn¹
+	if (length(unique(default)) == 2)
+		l <- locfit(default ~ lp(score, nn = span), family = "binomial",
+				link = "logit", data = dane, weights=weights_locfit)
+	#w przeciwnym razie robi regresje liniow¹
+	else 
+		l <- locfit(default ~ lp(score, nn = span), data = dane, weights=weights)
+	
+	b2 <- predict(l, newdata = bucket$srodek)
+	if (target == "br")
+		bucket2 <- cbind(bucket, fitted = b2)
+	else bucket2 <- cbind(bucket, fitted = log(b2/(1 - b2)))
+	
+	#liczê wielkoœæ b¹belka
+	skala <- sqrt(bucket$n_obs/(sum(weights)/buckets))
+	
+	#liczê wartoœci wyestymowane
+	#estim_aggr<-buckety_stat(b2, default, )
+	
+	#rysowanie
+	x <- bucket2$srodek
+	if (index)
+		x <- bucket$nr
+	if (plot) {
+		if (new == TRUE)
+			plot(x, with(bucket2, get(target)), col = col_points,
+					cex = skala, ...)
+		else points(x, with(bucket2, get(target)), cex = skala,
+					col = col_points, ...)
+		lines(x, bucket2$fitted, col = col_line, ...)
+	}
+	bucket2
+}
+
+
+
 usun_konce<-function(score, prob=0.01)
 {
 	l=quantile(score, prob=prob);
@@ -206,4 +278,5 @@ usun_konce<-function(score, prob=0.01)
 
 	c(1:length(score))[do_usuniecia]
 }
+
 
