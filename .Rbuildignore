@@ -1,0 +1,7 @@
+^ver.*
+^\..*
+^arch\.zip
+^dewel.*
+^gen.*
+^NEWS\.md^
+^NEWS\.old^

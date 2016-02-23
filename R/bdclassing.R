@@ -49,6 +49,7 @@
 #' y<-(x+rnorm(1000))<0;
 #' buckety_br(x, y, 10);
 #' @author Micha³ Danaj
+#' @export
 buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.action=c("none","combine"),
 		weights=NULL)
 {                                         
@@ -122,6 +123,7 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 #'   \item{waga}{Waga jako odwrotnoœæ warinacji. Gdy \code{n_default=0} to przyjmuje siê,
 #' 			¿e \code{n_default=0.5}}
 #' @author Micha³ Danaj 
+#' @export
 buckety_stat<-function (bucket, default, total = TRUE)
 {
 	print ('==============   buckety_stat  ==============')
@@ -183,6 +185,7 @@ buckety_stat<-function (bucket, default, total = TRUE)
 #' @seealso \code{\link{buckety_stat}}.
 #' @return \code{data.frame} ze statystykami.
 #' @author Micha³ Danaj
+#' @export
 buckety_stat2<-function(breaks, score, def, total=FALSE){
 	
 	print('===============  buckety_stat2')
@@ -276,6 +279,7 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 #' 		plot(x1, y_fitted) 
 #' @seealso \code{\link{przypisz2}}
 #' bo póŸniej sortujemy i odnosimy siê tym porz¹dkiem do pocz¹tkowego porz¹dku
+#' @export
 # TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki,
 # TODO obs³uga jednego przedzia³u dla interpolacji
 przypisz<-function (x, bucket, interpol = FALSE)
@@ -316,6 +320,7 @@ przypisz<-function (x, bucket, interpol = FALSE)
 #' @seealso \code{\link{przypisz}}
 #' @return  Wektor wartoœci.
 #' @author Micha³ Danaj
+#' @export
 # TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki,
 # TODO Coœ nie dzia³a obs³uga,  gdy w x s¹ NA, np. zmienna Wiek
 przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-2147483647)
@@ -421,6 +426,7 @@ przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-21474836
 #' @param maping   \code{data.frame} z dwoma kolumnami znakowymi (lub do przerobienia przez \code{as.character})
 #'			  \code{war} oraz \code{label}
 #' @author Micha³ Danaj
+#' @export
 mapuj<-function(data, mapping){
 	
 	
@@ -480,6 +486,7 @@ mapuj<-function(data, mapping){
 #' @param new_label label jaki bêdzie nadany po³¹czonym bucketom. W przypadku braku podania, zostanie zatosowany domyœlny.
 #' @returnType \code{data.frame}.
 #' @author Micha³ Danaj
+#' @export
 polacz_buckety<-function(x, y, buckets, row_idxs, new_label=NULL)
 {
 	row_idxs<-sort(unique(row_idxs));

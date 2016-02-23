@@ -1,98 +1,3 @@
-# 2009-05-13
-#	  + W funkcji AR doda³em usuwanie przedzia³ów, w których nie ma obserwacji
-#	  + Zmieni³em funkcjê buckety_br na now¹ wersjê. Star¹ nazwa³em buckety_br_old
-#	  + Usun¹³em funkcjê wygladz
-#
-# 2009-05-16
-#   + Doda³em wymagalnoœæ biblioteki locfit w funkcj reg_nieparam
-#   + Doda³em objekt kalibracja i funkcje na nim dzia³aj¹ce      
-#   + Doda³em funkcjê hist_wiele
-#
-# 2009-05-17
-#   + W niektórych funkcjach dodanie usuwania nieu¿ywanych leveli factorów
-#   + Dodanie funkcji infomacje_kal
-#
-# 2009-05-19
-#   + Dodanie parametru ylim2 do funkcji informacje_kal i zabezpieczenie siê 
-#     przed wartoœciami nullowymi w zakresie do ylim     
-#
-# 2009-05-22
-#		+ Usuwanie NA i NAN w hist_wiele
-# 
-# 2009-05--23
-#		+ Zmiana domyœlnej wartoœci parametru wytnij w funkcji reg_nieparam
-#		  z 0.01 na 0
-#		+ Usun¹³em tworzenie data.frame ze zmiennej score. Jest to niepotrzebne,
-#			poza tym przy do.call powodowda³o jakiœ b³¹d przy wywo³aniu z funkcji by().
-#
-# 2009-06-02
-#   + Dodanie odchylenia standardowego do wyniku funkcji buckety_stat
-#
-#	2009-06-09
-#		+ W funkcji reg_nieparam, rysowanie kó³ek z powierzchni¹ proporcjonaln¹
-#			do iloœæ obserwacji w buckecie
-#		+ Dodanie do funkcji reg_nieparam parametru index, który powoduje, ¿e na
-#			osi x odk³adane s¹ numery bucketów, a nie wartoœci zmiennej
-#		+ W funkcji buckety_br dodanie sortowania krañców przedzia³ów.
-#
-# 2009-06-14
-#		+ Nowa wersja funkcji usun_konce, ca³kiem zmieniona
-#		+ Dodanie parametru "target" do funkcji reg_nieparama, umo¿liwiaj¹cego rysowanie logitów
-#		+	Dodanie funkcji logit. Szczególnie przydatne, gdy mamy d³ugi argument
-#
-# 2009-06-14
-#   + Poprawa funkcji logit. Dodanie logarytmu :).
-#
-# 2009-09-21
-#   + Usuniêcie funkcji kalibracyjnych.
-#		+ Usuniêcie funkcji lag
-#
-# 2009-11-02
-#   + Usuniêcie funkcji lag spowodowa³o b³¹d w funkcjach AR i AR_quick,
-#		  które z niej korzysta³y. B³¹d zosta³ poprawiony.
-#
-# 2009-12-27
-#   + Usun¹³em funkcje drzewo, drzewo_podzial, AR_quick, vec_stats
-#		+ W którymœ momencie, nie wiem czemu, przerobi³em funkcjê AR, ¿eby nie dzia³a³a
-#			na liœcie score'ów. Przeróbka spowodowa³a nieporawne dzia³anie rysowania.
-#			Teraz to poprawi³em.
-# v.3.1 2010-03-27  
-#		+ Dodanie funkcji AR_quick i AR_boot
-#		+ Poprawa dokumentacji
-#		+ Zmiana nazwy pakietu na MDBinom
-#
-# v.4.0 2010-08-07
-#		  Du¿o nowych funkcji, i kilka poprawek b³êdów w starych funkcjach:
-#		+ W funkcji AR dodatkowy parametr lgd_adjust wraz z kodem.
-#		+ buckety_stat: dodanie kolumnu 'label'
-#		+ usun_konce: zmiana sposobu okreœlania prawego koñca do usuniêcia.
-#		+ 	Wczeœniej by³o b³êdnie - usuwany by³ o jeden "score" za du¿o.
-#		+ reg_nieparam: Obs³uga zwracania przez usun_konce() wektora zerowego.
-#		+	Wczeœniej z powdu b³êdu w procedurze wektor zerowy nie by³ zwracany.
-#		+ przypisz: obs³uga przypadku (nie dla interpolacji), ¿e mo¿e byæ tylko jeden bucket.
-#		+ 
-# v.4.1 2011-01-07
-#		+ poprawki z wykorzystaniem lgd_adjusted
-#		+ w funkcji informacje_kal wczeœniej parametr \code{buckets} nie by³
-#		  w rzeczywistoœci wykorzystywany. Teraz zosta³o to poprawione.
-# v.4.2 2011-07-03
-#		+ Rozszerzenie funkcji AR_boot o parametry \code{obs} oraz \code{seed}
-# v.4.3 2012-04-03
-#		+ Dodanie funkcji nvl oraz nvl2. Nie s¹ to funkcje zgodne z tematem pakietu,
-#		  ale jest to mój podstawowy pakiet, jest to wiêc najodpowiedniejsze miejsce
-# v.4.4 2012-08-01
-#		+ Zabezpieczenie przed brakami danych w \code{buckety_stat} i \code{buckety_stat2}
-#		+ Zmiana przypisania bucketu w funkcji buckety_stat2 z funkcji \code{cut} na
-#		  \code{findInterval}, w celu zachowania spójnoœci z ca³¹ reszt¹ pakietu
-# v.4.5 2016-02-22
-#		+ buckety_br - doana wersja z wagami
-#		+ usun_konce - dodana wersja z wagami
-#		+ wydzielenie pliku bdclassing
-#		+ dodanie lub nowa wersja funkcji do pliku bdclassing:
-#			- przypisz2
-#			- mapuj
-#			- polacz_buckety
-
 
 #' Ró¿ne dzia³ania na zmiennych dwumianowych.
 #'
@@ -107,7 +12,7 @@
 #'
 #' Ró¿ne dzia³ania na zmiennych dwumianowych
 #'
-#' @name MDBinom-package
+#' @name MDBinom-package	
 #' @aliases MDBinom
 #' @docType package
 #' @title Ró¿ne dzia³ania na zmiennych dwumianowych
@@ -124,6 +29,7 @@ NULL;
 #' Liczy logit
 #' @param p wartoœæ.
 #' @author Micha³ Danaj
+#' @export
 logit<-function(p)
 	return(log(p/(1-p)));
 
@@ -133,6 +39,7 @@ logit<-function(p)
 #' @param val wartoœæ, któr¹ ma zostaæ zast¹piony brak danych \code{NA}
 #' @author Micha³ Danaj
 #' @return Zwraca pierwotny obiekt z wartoœci¹ \code{val} w miejsce braku danych
+#' @export
 nvl<-function(x, val){
 	x[is.na(x)]<-val;
 	x
@@ -145,6 +52,7 @@ nvl<-function(x, val){
 #' @param val_null wartoœæ, która ma zostaæ zwrócona w przypadku braku danych
 #' @author Micha³ Danaj
 #' @return Zwraca pierwotny obiekt z oryginalnymi wartoœciami zast¹pionymi przez \code{val_not_null} i \code{val_null} 
+#' @export
 nvl2<-function(x, val_not_null, val_null){
 	x[!is.na(x)]<-val_not_null;
 	x[is.na(x)]<-val_null;
@@ -179,6 +87,7 @@ nvl2<-function(x, val_not_null, val_null){
 #'				 zawiera wyliczony AR na ca³ej próbie, w dalszej kolejnoœci znajduj¹
 #'				 siê wartoœci wyliczone w oparciu o próby bootstrap.
 #' @author Micha³ Danaj
+#' @export
 #' @examples
 #' ## dane do przyk³adu
 #' n<-100000; #liczba obserwacji w próbie
@@ -206,7 +115,6 @@ nvl2<-function(x, val_not_null, val_null){
 #' ) 
 #' # user  system elapsed 
 #' #83.66    1.62   92.44 
-
 AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 50000000, seed=NULL) 
 {
 	if (is.null(score)) 
@@ -259,6 +167,7 @@ AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 500000
 #' @param bad liczba badów odpowiadaj¹ca kolejnym wartoœciom score.
 #' @param obs liczba obserwacji odpowiadaj¹ca kolejnym wartoœciom score.
 #' @author Micha³ Danaj
+#' @export
 AR_quick<-function(bad, obs)
 {
 
@@ -334,6 +243,7 @@ AR_quick<-function(bad, obs)
 #'	  \item{AR}{Wyliczone Accuracy Ratio.}							
 #'
 #' @author Micha³ Danaj
+#' @export
 # @examples
 #	n<-1000;
 #	x<-rnorm(n);
@@ -474,6 +384,7 @@ AR<-function(score, def, plot=FALSE, return.table=FALSE,
 #' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
 #' @method print AR
+#' @export
 print.AR<-function(x){
 	print(x$label);
 	print(x$stat);
@@ -498,6 +409,7 @@ HTML.AR<-function(x){
 #' Zwraca statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
 #' @title Zwraca statystyki przechowywane w obiekcie AR
+#' @export
 getStats.AR<-function(x){
  s<-t(as.data.frame(x$stats))
  cbind(data.frame(label=x$label),s);
@@ -510,7 +422,8 @@ getStats.AR<-function(x){
 #' Przekszta³ca obiekt na \code{\link{data.frame}}
 #' @param x obiekt klasy \code{AR}.
 #' @title Przekszta³ca obiekt na data.frame 
-#' @method as.data.frame AR   
+#' @method as.data.frame AR
+#' @export   
 as.data.frame.AR<-function(x){
  s<-t(as.data.frame(x$stats))
  cbind(data.frame(label=x$label),s);	
@@ -535,6 +448,7 @@ as.data.frame.AR<-function(x){
 #' @param xlab Label
 #' @param ... dodatkowe parametry.
 #' @author Micha³ Danaj
+#' @export
 #' @examples
 #' x<-rnorm(100);
 #' y<-(x+rnorm(100))>0;
@@ -625,7 +539,7 @@ informacje<-function(score, default, buckets=20, span=0.8, main="", hist_col="bl
 #' @param leg.label etykiety do legendy.
 #' @param ylim2 ograniczenie y-ka.
 #' @param ... dodatkowe parametry do funkcji \code{\link{plot}}.
- 
+#' @export
 
 informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_col = "blue", 
 		ylab = c("Frequency", "BR"), xlab = "Calibrated score", legx = 0, 
@@ -694,7 +608,8 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 #' @param plot_type Typ wykresu. 
 #' @param adjusted_AR zmienna logiczna. TRUE, gdy trzeba osobno wyliczyæ pole pod
 #' 		  modelem idealnym (np. w przypadku LGD).
-#' @author Micha³ Danaj 
+#' @author Micha³ Danaj
+#' @export 
 # @examples	
 #	n<-1000;
 #	x1<-rnorm(n);
@@ -761,6 +676,7 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 #'				W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.
 #' @param ... dodatkowe parametry.
 #' @author Micha³ Danaj 
+#' @export
 #' @examples
 #'		n<-1000;
 #'		x1<-rnorm(n);
@@ -817,6 +733,7 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 #' @param weights Wagi.
 #' @return Zwraca wektor z indeksami elementów, które powinny zostaæ usuniête.
 #' @author Micha³ Danaj
+#' @export
 #' @examples
 #' x<-sort(rnorm(10));
 #' x
