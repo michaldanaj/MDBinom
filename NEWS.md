@@ -1,3 +1,14 @@
+
+# development
+Przenoszenie funkcji z pliku "funkcje do analiz.r"
+
+* Rozbicie pliku bdclassing na classing_assign i classing_make
+
+* Stworzenie plików:
+  * classing_make_tree - do tworzenia drzew
+  * raport - do generowania raportu HTML 
+  * univariate - funkcje zaczynające się na univariate
+
 # v.4.5.1 2016-02-22
 
 * Usunięte z repozytorium git:
