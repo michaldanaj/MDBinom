@@ -3,7 +3,10 @@ Type: Package
 Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi.
 Version: 5.0.0.9000
 Date: 2016-02-24
-Author: Micha³ Danaj
+Authors@R: person("Micha³", "Danaj", email = "michal.danaj@gmail.com",
+  role = c("aut", "cre"))
+Author: Micha³ Danaj [aut, cre],
+Maintainer: Micha³ Danj <michal.danaj@gmail.com>  
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyLoad: yes
@@ -13,7 +16,5 @@ Imports:
     reshape,
     R2HTML,
     lattice
- Suggests:  
-    sqldf
 Encoding: cp1250
 RoxygenNote: 5.0.1

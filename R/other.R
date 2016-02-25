@@ -5,9 +5,21 @@
 
 
 
-###########################################
-#  zmiana funkcji do rysowania kalibracji #
-###########################################
+
+#' Rysuje kalibracjê modelu
+#' 
+#' Rysuje kalibracjê modelu
+#' @param score Zmienna na osi OX.
+#' @param response Zmienna celu.
+#' @param estim Wyestymowana wartoœæ przez model.
+#' @param target Co ma byæ na osi OY.
+#' @param ylab Opis osi OY.
+#' @param xlab Opis osi OX.
+#' @param ... Parametry graficzne.
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 plotCalibr<-
 		function (score, response, estim, target = c("br", "logit"), ylab=y_name,
 				xlab="score",    ...)
@@ -49,7 +61,8 @@ plotCalibr<-
 #' Generuje tabelê z coarse classing do dokumentacji
 #' 
 #' Jeœli Woe lub IV wychoch¹ +-Inf, to wstawia zamiast tego NA
-#' @item wyniki lista z wynikami dyskretyzacji
+#' @param wyniki lista z wynikami dyskretyzacji
+#' @export 
 makeCoarseClassingTables<-function(wyniki){
 	lapply(wyniki, function(z){
 				x<-z$dyskretyzacja;
@@ -85,6 +98,14 @@ makeCoarseClassingTables<-function(wyniki){
 
 
 
+#' Rysuje interakcje dwóch zmiennych
+#' @param zm1 Pierwsza zmienna.
+#' @param zm2 Druga zmienna.
+#' @param target Zmienna celu. 
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 interakcja<-function(zm1, zm2, target){
 	dwa<-tapply(target, list(zm1,zm2), mean)
 	jeden<-log(dwa/(1-dwa))
@@ -99,25 +120,16 @@ interakcja<-function(zm1, zm2, target){
 }
 
 
-
-###############################################################################
-#####																	  #####
-###############################################################################
-
-
-
-
-
-
-
-#przypisuje woe na podstawie br z bucketa. Korzysta z funkcji \code{woe}, która 
-#w razie niewyst¹pienia w buckecie wartoœci z klasy 0 lub 1, przyjmuje wartoœæ 0.5
-#
-#bucket_list - lista z opisami dyskretyzacji. Nazwy elementów listy powinny byæ zgodne z nazwami zmiennych w \code{data}
-#data - \code{data.frame} z oryginalnymi zmiennymi
-#var - wektor z nazwami zmiennych do ograniczenia
-
-
+#' Przypisuje woe na podstawie br z bucketa.
+#' 
+#' Przypisuje woe na podstawie br z bucketa. Korzysta z funkcji \code{woe}, która 
+#' w razie niewyst¹pienia w buckecie wartoœci z klasy 0 lub 1, przyjmuje wartoœæ 0.5
+#' 
+#' @param bucket_list - lista z opisami dyskretyzacji. Nazwy elementów listy powinny byæ zgodne z nazwami zmiennych w \code{data}.
+#' @param data - \code{data.frame} z oryginalnymi zmiennymi.
+#' @param vars - wektor z nazwami zmiennych do ograniczenia.
+#' @param varname_sufix - Sufix wynikowych zmiennych.
+#' @export
 przypisz_woe<-function(bucket_list, data, vars=names(bucket_list), varname_sufix='woe'){
 	
 	data_out<-NULL

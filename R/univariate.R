@@ -8,22 +8,23 @@
 #' Dyskretyzuje zmienn¹ i wylicza dla niej statystyki
 #'
 #' Wylicza statystyki i zwraca je w postaci listy.
-#' @item x zmienna, po której procedura bêdzie sortowaæ.
-#' @item y zmienna odpowiedzi.
-#' @item czas podzia³ na okresy czasowe.
-#' @item proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
+#' @param x zmienna, po której procedura bêdzie sortowaæ.
+#' @param y zmienna odpowiedzi.
+#' @param czas podzia³ na okresy czasowe.
+#' @param proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
 #'       zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.
-#' @item interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 #'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
-#' @item min_bucket minimalna liczba obserwacji w buckecie, przy dzieleniu drzewem.
-#' @item breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
+#' @param min_bucket minimalna liczba obserwacji w buckecie, przy dzieleniu drzewem.
+#' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 #'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
-#' @item NA_subst wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
+#' @param NA_subst wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
 #'		bêd¹ przeporwadzone w standardowy sposób. Jeœli jednak wartoœæ \code{NA_subst} zostanie
 #' 		dodana do \code{special_val}, zostanie ona potraktowana jako wartoœæ dyskretna.  
 #' @author Micha³ Danaj
+#' @export
 univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 		interactive=FALSE, min_bucket=floor(0.05*length(x)), breaks=NULL,
 		mapping=NULL, forceContinous=FALSE, 
@@ -86,13 +87,14 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 #' Wylicza statystyki i zwraca je w postaci listy. Do wyliczenia \code{AR} u¿ywa jako zmiennej
 #' score'owej oryginalnych wartoœci BR przypisanych do bucketu. Tzn, mimo ¿e na nowych danych kolejnoœæ
 #' bucketów, sortuj¹c je po br mo¿e byæ inna ni¿ oryginalnie, to stosowana jest oryginalna kolejnoœæ.
-#' @tiem buckets \code{data.frame} z podzia³em zmiennej na buckety.
-#' @item x zmienna, po której procedura bêdzie sortowaæ.
-#' @item y zmienna odpowiedzi.
-#' @item czas podzia³ na okresy czasowe.
-#' @item proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
+#' @param buckets \code{data.frame} z podzia³em zmiennej na buckety.
+#' @param x zmienna, po której procedura bêdzie sortowaæ.
+#' @param y zmienna odpowiedzi.
+#' @param czas podzia³ na okresy czasowe.
+#' @param proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
 #'       zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.
 #' @author Micha³ Danaj
+#' @export
 univariate_stats_new_data<-function(buckets,x,y,czas,proby=rep(TRUE, length(y))){
 	buckets$fitted<-buckets$label;
 	nowe_wartosci<-przypisz2(x, buckets)
@@ -134,16 +136,16 @@ univariate_stats_new_data<-function(buckets,x,y,czas,proby=rep(TRUE, length(y)))
 #' lub zmienna nie jest zmienn¹ numeryczn¹,
 #' uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
 #' wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
-#' @item discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
+#' @param discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 #'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
-#' @item interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 #'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
-#' @item breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
+#' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 #'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
-#' @seealso \link{\code{buckety_stat}}.
-
+#' @seealso \code{\link{buckety_stat}}.
+#' @export
 univariate_anal_stats1<-function(x,y, discret_treshold=15,
 		special_val=NULL, max_gleb=3, min_bucket=200, interactive=FALSE,
 		breaks=NULL, mapping=NULL, forceContinous=FALSE,...){
@@ -195,9 +197,10 @@ univariate_anal_stats1<-function(x,y, discret_treshold=15,
 #'
 #' Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y}
 #' w podziale na zadane grupy czasowe \code{czas} (lub podzia³ innego typu).
-#' @item x_discr zmienna objaœniaj¹ca.
-#' @item y zmienna odpowiedzi.
-#' @item czas.
+#' @param x_discr zmienna objaœniaj¹ca.
+#' @param y zmienna odpowiedzi.
+#' @param czas Czas.
+#' @export
 univariate_anal_stats2<-function(x_discr, y, czas, estim){
 	
 	#licznoœci po czasie i zmiennej
@@ -224,11 +227,12 @@ univariate_anal_stats2<-function(x_discr, y, czas, estim){
 
 #' Wylicza AR po czasie i w podziale na zadane próby
 #'
-#' @item score zmienna, po której procedura bêdzie sortowaæ.
-#' @item y zmienna odpowiedzi.
-#' @item czas podzia³ na okresy czasowe.
-#' @item proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
+#' @param score zmienna, po której procedura bêdzie sortowaæ.
+#' @param y zmienna odpowiedzi.
+#' @param czas podzia³ na okresy czasowe.
+#' @param proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
 #'       zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.
+#' @export
 univariate_anal_stats3<-function (score, y, czas, proby){
 	razem<-data.frame(score,y,czas);
 	razem$czas<-as.factor(razem$czas);
@@ -272,16 +276,16 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 #' lub zmienna nie jest zmienn¹ numeryczn¹,
 #' uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
 #' wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
-#' @item discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
+#' @param discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 #'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
-#' @item interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 #'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
-#' @item breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
+#' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 #'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
-#' @seealso \link{\code{buckety_stat}}.
-
+#' @seealso \code{\link{buckety_stat}}.
+#' @export
 univariate_anal_stats1b<-function(x,y, 
 		locfit=FALSE, 
 		discret_treshold=15,
@@ -374,6 +378,16 @@ univariate_anal_stats1b<-function(x,y,
 
 
 
+#' Nie wiem co to robi
+#' 
+#' @param dane dane
+#' @param mapowanie mapowanie 
+#' @param czas czas
+#' @param ...  dodatkowe parametry graficzne.
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 univariate_anal_stats4<-function(dane, mapowanie, czas=lastDay(dane$reportingdate, unit = "quater"),...){
 	dyskretne<-mapuj(dane,mapowanie)
 	wynik<-univariate_anal_stats(dyskretne, dane$def, czas,...)

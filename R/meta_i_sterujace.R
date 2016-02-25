@@ -36,9 +36,18 @@ numeric_var_treatment.params<-list(
 
 
 
-#generuje kod do zmiany roli zmiennych
-#gen_code - jeœli TRUE, wynikiem funkcji jest kod do zmiany wartoœci. W przeciwnym razie, zwracany
-#			jest data.frame ze zmienionymi rolami
+# TODO dorobiæ wyœwietlanie, które role zosta³y wprowadzone niepoprawnie.
+#' Generuje kod do zmiany roli zmiennych lub data.frame z rolami
+#' 
+#' Generuje kod do zmiany roli zmiennych lub data.frame ze zmienionymi rolami.
+#' @param zmienne_rola \code{data.frame} z rolami zmiennych.
+#' @param pattern Wyra¿enie przekazane do funkcji \code{grep} filtruj¹ce zmienne
+#' @param gen_code Jeœli TRUE, wynikiem funkcji jest kod do zmiany wartoœci. W przeciwnym razie, zwracany
+#'			jest data.frame ze zmienionymi rolami.  
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 editVariablesRole<-function(zmienne_rola, pattern=NULL, gen_code=TRUE){
 	
 	rola<-c("rejected", "explanatory", "target", "keep");

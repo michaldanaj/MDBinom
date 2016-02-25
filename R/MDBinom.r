@@ -132,7 +132,7 @@ AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 500000
 		stop("AR_boot: Liczba jednorazowo wylosowanych elementów n_once musi byæ wiêksza, ni¿ \n\t\t\t\t\tliczba unikalnych wartoœci score!")
 	prob <- c(bad, good)/length(score)
 	ile_kolumn <- floor(n_once/length(obs))
-	N <- ceil(n_boot/ile_kolumn)
+	N <- Hmisc::ceil(n_boot/ile_kolumn)
 	wynik <- AR_quick(bad, obs)
 	
 	
@@ -208,7 +208,7 @@ AR_quick<-function(bad, obs)
 	#uwzgledniam bad rate w probce
 	return ( (2*AUC-1)/(1-def_all/obs_all)) ;
 }	
-
+#TODO zaktualizowaæ dokkumentacjê!
 #' Liczy Accuracy Ratio (GINI)
 #'
 #'  Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
@@ -244,12 +244,12 @@ AR_quick<-function(bad, obs)
 #'
 #' @author Micha³ Danaj
 #' @export
-# @examples
-#	n<-1000;
-#	x<-rnorm(n);
-#	def<- as.numeric(x+rnorm(n)<0);
-#	AR(x,def,plot=TRUE);
-# TODO zaktualizowaæ dokkumentacjê!
+#' @examples
+#'	n<-1000;
+#'	x<-rnorm(n);
+#'	def<- as.numeric(x+rnorm(n)<0);
+#'	AR(x,def,plot=TRUE);
+ 
 AR<-function(score, def, plot=FALSE, return.table=FALSE, 
 									sort.order=NULL, label="", lgd_adjusted=FALSE,...)
 {
@@ -398,10 +398,10 @@ print.AR<-function(x){
 #' @param x obiekt klasy \code{AR}.
 #' @method HTML AR
 HTML.AR<-function(x){
-	HTML(x$label);
-	HTML(x$stat);
+	HTML::HTML(x$label);
+	HTML::HTML(x$stat);
 	if (!is.null(x$table))
-		HTML(x$table);	
+		HTML::HTML(x$table);	
 }
 
 #' Zwraca statystyki przechowywane w obiekcie \code{\link{AR}}
@@ -442,8 +442,7 @@ as.data.frame.AR<-function(x){
 #' @param buckets Sugerowana liczba bucketów. 
 #' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}
 #' @param main Tytu³ wykresu. 
-#' @param hist_col Kolor histogramu 
-# @param method_bucket 
+#' @param hist_col Kolor histogramu  
 #' @param ylab Label
 #' @param xlab Label
 #' @param ... dodatkowe parametry.
@@ -465,9 +464,9 @@ informacje<-function(score, default, buckets=20, span=0.8, main="", hist_col="bl
 	h<-hist(score, plot=FALSE);
 #	w<-wygladz(score, default, buckets=buckets, span=span, type=type,  plot=FALSE, method_bucket=method_bucket);
 	if (length(unique(default))==2)
-		local<- locfit(default ~ lp(score, nn=span), family="binomial", link="logit")
+		local<- locfit::locfit(default ~ locfit::lp(score, nn=span), family="binomial", link="logit")
 	else
-		local<- locfit(default ~ lp(score, nn=span)) 
+		local<- locfit::locfit(default ~ locfit::lp(score, nn=span)) 
 	br2<-predict(local,newdata=h$mid, type="response");                                                                   
 	cut_<-cut(score, breaks=h$breaks);
 	br<-tapply(default, cut_, mean);
@@ -551,9 +550,9 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 	par(mar = c(5, 4, 4, 5))
 	h <- hist(score, plot = FALSE, breaks=buckets)
 	if (length(unique(default)) == 2) 
-		local <- locfit(default ~ lp(score, nn = span), family = "binomial", 
+		local <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial", 
 				link = "logit")
-	else local <- locfit(default ~ lp(score, nn = span))
+	else local <- locfit::locfit(default ~ locfit::lp(score, nn = span))
 	br2 <- predict(local, newdata = h$mid, type = "response")
 	cut_ <- cut(score, breaks = h$breaks)
 	br <- tapply(default, cut_, mean)
@@ -610,14 +609,6 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 #' 		  modelem idealnym (np. w przypadku LGD).
 #' @author Micha³ Danaj
 #' @export 
-# @examples	
-#	n<-1000;
-#	x1<-rnorm(n);
-#	x2<-x1+rnorm(n);
-#	y<-(x1+rnorm(n))<0;
-#	
-#	ar<-AR(data.frame(x1,x2),y);
-#	plot_AR(ar, plot_type="ROC");
 plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 {
 	plot_type<-match.arg(plot_type);
@@ -657,7 +648,10 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 			col=kolej+1, cex=0.8, xjust=1, yjust=0, lty=kolej+1 )
 	
 }
- 
+
+# TODO Dodaæ opcjê subset.
+# TODO Co z b³edem out of vertex space?
+
 #'  Rysuje lokalnie wyg³adzon¹ funckjê.
 #'  
 #'  Rysuje i zwraca statystyki dla bucketów.  
@@ -685,8 +679,6 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 #'		
 #'		reg_nieparam(x1,y, buckets=20)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
-# TODO Dodaæ opcjê subset.
-# TODO Co z b³edem out of vertex space?
 
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
@@ -700,9 +692,9 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	}
 	bucket <- buckety_br(dane$score, dane$default, buckets, method = "eq_count")
 	if (length(unique(default)) == 2)
-		l <- locfit(default ~ lp(score, nn = span), family = "binomial",
+		l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",
 				link = "logit", data = dane)
-	else l <- locfit(default ~ lp(score, nn = span), data = dane)
+	else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane)
 	b2 <- predict(l, newdata = bucket$srodek)
 	if (target == "br")
 		bucket2 <- cbind(bucket, fitted = b2)

@@ -1,6 +1,15 @@
+# Funkcje zaczynaj¹ce siê na univariate
+# 
+# Author: Piotr
+###############################################################################
 
 
-#'  Znajduje przedzia³ opisany w \code{bucket}, do którego nale¿y \code{x} i 
+# TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki, bo póŸniej
+# sortujemy i odnosimy siê tym porz¹dkiem do pocz¹tkowego porz¹dku
+# TODO obs³uga jednego przedzia³u dla interpolacji
+#' Przypisuje wartoœci zdefiowane w \code{bucket} 
+#' 
+#' Znajduje przedzia³ opisany w \code{bucket}, do którego nale¿y \code{x} i 
 #'  przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
 #'
 #'  Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹ 
@@ -14,8 +23,8 @@
 #'		\itemize{
 #' 			\item od. Dolny kraniec przedzia³u.
 #' 			\item do Górny kreniec przedzia³u.
-#' 			\item srodekŒrodek przedzia³u.
-#' 			\item fittedWartoœæ przypisana do danego przedzia³u.
+#' 			\item srodek Œrodek przedzia³u.
+#' 			\item fitted Wartoœæ przypisana do danego przedzia³u.
 #' 		}
 #'   @param interpol Czy przeprowadziæ interpolacjê?
 #' 
@@ -37,10 +46,9 @@
 #' 		y_fitted<-przypisz(x1, b, interpol=TRUE)
 #' 		plot(x1, y_fitted) 
 #' @seealso \code{\link{przypisz2}}
-#' bo póŸniej sortujemy i odnosimy siê tym porz¹dkiem do pocz¹tkowego porz¹dku
+#' 
 #' @export
-# TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki,
-# TODO obs³uga jednego przedzia³u dla interpolacji
+
 przypisz<-function (x, bucket, interpol = FALSE)
 {
 	n <- dim(bucket)[1]
@@ -69,9 +77,12 @@ przypisz<-function (x, bucket, interpol = FALSE)
 }
 
 
+# TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki,
+# TODO Coœ nie dzia³a obs³uga,  gdy w x s¹ NA, np. zmienna Wiek
+#' Przypisuje dyskretyzacjê
+#' 
 #' Przypisuje zmienne dyskretne oraz ci¹g³e w oparciu o podane przedzia³y, uwzglêdnia wartoœci
 #' specjalne
-#' bo póŸniej sortujemy i odnosimy siê tym porz¹dkiem do pocz¹tkowego porz¹dku
 #'   @param x Wektor zmiennych numerycznych. 
 #'   @param bucket \code{data.frame} z bucketami.
 #'   @param interpol Czy przeprowadziæ interpolacjê?
@@ -80,8 +91,6 @@ przypisz<-function (x, bucket, interpol = FALSE)
 #' @return  Wektor wartoœci.
 #' @author Micha³ Danaj
 #' @export
-# TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki,
-# TODO Coœ nie dzia³a obs³uga,  gdy w x s¹ NA, np. zmienna Wiek
 przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-2147483647)
 {
 	
@@ -182,7 +191,7 @@ przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-21474836
 #' Mo¿liwe jest okreœlenie warunku \code{else} poprzez wpisanie w \code{mapping$war} stringa "else".
 #'
 #' @param data \code{data.frame} do którego bêdzie przypisywane mapowanie
-#' @param maping   \code{data.frame} z dwoma kolumnami znakowymi (lub do przerobienia przez \code{as.character})
+#' @param mapping   \code{data.frame} z dwoma kolumnami znakowymi (lub do przerobienia przez \code{as.character})
 #'			  \code{war} oraz \code{label}
 #' @author Micha³ Danaj
 #' @export
@@ -233,17 +242,17 @@ mapuj<-function(data, mapping){
 #' po³¹czenie tylko
 #' przedzia³ów przlegaj¹cych do siebie. Dla nowo powsta³ych bucketów wylicza statystyki. 
 #' W przypadku ³¹czenia przedzia³ów zmiennej ci¹g³ej, wiersze z tymi bucketami zostan¹ ze sob¹
-#' po³¹czone i powstanie \{data.frame} z liczb¹ wierszy o jeden mniejsz¹ ni¿ w \code{bucket}.
+#' po³¹czone i powstanie \code{data.frame} z liczb¹ wierszy o jeden mniejsz¹ ni¿ w \code{bucket}.
 #' Przy ³¹czeniu bucketów dyskretnych lub dyskretnego i ci¹g³ego, wiersze nie zostan¹ usuniête. 
 #' Zostanie im nadany wspólny label oraz wspólny numer. Jeœli liczba bucketów do po³¹czenia jest<=1,
 #' zwracany jest wejœciowy podzia³. 
 #' @param x zmienna score'owa.
 #' @param y zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.
 #' @param buckets buckety.
-#' @param nr1 numer wiersza w \{buckets} z pierwszym bucketem do po³¹czenia.
-#' @param nr2 numer wiersza w \{buckets} z pierwszym bucketem do po³¹czenia.
+#' @param nr1 numer wiersza w \code{buckets} z pierwszym bucketem do po³¹czenia.
+#' @param nr2 numer wiersza w \code{buckets} z pierwszym bucketem do po³¹czenia.
 #' @param new_label label jaki bêdzie nadany po³¹czonym bucketom. W przypadku braku podania, zostanie zatosowany domyœlny.
-#' @returnType \code{data.frame}.
+#' @return \code{data.frame}.
 #' @author Micha³ Danaj
 #' @export
 polacz_buckety<-function(x, y, buckets, row_idxs, new_label=NULL)

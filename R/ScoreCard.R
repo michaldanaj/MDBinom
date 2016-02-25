@@ -6,11 +6,12 @@
 
 
 #' Przypisuje score z definicji karty scoringowej.
-#' @param scoreCard definicja karty scoringowej. Patrz \link{\code{getScores}}.
+#' 
+#' @param scoreCard definicja karty scoringowej. Patrz \code{\link{getScoreCard}}.
 #' @param x \code{data.frame} z kolumnami o nazwach takich, jak w definicji karty
 #' @param sufix ci¹g znaków dodany do nazw wynikowych kolumn.
-#' @seealso \link{\code{getScores}}.
-#' scoringowej.
+#' @seealso \code{\link{getScoreCard}}.
+#' @export 
 assignScore<-function(scoreCard, x, sufix='_points'){
 	if (!is.data.frame(x))
 		stop('"x" powinno byæ typu data.frame.');
@@ -50,12 +51,14 @@ assignScore<-function(scoreCard, x, sufix='_points'){
 
 
 #' Wylicza punkty score'owe na podstawie parametrów modelu
+#' 
 #' @param model model, którego parametry zostan¹ przekszta³cone na punkty score'owe.
 #' @param from od jakiej wartoœci maj¹ siê rozpoczynaæ punkty score'owe.
 #' @param to do jakiej wielkoœci maj¹ byæ wartoœci punktów socre'owych.
 #' @param test jeœli TRUE, zwraca testy istotnoœci atrybutów.
+#' @export 
 getScoreCard<-function(model, from, to, test=FALSE){
-	wynik<-melt(model$xlevels);
+	wynik<-reshape::melt(model$xlevels);
 	wynik$by<-paste(wynik$L1,wynik$value,  sep='')
 	wynik$coeff<- -1*coef(model)[wynik$by]
 	if (test)
@@ -79,12 +82,15 @@ getScoreCard<-function(model, from, to, test=FALSE){
 }
 
 #' Wylicza punkty score'owe na podstawie parametrów modelu
+#'
+#' Wylicza punkty score'owe na podstawie parametrów modelu 
 #' @param model model, którego parametry zostan¹ przekszta³cone na punkty score'owe.
 #' @param from od jakiej wartoœci maj¹ siê rozpoczynaæ punkty score'owe.
 #' @param to do jakiej wielkoœci maj¹ byæ wartoœci punktów socre'owych.
 #' @param test jeœli TRUE, zwraca testy istotnoœci atrybutów.
+#' @export
 getScoreCard2<-function(model, from, to, test=FALSE){
-	wynik<-melt(model$xlevels);
+	wynik<-reshape::melt(model$xlevels);
 	wynik$by<-paste(wynik$L1,wynik$value,  sep='')
 	wynik$coeff<- -1*coef(model)[wynik$by]
 	if (test)

@@ -5,29 +5,37 @@
 ###############################################################################
 
 
-
+#TODO wyci¹gn¹æ parametry drzewa 
+#TODO wyci¹gn¹æ parametry locfit
 #'   Dyskretyzuje zmienn¹ ciag³¹ drzewkiem w oparciu o zmienn¹ odpowiedzi
 #'
 #' W parametrze \code{x} ani \code{y} nie mo¿e byæ NULLi. Mo¿na je jakoœ zakodowaæ.
-#' @item x zmienna ci¹g³a.
-#' @item y zmienna celu (PD, LGD).
-#' @item special_val wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
+#' @param x zmienna ci¹g³a.
+#' @param y zmienna celu (PD, LGD).
+#' @param special_val wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
 #'                   osobne klasy. Wartoœæ tak¹ jest równie¿ \code{NA}, automatycznie
 #'                   uwzglêdniana jako osobna klasa.
-#' @item interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#' @param min_bucket Minimalna wielkoœæ liœcia
+#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 #'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
-#' @item from zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item to   zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item ... inne parametry do funkcji \link{\code{drzewo}}.
+#' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}.  
+#' @param breaks Zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param Parametr wyg³adzaj¹cy funkcji \code{locit}.
+#' @param ... inne parametry do funkcji \code{\link{drzewo}}.
 #' @seealso \code{drzewo}
 #' @author Micha³ Danaj
-#TODO wyci¹gn¹æ parametry drzewa
+#' @export
 numeric_var_treatment<-function(x, y, 
 		special_val=numeric_var_treatment.params$spcial_val,
 		min_bucket=numeric_var_treatment.params$min_bucket, 
 		max_gleb=numeric_var_treatment.params$max_gleb,
-		interactive=FALSE, locfit=FALSE, breaks=NULL,span=0.9, ...){
+		interactive=FALSE, 
+		locfit=FALSE, 
+		breaks=NULL,
+		span=0.9, ...){
+	
 	if (length(x)!=length(y))
 		stop("discretization: parametry 'x' i 'y' maj¹ ró¿ne d³ugoœci!");
 	
@@ -123,24 +131,26 @@ numeric_var_treatment<-function(x, y,
 	return(classing_stat);
 }
 
-
+#TODO wyci¹gn¹æ parametry drzewa
 #'   Dyskretyzuje zmienn¹ ciag³¹ drzewkiem w oparciu o zmienn¹ odpowiedzi
 #'
 #' W parametrze \code{x} ani \code{y} nie mo¿e byæ NULLi. Mo¿na je jakoœ zakodowaæ.
-#' @item x zmienna ci¹g³a.
-#' @item y zmienna celu (PD, LGD).
-#' @item special_val wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
+#' @param x zmienna ci¹g³a.
+#' @param y zmienna celu (PD, LGD).
+#' @param special_val wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
 #'                   osobne klasy. Wartoœæ tak¹ jest równie¿ \code{NA}, automatycznie
 #'                   uwzglêdniana jako osobna klasa.
-#' @item interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#' @param min_bucket Minimalna wielkoœæ liœcia
+#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 #'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
-#' @item from zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item to   zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @item ... inne parametry do funkcji \link{\code{drzewo}}.
+#' @param breaks Zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param testy Wyœwietla komunikaty testowe. 
+#' @param ... inne parametry do funkcji \code{\link{drzewo}}.
 #' @seealso \code{drzewo}
 #' @author Micha³ Danaj
-#TODO wyci¹gn¹æ parametry drzewa
+#' @export
 discretization<-function(x, y, special_val=NULL, min_bucket=20, max_gleb=3,
 		interactive=FALSE,breaks=NULL,testy=FALSE,...){
 	
@@ -229,6 +239,24 @@ discretization<-function(x, y, special_val=NULL, min_bucket=20, max_gleb=3,
 	return(classing_stat);
 }
 
+#' Automatyczna dyskretyzacja w oparciu o algorytm drzewa
+#' 
+#' Dyskretyzuje zmienn¹ \code{score}
+#' @param score Zmienna do dyskretyzacji
+#' @param def Zmienna celu
+#' @param freq Licznoœæ. Na razie nie obs³ugiwane
+#' @param wytnij Jak¹ czêœæ koñcowych wartoœci usun¹æ funkcj¹ \code{usun_konce} 
+#' @param min_split Minimalna wielkoœæ wêz³a, aby móc dokonaæ podzia³u
+#' @param min_bucket Minimalna wielkoœæ liœcia
+#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @param n_buckets Chyba nie u¿ywane?
+#' @param plot Rysuje wynik dyskretyzacji 
+#' @param testy Czy wyœwietlaæ komentarze do testowania
+#' @param ... Dodatkowe parametry do rysowania 
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, max_gleb=4, n_buckets=20, plot=TRUE, testy=FALSE,...)
 {
 	
@@ -329,6 +357,16 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 	bucket
 }
 
+
+
+#' Rysuje dyskretyzacjê w oparciu o drzewko
+#' 
+#' @param liscie_drzewa 
+#' @param ... Dodatkowe parametry graficzne 
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 drzewo_plot<-function(liscie_drzewa,...){
 	#liscie<-liscie_drzewa[liscie_drzewa$discret=="",];
 	liscie<-liscie_drzewa[!is.na(liscie_drzewa$od),];
@@ -373,6 +411,24 @@ drzewo_plot<-function(liscie_drzewa,...){
 	}
 }
 
+
+
+#' Podzia³ drzewa
+#' 
+#' @param score
+#' @param def
+#' @param nr_wezla 
+#' @param od 
+#' @param do 
+#' @param freq 
+#' @param glebokosc 
+#' @param min_split 
+#' @param min_bucket 
+#' @param max_gleb 
+#' @param testy  
+#' @return 
+#' 
+#' @author Piotr
 drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 		min_split=200, min_bucket=100, max_gleb=3, testy=FALSE)
 {
@@ -451,13 +507,19 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 #'
 #' Interaktywny podzia³ zmiennej ci¹g³ej na buckety. Uwaga! W danych
 #' nie mo¿e byæ wartoœci NULL. Nieopisane zmienne s¹ to zmienne z
-#' wykorzystywanej funkcji \link{\code{drzewo}} oraz \link{\code{reg_nieparam}}.
+#' wykorzystywanej funkcji \code{\link{drzewo}} oraz \code{\link{reg_nieparam}}.
 #' Po wykonaniu zmiany wyœwietlane s¹ statystyki po bucketach oraz statystyka AR.
-#' @item score zmienna score'owa.
-#' @item def zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.
-#' @seealso \link{\code{drzewo}}, \link{\code{quick_AR}},  \link{\code{buckety_stat2}}.
+#' @param score zmienna score'owa.
+#' @param def zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.
+#' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
+#' @param min_split Minimalna wielkoœæ wêz³a, aby móc dokonaæ podzia³u
+#' @param min_bucket Minimalna wielkoœæ liœcia
+#' @param buckets Chyba nie u¿ywane?
+#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @seealso \code{\link{drzewo}}, \code{\link{quick_AR}},  \code{\link{buckety_stat2}}.
 #' @return \code{data.frame} ze statystykami.
 #' @author Micha³ Danaj
+#' @export 
 interactive_tree<-function(score, def, span=0.80, min_split=200, min_bucket=100,
 		buckets=60, max_gleb=2)
 {

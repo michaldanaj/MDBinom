@@ -66,7 +66,7 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 		#w przypadku, gdy jedna wartoœæ jest dla wielu kwantyli, zdarzaj¹ siê problemy numeryczne
 		#¿e wartoœæ teoretycznie jest taka sama, ale ró¿ni siê na 15-tym miejscu po przecinku.
 		#tak na szybko, brute force obejœcie: sortujê
-		granice<-sort(as.vector(unique(wtd.quantile(x, prob=0:n/n, type='quantile', weights=weights))));
+		granice<-sort(as.vector(unique(Hmisc::wtd.quantile(x, prob=0:n/n, type='quantile', weights=weights))));
 	}
 	#oznaczam, do ktorego przedzialu nalezy dana obserwacja
 	przedzial<-findInterval(x, granice, rightmost.closed = TRUE, all.inside = TRUE);

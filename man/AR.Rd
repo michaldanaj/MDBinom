@@ -44,6 +44,12 @@ Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
  @param def Wektor wartoœci \code{\{0,1\}} 
  @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}.
 }
+\examples{
+n<-1000;
+x<-rnorm(n);
+def<- as.numeric(x+rnorm(n)<0);
+AR(x,def,plot=TRUE);
+}
 \author{
 Micha³ Danaj
 }

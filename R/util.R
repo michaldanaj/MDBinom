@@ -5,22 +5,53 @@
 
 
 
+#' Odchylenie modelu
+#' 
+#' @param predicted prawdopodobieñstwo.
+#' @param target target.
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 model_dev<-function(predicted, target){
 	-2*sum(target*log(predicted)+(1-target)*log(1-predicted))
 }
 
 
+#' Zastêpuje braki danych
+#' 
+#' @param x x
+#' @param val jak¹ wartoœci¹ zast¹piæ brak danych. 
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 na.subst<-function(x, val){
 	x[is.na(x)]<-val;
 	x
 }
 
 
+#' Wrzuca dane do schowka, do wklejenia do Excela
+#' @param table \code{data.frame} do przekazania do Excela. 
+#' @param row.names  czy przekazaæ równie¿ wiersze.
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 to_excel<-function(table, row.names=FALSE){
 	write.table(table, file='clipboard', sep='\t', row.names=row.names, dec=',')
 }
 
-#do skasowania!!!
+
+#do skasowania!!! 
+#' Liczy WoE
+#' 
+#' @param br wartoœæ prawdopodobieñstwa.
+#' @return 
+#' 
+#' @author Piotr
+#' @export
 woe<-function(br){
 	br[br==0]<-0.5/length(br)
 	br[br==1]<-(length(br)-0.5)/length(br)
@@ -36,6 +67,7 @@ woe<-function(br){
 #'  do którego nale¿y data \code{dat}.
 #' @param ... Opcje do funkcji \link{as.Date}.
 #' @author Micha³ Danaj
+#' @export
 lastDay<-function(dat, unit=c("month","quarter", "half_year", "year"),...) {
 	
 	# Wstêpne przygotowania
