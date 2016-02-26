@@ -12,9 +12,11 @@ univariate_anal_stats2(x_discr, y, czas, estim)
 \item{y}{zmienna odpowiedzi.}
 
 \item{czas}{Czas.}
+
+\item{estim}{wartoœæ wyestymowana przez model.}
 }
 \description{
-Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y}
+Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y} oraz \code{esitm}
 w podziale na zadane grupy czasowe \code{czas} (lub podzia³ innego typu).
 }
 

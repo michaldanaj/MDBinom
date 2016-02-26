@@ -7,9 +7,9 @@
 drzewo_plot(liscie_drzewa, ...)
 }
 \arguments{
-\item{liscie_drzewa}{}
+\item{liscie_drzewa}{Cholera wie, co jest i jak mam to tu przekazaæ.}
 
-\item{...}{Dodatkowe parametry graficzne}
+\item{...}{Dodatkowe parametry graficzne.}
 }
 \value{
 

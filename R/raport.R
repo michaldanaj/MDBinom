@@ -19,12 +19,12 @@ genRaport<-function(wyniki, dir, kolejnosc=1:length(wyniki), scale=c(0,0.2)){
 	
 	makeCSSFile(dir)
 	
-	HTML::HTMLStart(dir , "univariate", HTMLframe=TRUE, Title="Univariate analysis",
+	R2HTML::HTMLStart(dir , "univariate", HTMLframe=TRUE, Title="Univariate analysis",
 			echo=TRUE);
-	HTML::HTMLStop();
+	R2HTML::HTMLStop();
 	
 	
-	plik_main<-HTML::HTMLInitFile(dir, 'univariate_main', CSSFile='R2HTML MD.css');
+	plik_main<-R2HTML::HTMLInitFile(dir, 'univariate_main', CSSFile='R2HTML MD.css');
 	
 	genRaportBody(wyniki, kolejnosc, dir, plik_main, scale)
 	genRaportMenu(wyniki, dir)
@@ -39,12 +39,12 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		nazwa_zmiennej<-names(wyniki)[kolejnosc[i]];
 		
 		cat(sprintf('<a name="%s">', nazwa_zmiennej), file=plik_main, append=TRUE)
-		HTML::HTML.title(nazwa_zmiennej);
+		R2HTML::HTML.title(nazwa_zmiennej);
 		cat('</a>', file=plik_main, append=TRUE)
 		#    windows();
 		
 		### dyskryminacja ###
-		HTML::HTML.title("Discrimination GINI", HR=3);
+		R2HTML::HTML.title("Discrimination GINI", HR=3);
 		if (!is.null(wynik$rozklady$pct_all_tbl)){
 			do_wykresu<-reshape::melt(wynik$dyskryminacja)
 			do_wykresu<-do_wykresu[do_wykresu$X2!='AR_calosc',];
@@ -53,29 +53,29 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 			print(lattice::xyplot(value ~ X2 , group = X1_order, data=do_wykresu, type='b',
 							xlab="Date", ylab="GINI", main=nazwa_zmiennej));
 			print('1');
-			HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, ' discrimination'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
+			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, ' discrimination'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 400, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			HTML::HTML(wynik$dyskryminacja);
+			R2HTML::HTML(wynik$dyskryminacja);
 		}
 		
 		###   rysunek PIT/TTC   ###
-		HTML::HTML.title("Point in Time or Through the Cycle", HR=3);
+		R2HTML::HTML.title("Point in Time or Through the Cycle", HR=3);
 		if (!is.null(wynik$rozklady$avg_t_tbl)){
 			plot(wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)], main="PIT/TTC",
 					ylab="Mean LGD", xlab="Date");
 			points(wynik$rozklady$estim, col="green")
-			HTML::HTMLplot(Caption = "Does changes in variable distribution follow changes of portfolio LGD?",
+			R2HTML::HTMLplot(Caption = "Does changes in variable distribution follow changes of portfolio LGD?",
 					file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'cycle'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 400, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			HTML::HTML(    t(data.frame("Portfolio LGD" = wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)],
+			R2HTML::HTML(    t(data.frame("Portfolio LGD" = wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)],
 									"Estimated LGD" = wynik$rozklady$estim))
 			);
 		}
 		
 		###   dyskretyzacja   ###
-		HTML::HTML.title("Buckets", HR=3);
+		R2HTML::HTML.title("Buckets", HR=3);
 #    dev.off();
 		windows(1400,700);
 		par(mfrow=c(1,2));
@@ -93,14 +93,14 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		par(usr=c(par()$usr[1:2], scale))
 		lines(b, wynik$dyskretyzacja$br[-ile_row],type="o", col="red", lty="solid", pch="x")
 		axis(4)
-		HTML::HTMLplot(Caption = "Results of discretization", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'tree'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
+		R2HTML::HTMLplot(Caption = "Results of discretization", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'tree'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 				Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 		
 		par(mfrow=c(1,1));
-		HTML::HTML(wynik$dyskretyzacja);
+		R2HTML::HTML(wynik$dyskretyzacja);
 		
 		###   rozk³ady    ###
-		HTML::HTML.title("Distribution of buckets", HR=3);
+		R2HTML::HTML.title("Distribution of buckets", HR=3);
 		if (!is.null(wynik$rozklady$pct_all_tbl)){
 			do_wykresu<-reshape::melt(wynik$rozklady$pct_all_tbl)
 			do_wykresu<-do_wykresu[do_wykresu$X1!='TOTAL' & do_wykresu$X2!='TOTAL',];
@@ -114,32 +114,32 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 			#dev.off()
 			
 			#
-			HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'distribution'),
+			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'distribution'),
 					GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			HTML::HTML(wynik$rozklady$obs_all_tbl, caption="Number of observations");
-			HTML::HTML(wynik$rozklady$pct_all_tbl, caption="% share at given date");
+			R2HTML::HTML(wynik$rozklady$obs_all_tbl, caption="Number of observations");
+			R2HTML::HTML(wynik$rozklady$pct_all_tbl, caption="% share at given date");
 			
 			#     œredni LGD    #
-			HTML::HTML.title("Mean LGD", HR=3);
+			R2HTML::HTML.title("Mean LGD", HR=3);
 			do_wykresu<-reshape::melt(wynik$rozklady$avg_t_tbl)
 			do_wykresu<-do_wykresu[do_wykresu$X1!='TOTAL' & do_wykresu$X2!='TOTAL',];
 			X1_order<-ordered(do_wykresu$X1, levels=rownames(wynik$rozklady$pct_all_tbl));
 			print(lattice::xyplot(value ~ X2|X1_order , data=do_wykresu, type='b', xlab="Date", ylab="Mean LGD", main=nazwa_zmiennej,
 							strip=lattice::strip.custom(bg='green')));
 			
-			HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'LGD by bucket'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
+			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'LGD by bucket'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			print(lattice::xyplot(value ~ X1_order |X2 , data=do_wykresu, type='b', xlab="Bucket", ylab="LGD", main=nazwa_zmiennej));
-			HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'LGD by time'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
+			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'LGD by time'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			HTML::HTML(wynik$rozklady$avg_t_tbl, caption="Mean LGD");
+			R2HTML::HTML(wynik$rozklady$avg_t_tbl, caption="Mean LGD");
 			
 			dev.off();
 		}
-		HTML::HTML("<HR><HR><HR><HR><HR>")
+		R2HTML::HTML("<HR><HR><HR><HR><HR>")
 	}
 }
 
@@ -149,7 +149,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 
 genRaportMenu<-function(wyniki, dir){
 	
-	plik_menu<-HTML::HTMLInitFile(dir, 'univariate_menu');
+	plik_menu<-R2HTML::HTMLInitFile(dir, 'univariate_menu');
 	
 	GINI<-sapply(wyniki, function(wynik){
 				gini<-wynik$dyskryminacja[1,'AR_calosc']
@@ -161,7 +161,7 @@ genRaportMenu<-function(wyniki, dir){
 	
 	#GINI
 	kolej<-rev(order(GINI));
-	HTML::HTML.title('Sortowanie po GINI');
+	R2HTML::HTML.title('Sortowanie po GINI');
 	for (i in 1:length(wyniki)){
 		nazwa_zmiennej<-names(wyniki)[kolej[i]];
 		cat(sprintf('<a href="univariate_main.html#%s" target=main>%s (%f)</a></br>\n',nazwa_zmiennej,nazwa_zmiennej, round(GINI[kolej[i]],3))
@@ -173,14 +173,14 @@ genRaportMenu<-function(wyniki, dir){
 	
 	#alfabetycznie
 	kolejnosc<-order(names(wyniki));
-	HTML::HTML.title('Sortowanie Alfabetyczne');
+	R2HTML::HTML.title('Sortowanie Alfabetyczne');
 	for (i in 1:length(wyniki)){
 		nazwa_zmiennej<-names(wyniki)[kolejnosc[i]];
 		cat(sprintf('<a href="univariate_main.html#%s" target=main>%s</a></br>\n',nazwa_zmiennej,nazwa_zmiennej)
 				, file=plik_menu, append=TRUE);
 	}
 	
-	HTML::HTMLEndFile(plik_menu)
+	R2HTML::HTMLEndFile(plik_menu)
 }
 
 

@@ -31,9 +31,9 @@ jest automatyczna.}
 
 \item{breaks}{Zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].}
 
-\item{...}{inne parametry do funkcji \code{\link{drzewo}}.}
+\item{span}{Parametr wyg³adzaj¹cy funkcji \code{locit}.}
 
-\item{Parametr}{wyg³adzaj¹cy funkcji \code{locit}.}
+\item{...}{inne parametry do funkcji \code{\link{drzewo}}.}
 }
 \description{
 W parametrze \code{x} ani \code{y} nie mo¿e byæ NULLi. Mo¿na je jakoœ zakodowaæ.

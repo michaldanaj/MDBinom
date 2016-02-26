@@ -7,7 +7,7 @@
 
 #TODO wyci¹gn¹æ parametry drzewa 
 #TODO wyci¹gn¹æ parametry locfit
-#'   Dyskretyzuje zmienn¹ ciag³¹ drzewkiem w oparciu o zmienn¹ odpowiedzi
+#' Dyskretyzuje zmienn¹ ciag³¹ drzewkiem w oparciu o zmienn¹ odpowiedzi
 #'
 #' W parametrze \code{x} ani \code{y} nie mo¿e byæ NULLi. Mo¿na je jakoœ zakodowaæ.
 #' @param x zmienna ci¹g³a.
@@ -22,7 +22,7 @@
 #'                   jest automatyczna.
 #' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}.  
 #' @param breaks Zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @param Parametr wyg³adzaj¹cy funkcji \code{locit}.
+#' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
 #' @param ... inne parametry do funkcji \code{\link{drzewo}}.
 #' @seealso \code{drzewo}
 #' @author Micha³ Danaj
@@ -361,8 +361,8 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 
 #' Rysuje dyskretyzacjê w oparciu o drzewko
 #' 
-#' @param liscie_drzewa 
-#' @param ... Dodatkowe parametry graficzne 
+#' @param liscie_drzewa Cholera wie, co jest i jak mam to tu przekazaæ.
+#' @param ... Dodatkowe parametry graficzne.
 #' @return 
 #' 
 #' @author Piotr
@@ -412,20 +412,21 @@ drzewo_plot<-function(liscie_drzewa,...){
 }
 
 
-
+#TODO dorobiæ dokumentacjê.
 #' Podzia³ drzewa
 #' 
-#' @param score
-#' @param def
-#' @param nr_wezla 
-#' @param od 
-#' @param do 
-#' @param freq 
-#' @param glebokosc 
-#' @param min_split 
-#' @param min_bucket 
-#' @param max_gleb 
-#' @param testy  
+#' Podzia³ drzewa.
+#' @param score score
+#' @param def def
+#' @param nr_wezla nr_wezla 
+#' @param od od
+#' @param do do
+#' @param freq freq
+#' @param glebokosc glebokosc
+#' @param min_split min_split
+#' @param min_bucket min_bucket
+#' @param max_gleb max_gleb
+#' @param testy  testy
 #' @return 
 #' 
 #' @author Piotr
@@ -516,7 +517,7 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 #' @param min_bucket Minimalna wielkoœæ liœcia
 #' @param buckets Chyba nie u¿ywane?
 #' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
-#' @seealso \code{\link{drzewo}}, \code{\link{quick_AR}},  \code{\link{buckety_stat2}}.
+#' @seealso \code{\link{drzewo}}, \code{\link{AR_quick}},  \code{\link{buckety_stat2}}.
 #' @return \code{data.frame} ze statystykami.
 #' @author Micha³ Danaj
 #' @export 

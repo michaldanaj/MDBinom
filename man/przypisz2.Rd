@@ -7,16 +7,23 @@
 przypisz2(x, bucket, interpol = FALSE, fitted = NULL,
   NA_substit = -2147483647)
 }
+\arguments{
+\item{x}{Wektor zmiennych numerycznych.}
+
+\item{bucket}{\code{data.frame} z bucketami.}
+
+\item{interpol}{Czy przeprowadziæ interpolacjê?}
+
+\item{fitted}{Nadpisuje wektor \code{bucket$fitted} i na tej podstawie przypisuje wartoœci.}
+
+\item{NA_substit}{wartoœæ do podstawienia za brak danych}
+}
 \value{
 Wektor wartoœci.
 }
 \description{
 Przypisuje zmienne dyskretne oraz ci¹g³e w oparciu o podane przedzia³y, uwzglêdnia wartoœci
 specjalne
-  @param x Wektor zmiennych numerycznych. 
-  @param bucket \code{data.frame} z bucketami.
-  @param interpol Czy przeprowadziæ interpolacjê?
-  @param NA_substit wartoœæ do podstawienia za brak danych
 }
 \author{
 Micha³ Danaj

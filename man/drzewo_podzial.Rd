@@ -8,33 +8,33 @@ drzewo_podzial(score, def, nr_wezla, od, do, freq, glebokosc, min_split = 200,
   min_bucket = 100, max_gleb = 3, testy = FALSE)
 }
 \arguments{
-\item{score}{}
+\item{score}{score}
 
-\item{def}{}
+\item{def}{def}
 
-\item{nr_wezla}{}
+\item{nr_wezla}{nr_wezla}
 
-\item{od}{}
+\item{od}{od}
 
-\item{do}{}
+\item{do}{do}
 
-\item{freq}{}
+\item{freq}{freq}
 
-\item{glebokosc}{}
+\item{glebokosc}{glebokosc}
 
-\item{min_split}{}
+\item{min_split}{min_split}
 
-\item{min_bucket}{}
+\item{min_bucket}{min_bucket}
 
-\item{max_gleb}{}
+\item{max_gleb}{max_gleb}
 
-\item{testy}{}
+\item{testy}{testy}
 }
 \value{
 
 }
 \description{
-Podzia³ drzewa
+Podzia³ drzewa.
 }
 \author{
 Piotr

@@ -1,6 +1,7 @@
 Package: MDBinom
 Type: Package
-Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi.
+Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi
+Description: Pakiet do dyskretyzacji zmiennych ci¹g³ych na cele budowy modelu logistycznego.
 Version: 5.0.0.9000
 Date: 2016-02-24
 Authors@R: person("Micha³", "Danaj", email = "michal.danaj@gmail.com",
@@ -10,7 +11,7 @@ Maintainer: Micha³ Danj <michal.danaj@gmail.com>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyLoad: yes
-Imports:
+Suggests:
     locfit,
     Hmisc,
     reshape,

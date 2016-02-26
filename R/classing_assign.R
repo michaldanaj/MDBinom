@@ -10,23 +10,21 @@
 #' Przypisuje wartoœci zdefiowane w \code{bucket} 
 #' 
 #' Znajduje przedzia³ opisany w \code{bucket}, do którego nale¿y \code{x} i 
-#'  przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
+#' przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
 #'
-#'  Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹ 
-#'  œrodki przedzia³ów, pomiêdzy którymi le¿y \code{x}, a wartoœciami
-#'   \code{bucket$fitted} odpowiadaj¹ce tym œrodkom. 
+#' Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹ 
+#' œrodki przedzia³ów, pomiêdzy którymi le¿y \code{x}, a wartoœciami
+#' \code{bucket$fitted} odpowiadaj¹ce tym œrodkom.  
 #' 
-#'   @title Przypisuje wartoœæ z przedzia³u 
-#' 
-#'   @param x Wektor zmiennych numerycznych. 
-#'   @param bucket \code{data.frame} z kolumnami:
+#' @param x Wektor zmiennych numerycznych. 
+#' @param bucket \code{data.frame} z kolumnami:
 #'		\itemize{
 #' 			\item od. Dolny kraniec przedzia³u.
 #' 			\item do Górny kreniec przedzia³u.
 #' 			\item srodek Œrodek przedzia³u.
 #' 			\item fitted Wartoœæ przypisana do danego przedzia³u.
 #' 		}
-#'   @param interpol Czy przeprowadziæ interpolacjê?
+#' @param interpol Czy przeprowadziæ interpolacjê?
 #' 
 #' @return  Wektor wartoœci.
 #' 
@@ -83,10 +81,11 @@ przypisz<-function (x, bucket, interpol = FALSE)
 #' 
 #' Przypisuje zmienne dyskretne oraz ci¹g³e w oparciu o podane przedzia³y, uwzglêdnia wartoœci
 #' specjalne
-#'   @param x Wektor zmiennych numerycznych. 
-#'   @param bucket \code{data.frame} z bucketami.
-#'   @param interpol Czy przeprowadziæ interpolacjê?
-#'   @param NA_substit wartoœæ do podstawienia za brak danych
+#' @param x Wektor zmiennych numerycznych. 
+#' @param bucket \code{data.frame} z bucketami.
+#' @param interpol Czy przeprowadziæ interpolacjê?
+#' @param fitted Nadpisuje wektor \code{bucket$fitted} i na tej podstawie przypisuje wartoœci.  
+#' @param NA_substit wartoœæ do podstawienia za brak danych
 #' @seealso \code{\link{przypisz}}
 #' @return  Wektor wartoœci.
 #' @author Micha³ Danaj
@@ -97,8 +96,8 @@ przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-21474836
 	if (!is.null(fitted))
 		bucket$fitted<-as.vector(fitted);
 	
-	if (is.null(bucket$fitted))
-		stop("Brak kolumny 'bucket$fitted'.")
+	if (is.null(bucket$fitted) & is.null(fitted))
+		stop("Brak kolumny 'bucket$fitted' oraz parametru 'fitted'. Przynajmniej jeden powinien byæ uszupe³niony.")
 	
 	if (is.factor(bucket$fitted))
 		warning("przypisz2: Uwaga! bucket$fitted jest typu factor, co prowadzi do dziwnych wyników!");
@@ -234,71 +233,3 @@ mapuj<-function(data, mapping){
 	return(wynik)
 }
 
-
-
-#' £¹czy ze sob¹ buckety
-#' 
-#' £¹czy buckety. W przypadku bucketów z przedzia³ami zmiennej ci¹g³ej, mo¿liwe jest 
-#' po³¹czenie tylko
-#' przedzia³ów przlegaj¹cych do siebie. Dla nowo powsta³ych bucketów wylicza statystyki. 
-#' W przypadku ³¹czenia przedzia³ów zmiennej ci¹g³ej, wiersze z tymi bucketami zostan¹ ze sob¹
-#' po³¹czone i powstanie \code{data.frame} z liczb¹ wierszy o jeden mniejsz¹ ni¿ w \code{bucket}.
-#' Przy ³¹czeniu bucketów dyskretnych lub dyskretnego i ci¹g³ego, wiersze nie zostan¹ usuniête. 
-#' Zostanie im nadany wspólny label oraz wspólny numer. Jeœli liczba bucketów do po³¹czenia jest<=1,
-#' zwracany jest wejœciowy podzia³. 
-#' @param x zmienna score'owa.
-#' @param y zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.
-#' @param buckets buckety.
-#' @param nr1 numer wiersza w \code{buckets} z pierwszym bucketem do po³¹czenia.
-#' @param nr2 numer wiersza w \code{buckets} z pierwszym bucketem do po³¹czenia.
-#' @param new_label label jaki bêdzie nadany po³¹czonym bucketom. W przypadku braku podania, zostanie zatosowany domyœlny.
-#' @return \code{data.frame}.
-#' @author Micha³ Danaj
-#' @export
-polacz_buckety<-function(x, y, buckets, row_idxs, new_label=NULL)
-{
-	row_idxs<-sort(unique(row_idxs));
-	#sprawdzam, czy jest co ³¹czyæ
-	if (length(row_idxs)<=1)
-		return(buckets)
-	#sprawdzam, czy nie wyszliœmy poza zakres
-	if(min(row_idxs)<1 | max(row_idxs)>nrow(buckets)-1) 
-		stop("Numery wierszy s¹ poza zakresem zmiennej 'buckets'");
-	#sprawdzam, czy nie ma ju¿ takiego labela w innych wierszach
-	if (!is.null(new_label) & any( buckets$label[-row_idxs]==new_label))
-		warning("Podana wartoœæ 'new_label' znajduje siê ju¿ w 'buckets' w wierszu innym ni¿ aktualnie ³¹czone wiersze.")
-	for (i in 1:(length(row_idxs)-1)){
-		nr1<-row_idxs[i];
-		nr2<-row_idxs[i+1];
-		#jeœli ³¹czymy dane ci¹g³e
-		if (all((!is.na(buckets$od) & !is.na(buckets$do))[c(nr1,nr1)])){
-			if (nr2-nr1!=1)
-				stop("B³êdnie podane wiersze do po³¹czenia! Przedzia³y powinny byæ do siebie przyleg³e!")
-			#jeœli label nie podany, to go tworzê
-			if (is.null(new_label)){
-				new_label<-strsplit(buckets$label[nr1],',')[[1]][1]
-				new_label<-paste(new_label,strsplit(buckets$label[nr2],',')[[1]][2],sep=',')
-			}
-			#jeszcze przepisujê krañce przedzia³ów i inne wartoœci nie wyliczane w buckety_stat a
-			#wyliczane w buckety_stat2
-			buckets$do[nr1]<-buckets$do[nr2];
-			buckets$srodek[nr1]<-c(buckets$od[nr1]+buckets$do[nr1])/2;
-			buckets$label[nr1]<-new_label;
-			rownames(buckets)[nr1]<-new_label;
-			#usuwam drugi bucket
-			buckets<-buckets[-nr2,];
-			
-		}else{
-			if (is.null(new_label))
-				new_label<-paste(buckets$label[nr1],buckets$label[nr2],sep=',');
-			buckets$label[c(nr1,nr2)]<-new_label;
-			buckets$nr[nr2]<-buckets$nr[nr1];
-		}
-		buckets$fitted<-buckets$label;
-		x_buckets<-przypisz2(x,buckets);
-		buckets_new<-buckety_stat(x_buckets, y)
-		buckets<-cbind(buckets[,c('nr','label','discret','od','srodek','do')], 
-				buckets_new[buckets$label,c('n_good','pct_good','n_bad','pct_bad','n_obs','pct_obs','br','woe','logit')]);
-	}	
-	return(buckets);
-}

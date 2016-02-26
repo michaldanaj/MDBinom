@@ -28,12 +28,19 @@ jest automatyczna.}
 
 \item{breaks}{zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].}
 
+\item{mapping}{zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.}
+
 \item{forceContinous}{wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.}
+
+\item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
+kategoryczne.}
 
 \item{NA_subst}{wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
 bêd¹ przeporwadzone w standardowy sposób. Jeœli jednak wartoœæ \code{NA_subst} zostanie
     dodana do \code{special_val}, zostanie ona potraktowana jako wartoœæ dyskretna.}
+
+\item{span}{Parametr wyg³adzaj¹cy funkcji \code{\link[locfit]{locfit}}.}
 }
 \description{
 Wylicza statystyki i zwraca je w postaci listy.

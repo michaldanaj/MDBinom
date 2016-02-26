@@ -2,40 +2,44 @@
 % Please edit documentation in R/classing_make.R
 \name{buckety_br}
 \alias{buckety_br}
-\title{Podzia³ na przedzia³y. 
-
- @param x  Zmienna, któr¹ bêdziemy dyskretyzowaæ.  
- @param y  Zmienna dwumianowa.  
- @param n  Liczba wynikowych przedzia³ów.  
- @param method  Sposób podzia³u na przedzia³y. Szczegó³y w sekcji Details.  
- @param one.value.action Jeszcze nie dzia³a.
- @param weights Wagi.
- @return  
- Zwraca \code{data.frame}, w którym dla \code{i}-tego wiersza podane s¹ statystyki
- dla \code{i}-tego przedzia³u.
- \item{nr }{Numer przedzia³u.}
- \item{od }{Pocz¹tek przedzia³u.}
- \item{srodek}{Œrodek przedzia³u.}
- \item{mean}{Œrednia z obserwacji w przedziale.}
- \item{do}{Koniec przedzia³u.}
- \item{n_default}{Liczba defaultów.}
- \item{n_obs}{Liczba obserwacji.}
- \item{br}{Bad rate.}
- \item{logit}{Logit.}
- \item{probit}{Probit.}
- \item{var}{Wariancja zmiennej \code{default}.}
- \item{waga}{Waga jako odwrotnoœæ warinacji. Gdy \code{n_default=0} to przyjmuje siê,
-		¿e \code{n_default=0.5}}}
+\title{Dzieli na przedzia³y jedn¹ z dwóch metod i wylicza na nich bad rate.}
 \usage{
 buckety_br(x, y, n, method = c("eq_length", "eq_count"),
   one.value.action = c("none", "combine"), weights = NULL)
 }
-\description{
-Dzieli na przedzia³y jedn¹ z dwóch metod i wylicza na nich bad rate.
+\arguments{
+\item{x}{Zmienna, któr¹ bêdziemy dyskretyzowaæ.}
+
+\item{y}{Zmienna dwumianowa.}
+
+\item{n}{Liczba wynikowych przedzia³ów.}
+
+\item{method}{Sposób podzia³u na przedzia³y. Szczegó³y w sekcji Details.}
+
+\item{one.value.action}{Jeszcze nie dzia³a.}
+
+\item{weights}{Wagi.}
 }
-\details{
+\value{
+Zwraca \code{data.frame}, w którym dla \code{i}-tego wiersza podane s¹ statystyki
+dla \code{i}-tego przedzia³u.
+\item{nr }{Numer przedzia³u.}
+\item{od }{Pocz¹tek przedzia³u.}
+\item{srodek}{Œrodek przedzia³u.}
+\item{mean}{Œrednia z obserwacji w przedziale.}
+\item{do}{Koniec przedzia³u.}
+\item{n_default}{Liczba defaultów.}
+\item{n_obs}{Liczba obserwacji.}
+\item{br}{Bad rate.}
+\item{logit}{Logit.}
+\item{probit}{Probit.}
+\item{var}{Wariancja zmiennej \code{default}.}
+\item{waga}{Waga jako odwrotnoœæ warinacji. Gdy \code{n_default=0} to przyjmuje siê,
+	¿e \code{n_default=0.5}}
+}
+\description{
 Jako ¿e jest to wersja przejœciowa, nie ma ¿adnych detali.
- Mo¿e poza tym, ¿e jeœli nie ma obserwacji w jakimœ bukcecie, to go usuwa.
+Mo¿e poza tym, ¿e jeœli nie ma obserwacji w jakimœ bukcecie, to go usuwa.
 }
 \examples{
 x<-rnorm(1000);

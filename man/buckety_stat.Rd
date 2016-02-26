@@ -7,8 +7,7 @@
 buckety_stat(bucket, default, total=TRUE)
 }
 \arguments{
-\item{bucket}{wektor z identyfikatorami bucketów.
-\code{as.character}, zawieraj¹cy identyfikatory bucketów.}
+\item{bucket}{wektor z identyfikatorami bucketów.}
 
 \item{default}{wektor zmiennych numerycznych.}
 

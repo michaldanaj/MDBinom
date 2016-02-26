@@ -18,11 +18,15 @@
 #'                   jest automatyczna.
 #' @param min_bucket minimalna liczba obserwacji w buckecie, przy dzieleniu drzewem.
 #' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param mapping zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.
 #' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 #'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
+#' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
+#' 					  kategoryczne.
 #' @param NA_subst wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
 #'		bêd¹ przeporwadzone w standardowy sposób. Jeœli jednak wartoœæ \code{NA_subst} zostanie
-#' 		dodana do \code{special_val}, zostanie ona potraktowana jako wartoœæ dyskretna.  
+#' 		dodana do \code{special_val}, zostanie ona potraktowana jako wartoœæ dyskretna.
+#' @param span Parametr wyg³adzaj¹cy funkcji \code{\link[locfit]{locfit}}.  
 #' @author Micha³ Danaj
 #' @export
 univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
@@ -195,11 +199,12 @@ univariate_anal_stats1<-function(x,y, discret_treshold=15,
 
 #' Robi rozk³ad zmiennej po czasie (lub innym podziale)
 #'
-#' Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y}
+#' Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y} oraz \code{esitm}
 #' w podziale na zadane grupy czasowe \code{czas} (lub podzia³ innego typu).
 #' @param x_discr zmienna objaœniaj¹ca.
 #' @param y zmienna odpowiedzi.
 #' @param czas Czas.
+#' @param estim wartoœæ wyestymowana przez model.
 #' @export
 univariate_anal_stats2<-function(x_discr, y, czas, estim){
 	

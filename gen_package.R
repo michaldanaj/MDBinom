@@ -14,8 +14,13 @@ document()
 
 #check(check_dir =".")
 
-setwd('G:\\Michal\\eclipse - java')
-shell('R CMD check  MDBinom', intern=TRUE)
 
 install('MDBinom')
+
+setwd('G:\\Michal\\eclipse - java\\MDbinom')
 build(pkg = 'MDBinom', path='.', binary = TRUE)
+
+
+
+setwd('G:\\Michal\\eclipse - java')
+shell('R CMD check  MDBinom', intern=TRUE)

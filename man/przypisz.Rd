@@ -6,29 +6,30 @@
 \usage{
 przypisz(x, bucket, interpol = FALSE)
 }
+\arguments{
+\item{x}{Wektor zmiennych numerycznych.}
+
+\item{bucket}{\code{data.frame} z kolumnami:
+\itemize{
+        \item od. Dolny kraniec przedzia³u.
+        \item do Górny kreniec przedzia³u.
+        \item srodek Œrodek przedzia³u.
+        \item fitted Wartoœæ przypisana do danego przedzia³u.
+    }}
+
+\item{interpol}{Czy przeprowadziæ interpolacjê?}
+}
 \value{
 Wektor wartoœci.
 }
 \description{
 Znajduje przedzia³ opisany w \code{bucket}, do którego nale¿y \code{x} i 
- przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
+przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
 }
 \details{
 Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹ 
- œrodki przedzia³ów, pomiêdzy którymi le¿y \code{x}, a wartoœciami
-  \code{bucket$fitted} odpowiadaj¹ce tym œrodkom.
-
-@title Przypisuje wartoœæ z przedzia³u
-
-@param x Wektor zmiennych numerycznych. 
-  @param bucket \code{data.frame} z kolumnami:
-	\itemize{
-			\item od. Dolny kraniec przedzia³u.
-			\item do Górny kreniec przedzia³u.
-			\item srodek Œrodek przedzia³u.
-			\item fitted Wartoœæ przypisana do danego przedzia³u.
-		}
-  @param interpol Czy przeprowadziæ interpolacjê?
+œrodki przedzia³ów, pomiêdzy którymi le¿y \code{x}, a wartoœciami
+\code{bucket$fitted} odpowiadaj¹ce tym œrodkom.
 }
 \examples{
 		n<-1000;

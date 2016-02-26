@@ -14,7 +14,7 @@ univariate_anal_stats4(dane, mapowanie, czas = lastDay(dane$reportingdate,
 
 \item{czas}{czas}
 
-\item{...}{}
+\item{...}{dodatkowe parametry graficzne.}
 }
 \value{
 

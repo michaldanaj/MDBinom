@@ -7,7 +7,7 @@
 woe(br)
 }
 \arguments{
-\item{br}{}
+\item{br}{wartoœæ prawdopodobieñstwa.}
 }
 \value{
 

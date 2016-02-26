@@ -10,7 +10,7 @@
 #' LazyLoad: \tab yes\cr
 #' }
 #'
-#' Ró¿ne dzia³ania na zmiennych dwumianowych
+#' Ró¿ne dzia³ania na zmiennych dwumianowych.
 #'
 #' @name MDBinom-package	
 #' @aliases MDBinom
@@ -211,36 +211,36 @@ AR_quick<-function(bad, obs)
 #TODO zaktualizowaæ dokkumentacjê!
 #' Liczy Accuracy Ratio (GINI)
 #'
-#'  Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
-#'  informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
-#'  jest wartoœæ AR.
+#' Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
+#' informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
+#' jest wartoœæ AR.
 #'
-#'  @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}
-#'  @param def Wektor wartoœci \code{\{0,1\}} 
-#'  @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
-#'	@param return.table czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
+#' @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}
+#' @param def Wektor wartoœci \code{\{0,1\}} 
+#' @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
+#' @param return.table czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
 #'         wartoœci score
-#'  @param sort.order dla wartoœci równej "br", zamiast po \code{score}, 
+#' @param sort.order dla wartoœci równej "br", zamiast po \code{score}, 
 #'				 sortuje po wartoœci \code{br}. Mo¿e to byæ przydatne przy zmiennych dyskretnych.
-#'  @param label opis wyœwietlony w legendzie.
-#'  @param lgd_adjusted W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
+#' @param label opis wyœwietlony w legendzie.
+#' @param lgd_adjusted W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
 #' 			mniejsze ni¿ dla modelu PD i nie da siê go wyliczyæ analogicznym wzorem. Dlatego
 #' dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona u¿yta jako mianownik do
 #' wyliczenia AR. 
-#'  @param ... dodatkowe parametry.
-#'	@return Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
-#'	kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
-#'	Ka¿dy element listy ma postaæ:
-#'	  \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
-#'	  \item{bad}{Liczba bad-ów w przedziale.}
-#'	  \item{obs}{Liczba obserwacji w przedziale.}
-#'	  \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
-#'	  \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
-#'										wszystkich bad-ów.}
-#'	  \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
-#'										wszystkich good-ów.}
-#'	  \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
-#'	  \item{AR}{Wyliczone Accuracy Ratio.}							
+#' @param ... dodatkowe parametry.
+#'@return Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
+#'kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
+#'Ka¿dy element listy ma postaæ:
+#'  \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
+#'  \item{bad}{Liczba bad-ów w przedziale.}
+#'  \item{obs}{Liczba obserwacji w przedziale.}
+#'  \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
+#'  \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
+#'									wszystkich bad-ów.}
+#'  \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
+#'									wszystkich good-ów.}
+#'  \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
+#'  \item{AR}{Wyliczone Accuracy Ratio.}							
 #'
 #' @author Micha³ Danaj
 #' @export
@@ -398,10 +398,10 @@ print.AR<-function(x){
 #' @param x obiekt klasy \code{AR}.
 #' @method HTML AR
 HTML.AR<-function(x){
-	HTML::HTML(x$label);
-	HTML::HTML(x$stat);
+	R2HTML::HTML(x$label);
+	R2HTML::HTML(x$stat);
 	if (!is.null(x$table))
-		HTML::HTML(x$table);	
+		R2HTML::HTML(x$table);	
 }
 
 #' Zwraca statystyki przechowywane w obiekcie \code{\link{AR}}
