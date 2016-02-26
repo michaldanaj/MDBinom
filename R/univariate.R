@@ -133,70 +133,6 @@ univariate_stats_new_data<-function(buckets,x,y,czas,proby=rep(TRUE, length(y)))
 }
 
 
-
-#' Dyskretyzuje zmienn¹ i wylicza na niej statystyki
-#'
-#' W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discret_treshold}
-#' lub zmienna nie jest zmienn¹ numeryczn¹,
-#' uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
-#' wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
-#' @param discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
-#'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
-#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
-#'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
-#'                   jest automatyczna.
-#' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
-#' @seealso \code{\link{buckety_stat}}.
-#' @export
-univariate_anal_stats1<-function(x,y, discret_treshold=15,
-		special_val=NULL, max_gleb=3, min_bucket=200, interactive=FALSE,
-		breaks=NULL, mapping=NULL, forceContinous=FALSE,...){
-	
-	if (length(x)!=length(y))
-		stop("paramet ry 'x' i 'y' maj¹ ró¿ne d³ugoœci!");
-	
-	#Mimo, ¿e przygotowywya³em funkcjê do obs³ugi null-i, to rezygnujê z tego
-	#ze wzglêdów bezpieczeñstwa.
-	if (any(is.na(y)))
-		stop ("W 'y' nie mo¿e byæ NA!");
-	
-	## jeœli jest to ju¿ zmienna dyskretna;
-	
-	## jeœli jest to zmienna dyskretna
-	if ((length(unique(x))<=discret_treshold || !is.numeric(x))&&
-			is.null(breaks) && !forceContinous){
-		discret<-buckety_stat(x, y, total=TRUE);
-		#uzupe³niam statystyki
-		discret$od<-NA;
-		discret$do<-NA;
-		discret$srodek<-NA;
-		
-		nam<-rownames(discret)
-		if (is.numeric(x)){
-			nam[length(nam)]<-NA
-			discret$discret<-as.numeric(nam)
-		}
-		else{
-			nam[length(nam)]<-"<TOTAL>";
-			discret$discret<-nam;
-		}
-		
-		discret<-discret[,c('nr','label','discret', 'od','srodek','do','n_good','pct_good','n_bad','pct_bad','n_obs','pct_obs',
-						'br','woe','logit')]
-	}
-	## jeœli jest to zmienna ci¹g³a
-	else{
-		discret<-discretization(x,y, special_val=special_val,
-				max_gleb=max_gleb,min_bucket=min_bucket,breaks=breaks,
-				interactive=interactive,...);
-	}
-	
-	discret$label<-rownames(discret);
-	return(discret);
-}
-
 #' Robi rozk³ad zmiennej po czasie (lub innym podziale)
 #'
 #' Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y} oraz \code{esitm}
@@ -291,7 +227,7 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 #'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
 #' @seealso \code{\link{buckety_stat}}.
 #' @export
-univariate_anal_stats1b<-function(x,y, 
+univariate_anal_stats1<-function(x,y, 
 		locfit=FALSE, 
 		discret_treshold=15,
 		special_val=numeric_var_treatment.params$spcial_val, 
