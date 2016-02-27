@@ -4,13 +4,27 @@
 \alias{univariate_anal_stats1}
 \title{Dyskretyzuje zmienn¹ i wylicza na niej statystyki}
 \usage{
-univariate_anal_stats1(x, y, discret_treshold = 15, special_val = NULL,
-  max_gleb = 3, min_bucket = 200, interactive = FALSE, breaks = NULL,
-  mapping = NULL, forceContinous = FALSE, ...)
+univariate_anal_stats1(x, y, locfit = FALSE, discret_treshold = 15,
+  special_val = numeric_var_treatment.params$spcial_val, max_gleb = 3,
+  min_bucket = 200, interactive = FALSE, breaks = NULL, mapping = NULL,
+  forceContinous = FALSE, span = 0.9, ...)
 }
 \arguments{
+\item{x}{zmienna, po której procedura bêdzie sortowaæ.}
+
+\item{y}{zmienna odpowiedzi.}
+
+\item{locfit}{Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}.}
+
 \item{discret_treshold}{jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.}
+
+\item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
+kategoryczne.}
+
+\item{max_gleb}{Maksymalna g³êbokoœc do której budujemy drzewo}
+
+\item{min_bucket}{Minimalna wielkoœæ liœcia}
 
 \item{interactive}{TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
@@ -18,8 +32,14 @@ jest automatyczna.}
 
 \item{breaks}{zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].}
 
+\item{mapping}{zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.}
+
 \item{forceContinous}{wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.}
+
+\item{span}{Parametr wyg³adzaj¹cy funkcji \code{locit}.}
+
+\item{...}{dodatkowe parametry graficzne.}
 }
 \description{
 W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discret_treshold}

@@ -42,7 +42,7 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 	
 	
 	# dyskretyzujê zmienn¹ i wyliczam pierwsze statystyki
-	stat1<-univariate_anal_stats1b(x,y, special_val=special_val,
+	stat1<-univariate_anal_stats1(x,y, special_val=special_val,
 			max_gleb=3,plot=FALSE, min_bucket=min_bucket,
 			interactive=interactive, breaks=breaks, mapping=mapping,
 			forceContinous=forceContinous, span=span);
@@ -217,14 +217,24 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 #' lub zmienna nie jest zmienn¹ numeryczn¹,
 #' uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
 #' wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
+#' @param x zmienna, po której procedura bêdzie sortowaæ.
+#' @param y zmienna odpowiedzi.
+#' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}. 
 #' @param discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 #'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
+#' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
+#' 					  kategoryczne.
+#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @param min_bucket Minimalna wielkoœæ liœcia
 #' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
 #'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
 #' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param mapping zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.
 #' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
 #'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
+#' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
+#' @param ...  dodatkowe parametry graficzne.
 #' @seealso \code{\link{buckety_stat}}.
 #' @export
 univariate_anal_stats1<-function(x,y, 

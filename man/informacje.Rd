@@ -15,7 +15,7 @@ informacje(score, default, buckets = 20, span = 0.8, main = "",
 
 \item{buckets}{Sugerowana liczba bucketów.}
 
-\item{span}{Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}}
+\item{span}{Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}}
 
 \item{main}{Tytu³ wykresu.}
 

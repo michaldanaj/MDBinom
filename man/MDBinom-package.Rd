@@ -18,7 +18,7 @@ License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
 
-Ró¿ne dzia³ania na zmiennych dwumianowych
+Ró¿ne dzia³ania na zmiennych dwumianowych.
 }
 \author{
 Micha³ Danaj \email{michal.danaj@gmail.com}

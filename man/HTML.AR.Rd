@@ -4,7 +4,7 @@
 \alias{HTML.AR}
 \title{Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}}
 \usage{
-\method{HTML}{AR}(x)
+HTML.AR(x)
 }
 \arguments{
 \item{x}{obiekt klasy \code{AR}.}

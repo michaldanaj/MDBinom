@@ -383,7 +383,6 @@ AR<-function(score, def, plot=FALSE, return.table=FALSE,
 #' 
 #' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
-#' @method print AR
 #' @export
 print.AR<-function(x){
 	print(x$label);
@@ -396,7 +395,6 @@ print.AR<-function(x){
 #' 
 #' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
-#' @method HTML AR
 HTML.AR<-function(x){
 	R2HTML::HTML(x$label);
 	R2HTML::HTML(x$stat);
@@ -422,7 +420,6 @@ getStats.AR<-function(x){
 #' Przekszta³ca obiekt na \code{\link{data.frame}}
 #' @param x obiekt klasy \code{AR}.
 #' @title Przekszta³ca obiekt na data.frame 
-#' @method as.data.frame AR
 #' @export   
 as.data.frame.AR<-function(x){
  s<-t(as.data.frame(x$stats))
@@ -440,7 +437,7 @@ as.data.frame.AR<-function(x){
 #' @param score Wektor ze zmienn¹ numeryczn¹. 
 #' @param default Wektor ze zmienn¹ dwumianow¹. 
 #' @param buckets Sugerowana liczba bucketów. 
-#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}
+#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}
 #' @param main Tytu³ wykresu. 
 #' @param hist_col Kolor histogramu  
 #' @param ylab Label
@@ -528,7 +525,7 @@ informacje<-function(score, default, buckets=20, span=0.8, main="", hist_col="bl
 #' @param default default.
 #' @param estym wartoœci wyestymowane przez model.
 #' @param buckets Sugerowana liczba bucketów. 
-#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}
+#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}
 #' @param hist_col Kolor histogramu 
 #' @param ylab Label
 #' @param xlab Label
@@ -659,8 +656,8 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 #' @param default Wektor zmiennej dwumianowej. 
 #' @param buckets Liczba bucketów, na ile nele¿y podzieliæ \code{score}. 
 #' @param wytnij Ile krañcowych obserwacji wyci¹æ. 
-#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link{locfit}}
-#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link{locfit}} 
+#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}
+#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}} 
 #' @param plot Czy rysowaæ wykres. 
 #' @param target jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
 #' @param new Czy rysowaæ wykres od nowa. 

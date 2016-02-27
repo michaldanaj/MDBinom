@@ -35,6 +35,6 @@ Po wykonaniu zmiany wyœwietlane s¹ statystyki po bucketach oraz statystyka AR.
 Micha³ Danaj
 }
 \seealso{
-\code{\link{drzewo}}, \code{\link{quick_AR}},  \code{\link{buckety_stat2}}.
+\code{\link{drzewo}}, \code{\link{AR_quick}},  \code{\link{buckety_stat2}}.
 }
 

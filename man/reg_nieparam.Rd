@@ -19,9 +19,9 @@ reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
 
 \item{wytnij}{Ile krañcowych obserwacji wyci¹æ.}
 
-\item{span}{Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link{locfit}}}
+\item{span}{Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}}
 
-\item{degree}{Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link{locfit}}}
+\item{degree}{Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}}
 
 \item{plot}{Czy rysowaæ wykres.}
 
