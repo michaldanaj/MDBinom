@@ -75,8 +75,10 @@ editVariablesRole<-function(zmienne_rola, pattern=NULL, gen_code=TRUE){
 	nazwy_przecinek<-paste("c('", paste(nazwy_zmienionych, collapse = "','"), "')", sep="")
 	wartosci_przecinek<-paste("c('", paste(nowe_wartosci, collapse = "','"), "')", sep="")
 	
-	if (gen_code==TRUE)
-		paste(deparse(substitute(zmienne_rola)),"[",nazwy_przecinek,",'rola']<-", wartosci_przecinek, sep="")
+	if (gen_code==TRUE){
+		kod<-paste(deparse(substitute(zmienne_rola)),"[",nazwy_przecinek,",'rola']<-", wartosci_przecinek, sep="")
+		cat(kod)
+	}
 	else
 		wynik
 }
