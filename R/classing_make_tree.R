@@ -12,6 +12,7 @@
 #' W parametrze \code{x} ani \code{y} nie mo¿e byæ NULLi. Mo¿na je jakoœ zakodowaæ.
 #' @param x zmienna ci¹g³a.
 #' @param y zmienna celu (PD, LGD).
+#' @param NA_substit wartoœæ specjalna wstawiona za brak danych.
 #' @param special_val wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
 #'                   osobne klasy. Wartoœæ tak¹ jest równie¿ \code{NA}, automatycznie
 #'                   uwzglêdniana jako osobna klasa.
@@ -28,7 +29,8 @@
 #' @author Micha³ Danaj
 #' @export
 numeric_var_treatment<-function(x, y, 
-		special_val=numeric_var_treatment.params$spcial_val,
+		special_val=numeric_var_treatment.params$special_val,
+		NA_substit=numeric_var_treatment.params$NA_substit,
 		min_bucket=numeric_var_treatment.params$min_bucket, 
 		max_gleb=numeric_var_treatment.params$max_gleb,
 		interactive=FALSE, 
@@ -45,6 +47,7 @@ numeric_var_treatment<-function(x, y,
 		stop ("discretization: W 'x' ani 'y' nie mo¿e byæ NA!");
 	
 	# Wartoœci specjalne
+	special_val <- unique(c(special_val, NA_substit))
 	special_idx<-is.na(x)|x %in% special_val;
 	special_val<-unique(x[special_idx & !is.na(x)]);
 	#czy s¹ NA
