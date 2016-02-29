@@ -9,12 +9,22 @@ NA_substit=-.Machine$integer.max;
 special_val=c(-99999999, -10000001, -10000000, -9999999,  -9999998,  -9999997, -9999996);
 
 
+#' Parametry
+#'
+#' Parametryzacja funkcji z pakietu.
+#'
+#' @format Wektor o polach:
+#' \describe{
+#'   \item{discret_threshold}{Przy jakiej wartoœci unikalnych wartoœci zmienna numeryczna bêdzie traktowana jako dyskretna.}
+#'   \item{special_val}{Kody ró¿nych wartoœci specjalnych. Bêd¹ one traktowane jako wartoœci dyskretne, mimo ¿e pozosta³a czêœæ zmiennej mo¿e byæ ci¹g³a.}
+#' }
+#' @export 
 numeric_var_treatment.params<-list(
 		#przy jakiej wartoœci unikalnych wartoœci zmiennej ma j¹ traktowaæ jako dyskretn¹
 		discret_threshold=15,
 		
 		#kody ró¿nych wartoœci specjalnych. Bêd¹ one traktowane osobno, jako wartoœci dyskretne
-		spcial_val=-.Machine$integer.max,
+		special_val=-.Machine$integer.max,
 		
 		#wartoœæ do zast¹pienia missing value
 		NA_substit=-.Machine$integer.max,
