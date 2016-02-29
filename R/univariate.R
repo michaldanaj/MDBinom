@@ -254,8 +254,8 @@ univariate_anal_stats1<-function(x,y,
 	
 	#Mimo, ¿e przygotowywya³em funkcjê do obs³ugi null-i, to rezygnujê z tego
 	#ze wzglêdów bezpieczeñstwa.
-	if (any(is.na(y)))
-		stop ("W 'y' nie mo¿e byæ NA!");
+	#if (any(is.na(y)))
+	#	stop ("W 'y' nie mo¿e byæ NA!");
 	
 	
 	## jeœli s¹ jakieœ nulle w x, to odpowiednio siê nimi zajmujê
