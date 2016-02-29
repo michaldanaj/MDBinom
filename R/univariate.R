@@ -240,6 +240,7 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 univariate_anal_stats1<-function(x,y, 
 		locfit=FALSE, 
 		discret_treshold=15,
+		NA_substit = numeric_var_treatment.params$NA_substit,
 		special_val=numeric_var_treatment.params$spcial_val, 
 		max_gleb=3, 
 		min_bucket=200, 
@@ -268,7 +269,7 @@ univariate_anal_stats1<-function(x,y,
 			#TODO zobaczyæ, czy y ma dwie wartoœci i jest to 0 i 1
 			x<-missing_bin_target(x, y)
 		else
-			x[nulle]<-numeric_var_treatment.params$NA_substit;
+			x[nulle]<-NA_substit;
 		
 	}
 	
@@ -318,7 +319,7 @@ univariate_anal_stats1<-function(x,y,
 	}
 	## jeœli jest to zmienna ci¹g³a
 	else{
-		discret<-numeric_var_treatment(x,y, special_val=special_val,
+		discret<-numeric_var_treatment(x,y, special_val=special_val, NA_substit = NA_substit,
 				max_gleb=max_gleb,min_bucket=min_bucket,breaks=breaks,
 				interactive=interactive, locfit=locfit, span=span, ...);
 	}
