@@ -339,7 +339,7 @@ univariate_anal_stats1<-function(x,y,
 #' @param ...  dodatkowe parametry graficzne.
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 univariate_anal_stats4<-function(dane, mapowanie, czas=lastDay(dane$reportingdate, unit = "quater"),...){
 	dyskretne<-mapuj(dane,mapowanie)

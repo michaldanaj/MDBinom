@@ -23,6 +23,6 @@ univariate_anal_stats4(dane, mapowanie, czas = lastDay(dane$reportingdate,
 Nie wiem co to robi
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 
