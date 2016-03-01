@@ -8,14 +8,15 @@
 #' Generuje raport
 #' 
 #' Generuje raport
-#' @param wyniki - lista z wynikami dyskretyzacji itp, z funkcji \code{\link{univariate_anal_stats}}
-#' @param dir - katalog z raportem, jako pe³na bezwzglêdna œcie¿ka! Katalog musi byæ stworzony. 
-#' @param kolejnosc - kolejnoœæ wg której zmienne maj¹ byæ wyœwietlone.
+#' @param wyniki lista z wynikami dyskretyzacji itp, z funkcji \code{\link{univariate_anal_stats}}
+#' @param dir katalog z raportem, jako pe³na bezwzglêdna œcie¿ka! Katalog musi byæ stworzony. Domyœlnie \code{\link{tempdir()}}. 
+#' @param kolejnosc kolejnoœæ wg której zmienne maj¹ byæ wyœwietlone.
+#' @param show czy na koniec wyœwietliæ raport w przegl¹darce. Domyœlnie \code{TRUE}. 
 #' @param scale Skala osi OY.   
 #' 
 #' @author Micha³ Danaj
 #' @export
-genRaport<-function(wyniki, dir, kolejnosc=1:length(wyniki), scale=c(0,0.2)){
+genRaport<-function(wyniki, dir=tempdir(), kolejnosc=1:length(wyniki), show=TRUE, scale=c(0,0.2)){
 	
 	makeCSSFile(dir)
 	
@@ -25,10 +26,13 @@ genRaport<-function(wyniki, dir, kolejnosc=1:length(wyniki), scale=c(0,0.2)){
 	
 	
 	plik_main<-R2HTML::HTMLInitFile(dir, 'univariate_main', CSSFile='R2HTML MD.css');
+	 
 	
 	genRaportBody(wyniki, kolejnosc, dir, plik_main, scale)
 	genRaportMenu(wyniki, dir)
 	
+	if(show)
+		browseURL(paste(dir, 'univariate.html', sep='/'))
 }
 
 
@@ -63,14 +67,14 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		R2HTML::HTML.title("Point in Time or Through the Cycle", HR=3);
 		if (!is.null(wynik$rozklady$avg_t_tbl)){
 			plot(wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)], main="PIT/TTC",
-					ylab="Mean LGD", xlab="Date");
+					ylab="Mean target", xlab="Date");
 			points(wynik$rozklady$estim, col="green")
-			R2HTML::HTMLplot(Caption = "Does changes in variable distribution follow changes of portfolio LGD?",
+			R2HTML::HTMLplot(Caption = "Does changes in variable distribution follow changes of target over time?",
 					file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'cycle'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 400, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			R2HTML::HTML(    t(data.frame("Portfolio LGD" = wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)],
-									"Estimated LGD" = wynik$rozklady$estim))
+			R2HTML::HTML(    t(data.frame("Observed target" = wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)],
+									"Estimated target" = wynik$rozklady$estim))
 			);
 		}
 		
@@ -85,11 +89,11 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		#ciagle<-nchar(wynik$dyskretyzacja$discret)==0
 		#drzewo_plot(wynik$dyskretyzacja[ciagle,], xlab=nazwa_zmiennej, ylab="Mean LGD",
 		#		main=paste(nazwa_zmiennej,"discretization"));
-		drzewo_plot(wynik$dyskretyzacja, xlab=nazwa_zmiennej, ylab="Mean LGD",
+		drzewo_plot(wynik$dyskretyzacja, xlab=nazwa_zmiennej, ylab="Mean target",
 				main=paste(nazwa_zmiennej,"discretization"));
 		ile_row<-nrow(wynik$dyskretyzacja);
 		b<-barplot(wynik$dyskretyzacja$pct_obs[-ile_row], names.arg=rownames(wynik$dyskretyzacja)[-ile_row], xlab=nazwa_zmiennej,
-				ylab='Distribution',main="Distribution with LGD");
+				ylab='Distribution',main="Distribution with target");
 		par(usr=c(par()$usr[1:2], scale))
 		lines(b, wynik$dyskretyzacja$br[-ile_row],type="o", col="red", lty="solid", pch="x")
 		axis(4)
@@ -121,21 +125,21 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 			R2HTML::HTML(wynik$rozklady$obs_all_tbl, caption="Number of observations");
 			R2HTML::HTML(wynik$rozklady$pct_all_tbl, caption="% share at given date");
 			
-			#     œredni LGD    #
-			R2HTML::HTML.title("Mean LGD", HR=3);
+			#     œredni target    #
+			R2HTML::HTML.title("Mean target", HR=3);
 			do_wykresu<-reshape::melt(wynik$rozklady$avg_t_tbl)
 			do_wykresu<-do_wykresu[do_wykresu$X1!='TOTAL' & do_wykresu$X2!='TOTAL',];
 			X1_order<-ordered(do_wykresu$X1, levels=rownames(wynik$rozklady$pct_all_tbl));
-			print(lattice::xyplot(value ~ X2|X1_order , data=do_wykresu, type='b', xlab="Date", ylab="Mean LGD", main=nazwa_zmiennej,
+			print(lattice::xyplot(value ~ X2|X1_order , data=do_wykresu, type='b', xlab="Date", ylab="Mean target", main=nazwa_zmiennej,
 							strip=lattice::strip.custom(bg='green')));
 			
-			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'LGD by bucket'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
+			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'target by bucket'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
-			print(lattice::xyplot(value ~ X1_order |X2 , data=do_wykresu, type='b', xlab="Bucket", ylab="LGD", main=nazwa_zmiennej));
-			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'LGD by time'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
+			print(lattice::xyplot(value ~ X1_order |X2 , data=do_wykresu, type='b', xlab="Bucket", ylab="target", main=nazwa_zmiennej));
+			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'target over time'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			R2HTML::HTML(wynik$rozklady$avg_t_tbl, caption="Mean LGD");
+			R2HTML::HTML(wynik$rozklady$avg_t_tbl, caption="Mean target");
 			
 			dev.off();
 		}

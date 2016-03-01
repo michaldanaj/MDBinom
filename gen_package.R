@@ -24,3 +24,8 @@ build(pkg = 'MDBinom', path='.', binary = TRUE)
 
 setwd('G:\\Michal\\eclipse - java')
 shell('R CMD check  MDBinom', intern=TRUE)
+shell('R CMD INSTALL --build MDBinom', intern=TRUE)
+
+
+
+

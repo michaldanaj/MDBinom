@@ -5,6 +5,7 @@
 \title{Dyskretyzuje zmienn¹ i wylicza na niej statystyki}
 \usage{
 univariate_anal_stats1(x, y, locfit = FALSE, discret_treshold = 15,
+  NA_substit = numeric_var_treatment.params$NA_substit,
   special_val = numeric_var_treatment.params$spcial_val, max_gleb = 3,
   min_bucket = 200, interactive = FALSE, breaks = NULL, mapping = NULL,
   forceContinous = FALSE, span = 0.9, ...)
@@ -18,6 +19,8 @@ univariate_anal_stats1(x, y, locfit = FALSE, discret_treshold = 15,
 
 \item{discret_treshold}{jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.}
+
+\item{NA_substit}{wartoœæ, któr¹ zast¹piæ brak danych}
 
 \item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 kategoryczne.}

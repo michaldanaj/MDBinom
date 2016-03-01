@@ -5,7 +5,8 @@
 \title{Dyskretyzuje zmienn¹ ciag³¹ drzewkiem w oparciu o zmienn¹ odpowiedzi}
 \usage{
 numeric_var_treatment(x, y,
-  special_val = numeric_var_treatment.params$spcial_val,
+  special_val = numeric_var_treatment.params$special_val,
+  NA_substit = numeric_var_treatment.params$NA_substit,
   min_bucket = numeric_var_treatment.params$min_bucket,
   max_gleb = numeric_var_treatment.params$max_gleb, interactive = FALSE,
   locfit = FALSE, breaks = NULL, span = 0.9, ...)
@@ -18,6 +19,8 @@ numeric_var_treatment(x, y,
 \item{special_val}{wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
 osobne klasy. Wartoœæ tak¹ jest równie¿ \code{NA}, automatycznie
 uwzglêdniana jako osobna klasa.}
+
+\item{NA_substit}{wartoœæ specjalna wstawiona za brak danych.}
 
 \item{min_bucket}{Minimalna wielkoœæ liœcia}
 

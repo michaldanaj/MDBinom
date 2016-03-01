@@ -4,14 +4,17 @@
 \alias{genRaport}
 \title{Generuje raport}
 \usage{
-genRaport(wyniki, dir, kolejnosc = 1:length(wyniki), scale = c(0, 0.2))
+genRaport(wyniki, dir = tempdir(), kolejnosc = 1:length(wyniki),
+  show = TRUE, scale = c(0, 0.2))
 }
 \arguments{
-\item{wyniki}{- lista z wynikami dyskretyzacji itp, z funkcji \code{\link{univariate_anal_stats}}}
+\item{wyniki}{lista z wynikami dyskretyzacji itp, z funkcji \code{\link{univariate_anal_stats}}}
 
-\item{dir}{- katalog z raportem, jako pe³na bezwzglêdna œcie¿ka! Katalog musi byæ stworzony.}
+\item{dir}{katalog z raportem, jako pe³na bezwzglêdna œcie¿ka! Katalog musi byæ stworzony. Domyœlnie \code{\link{tempdir()}}.}
 
-\item{kolejnosc}{- kolejnoœæ wg której zmienne maj¹ byæ wyœwietlone.}
+\item{kolejnosc}{kolejnoœæ wg której zmienne maj¹ byæ wyœwietlone.}
+
+\item{show}{czy na koniec wyœwietliæ raport w przegl¹darce. Domyœlnie \code{TRUE}.}
 
 \item{scale}{Skala osi OY.}
 }

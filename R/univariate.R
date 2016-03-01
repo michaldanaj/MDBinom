@@ -222,6 +222,7 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 #' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}. 
 #' @param discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 #'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
+#' @param NA_substit wartoœæ, któr¹ zast¹piæ brak danych
 #' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 #' 					  kategoryczne.
 #' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo

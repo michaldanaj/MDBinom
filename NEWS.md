@@ -1,3 +1,5 @@
+# v.5.0.0.9001 2016-02-29
+Dużo małych rzeczy.
 
 # v.5.0.0.9000 2016-02-24
 Przenoszenie funkcji z pliku "funkcje do analiz.r"
