@@ -1,3 +1,9 @@
+# v.5.0.0.9002 2016-03-09
+
+* Dodanie funkcji univariate_loop 
+* Obsłużenie zbyt dużej liczby poziomów zmiennej kategorycznej
+* inne pomniejsze rzeczy
+
 # v.5.0.0.9002 2016-03-01
 Dodane funkcje do generowania kodu SQL.
 
