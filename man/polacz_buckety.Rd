@@ -23,7 +23,7 @@ polacz_buckety(x, y, buckets, row_idxs, new_label = NULL)
 \description{
 £¹czy buckety. W przypadku bucketów z przedzia³ami zmiennej ci¹g³ej, mo¿liwe jest 
 po³¹czenie tylko
-przedzia³ów przlegaj¹cych do siebie. Dla nowo powsta³ych bucketów wylicza statystyki. 
+przedzia³ów przylegaj¹cych do siebie. Dla nowo powsta³ych bucketów wylicza statystyki. 
 W przypadku ³¹czenia przedzia³ów zmiennej ci¹g³ej, wiersze z tymi bucketami zostan¹ ze sob¹
 po³¹czone i powstanie \code{data.frame} z liczb¹ wierszy o jeden mniejsz¹ ni¿ w \code{bucket}.
 Przy ³¹czeniu bucketów dyskretnych lub dyskretnego i ci¹g³ego, wiersze nie zostan¹ usuniête. 

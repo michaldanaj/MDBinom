@@ -4,7 +4,7 @@
 \alias{plot_AR}
 \title{Rysuje krzywe ROC i CAP}
 \usage{
-plot_AR(ar, plot_type = c("ROC", "CAP"), adjusted_AR = FALSE)
+plot_AR(ar, plot_type = c("ROC", "CAP"), adjusted_AR = FALSE, ...)
 }
 \arguments{
 \item{ar}{Obiekt klasy XYZ.}

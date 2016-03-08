@@ -39,6 +39,9 @@ univariate_loop<-function(x_df
 	if (!is.null(vsub_rola))
 		vsub_bool <- vsub_rola=='explanatory'
 	
+	if (!is.null(vsub_list))
+		vsub_bool <- names(x_df) %in% vsub_list
+		
 	wyniki<-list()
 	
 	for (zmienna in zmienne_names)
@@ -51,11 +54,10 @@ univariate_loop<-function(x_df
 		
 		x<-x_df[,i]
 		
+		print ('                                                                              ')
 		print ('------------------------------------------------------------------------------')
-		print ('------------------------------------------------------------------------------')
-		print ('------------------------------------------------------------------------------')
-		print(i)
-		print(zmienna)
+		print ('                                                                              ')
+		print(paste(i,"/",length(zmienne_names),": ",zmienna))
 		
 		
 		wyniki[[zmienna]]<-univariate_anal_stats(x, y,

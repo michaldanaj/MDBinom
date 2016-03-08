@@ -20,7 +20,7 @@
 #' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
 #' @param mapping zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.
 #' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
+#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.
 #' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 #' 					  kategoryczne.
 #' @param NA_subst wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
@@ -37,8 +37,8 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 		span=0.9){
 	
 	# zamieniam braki danych na liczbê.
-	if (is.numeric(x) & !is.null(NA_subst))
-		x[is.na(x)]<-NA_subst;
+	#if (is.numeric(x) & !is.null(NA_subst))
+	#	x[is.na(x)]<-NA_subst;
 	
 	
 	# dyskretyzujê zmienn¹ i wyliczam pierwsze statystyki
@@ -51,7 +51,7 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 	stat3<-NULL;
 	#Dalsze statystyki robiê pod warunkiem, ¿e jest wiêcej ni¿ jedna wartoœæ dyskretna
 	#(W stat1 jest te¿ <TOTAL>, dlatego 2)
-	if (nrow(stat1)>2){
+	if (typeof(stat1)!="character"){
 		
 		# przypisujê nazwê bucketu
 		stat1$fitted<-stat1$label;
@@ -65,8 +65,8 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 		stat2<-univariate_anal_stats2(x_discr, y, czas, BR_discr);
 		
 		# wyliczam trzecie statystyki (GINI) po zadanych próbach i czasie
-		
 		stat3<-univariate_anal_stats3(score=-BR_discr, y, czas, proby);
+		
 	}
 	return(list(dyskretyzacja=stat1, rozklady=stat2, dyskryminacja=stat3));
 }
@@ -213,15 +213,17 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 
 #' Dyskretyzuje zmienn¹ i wylicza na niej statystyki
 #'
-#' W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discret_treshold}
+#' W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discrete_threshold}
 #' lub zmienna nie jest zmienn¹ numeryczn¹,
 #' uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
 #' wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
 #' @param x zmienna, po której procedura bêdzie sortowaæ.
 #' @param y zmienna odpowiedzi.
 #' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}. 
-#' @param discret_treshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
+#' @param discrete_threshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 #'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
+#' @param no_stats_threshold liczba unikalnych wartoœci zmiennej kategorycznej, powy¿ej której nie s¹ generowane
+#' 		  statystyki. W przypadku przekroczenia, zwracany jest komunikat "Too many categorical levels".
 #' @param NA_substit wartoœæ, któr¹ zast¹piæ brak danych
 #' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 #' 					  kategoryczne.
@@ -233,16 +235,17 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 #' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
 #' @param mapping zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.
 #' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.
+#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.
 #' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
 #' @param ...  dodatkowe parametry graficzne.
 #' @seealso \code{\link{buckety_stat}}.
 #' @export
 univariate_anal_stats1<-function(x,y, 
 		locfit=FALSE, 
-		discret_treshold=15,
+		discrete_threshold=numeric_var_treatment.params$discrete_threshold,
 		NA_substit = numeric_var_treatment.params$NA_substit,
-		special_val=numeric_var_treatment.params$spcial_val, 
+		special_val=numeric_var_treatment.params$special_val, 
+		no_stats_threshold=numeric_var_treatment.params$no_stats_threshold,
 		max_gleb=3, 
 		min_bucket=200, 
 		interactive=FALSE,
@@ -281,7 +284,7 @@ univariate_anal_stats1<-function(x,y,
 	
 	
 	## jeœli jest to zmienna dyskretna lub mapowanie
-	if (!is.null(mapping)||((length(unique(x))<=discret_treshold || !is.numeric(x))&&
+	if (!is.null(mapping)||((length(unique(x))<=discrete_threshold || !is.numeric(x))&&
 				is.null(breaks) && !forceContinous)){
 		
 		if (!is.null(mapping))
@@ -289,7 +292,13 @@ univariate_anal_stats1<-function(x,y,
 		
 		discret<-buckety_stat(x, y, total=TRUE);
 		
+		if(nrow(discret)-1 > no_stats_threshold)
+			return("Too many categorical levels")
 		
+		#jeœli tylko jedna wartoœæ, to zwracam komunikat
+		if(nrow(discret) == 2)
+			return("One value")
+	
 		## uzupe³niam statystyki ##
 		
 		# ci¹g³e

@@ -7,7 +7,7 @@
 buckety_stat2(breaks, score, def, total = FALSE)
 }
 \arguments{
-\item{breaks}{punktu podzia³u}
+\item{breaks}{punkty podzia³u}
 
 \item{score}{zmienna score'owa.}
 
@@ -19,7 +19,7 @@ buckety_stat2(breaks, score, def, total = FALSE)
 \code{data.frame} ze statystykami.
 }
 \description{
-Dzieli zmienn¹ \code{score} na przedzia³y \code{(from, to)}
+Dzieli zmienn¹ \code{score} na przedzia³y okreœlone przez \code{breaks}
 i wylicza statystyki dla tak powsta³ych bucketów przy pomocy funkcji.
 }
 \details{

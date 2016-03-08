@@ -31,7 +31,7 @@ jest automatyczna.}
 \item{mapping}{zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.}
 
 \item{forceContinous}{wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.}
+unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.}
 
 \item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 kategoryczne.}

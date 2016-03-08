@@ -37,6 +37,7 @@ genRaport<-function(wyniki, dir=tempdir(), kolejnosc=1:length(wyniki), show=TRUE
 
 
 genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
+	
 	for (i in 1:length(wyniki)){
 		#for (i in 1:1){
 		wynik<-wyniki[[kolejnosc[i]]];
@@ -46,6 +47,13 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		R2HTML::HTML.title(nazwa_zmiennej);
 		cat('</a>', file=plik_main, append=TRUE)
 		#    windows();
+		
+		#jeœli z jakiegoœ powodu zmienna nie zosta³a wygenerowana;
+		if (typeof(wynik$dyskretyzacja)=="character"){
+			R2HTML::HTML(wynik$dyskretyzacja);
+			next
+		}
+			
 		
 		### dyskryminacja ###
 		R2HTML::HTML.title("Discrimination GINI", HR=3);
@@ -67,7 +75,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		R2HTML::HTML.title("Point in Time or Through the Cycle", HR=3);
 		if (!is.null(wynik$rozklady$avg_t_tbl)){
 			plot(wynik$rozklady$avg_t_tbl['TOTAL',-ncol(wynik$rozklady$avg_t_tbl)], main="PIT/TTC",
-					ylab="Mean target", xlab="Date");
+					ylab="Average target", xlab="Date");
 			points(wynik$rozklady$estim, col="green")
 			R2HTML::HTMLplot(Caption = "Does changes in variable distribution follow changes of target over time?",
 					file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'cycle'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
@@ -89,7 +97,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		#ciagle<-nchar(wynik$dyskretyzacja$discret)==0
 		#drzewo_plot(wynik$dyskretyzacja[ciagle,], xlab=nazwa_zmiennej, ylab="Mean LGD",
 		#		main=paste(nazwa_zmiennej,"discretization"));
-		drzewo_plot(wynik$dyskretyzacja, xlab=nazwa_zmiennej, ylab="Mean target",
+		drzewo_plot(wynik$dyskretyzacja, xlab=nazwa_zmiennej, ylab="Average target",
 				main=paste(nazwa_zmiennej,"discretization"));
 		ile_row<-nrow(wynik$dyskretyzacja);
 		b<-barplot(wynik$dyskretyzacja$pct_obs[-ile_row], names.arg=rownames(wynik$dyskretyzacja)[-ile_row], xlab=nazwa_zmiennej,
@@ -126,11 +134,11 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 			R2HTML::HTML(wynik$rozklady$pct_all_tbl, caption="% share at given date");
 			
 			#     œredni target    #
-			R2HTML::HTML.title("Mean target", HR=3);
+			R2HTML::HTML.title("Average target", HR=3);
 			do_wykresu<-reshape::melt(wynik$rozklady$avg_t_tbl)
 			do_wykresu<-do_wykresu[do_wykresu$X1!='TOTAL' & do_wykresu$X2!='TOTAL',];
 			X1_order<-ordered(do_wykresu$X1, levels=rownames(wynik$rozklady$pct_all_tbl));
-			print(lattice::xyplot(value ~ X2|X1_order , data=do_wykresu, type='b', xlab="Date", ylab="Mean target", main=nazwa_zmiennej,
+			print(lattice::xyplot(value ~ X2|X1_order , data=do_wykresu, type='b', xlab="Date", ylab="Average target", main=nazwa_zmiennej,
 							strip=lattice::strip.custom(bg='green')));
 			
 			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'target by bucket'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
@@ -139,11 +147,10 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 			R2HTML::HTMLplot(Caption = "", file = plik_main, append = TRUE, GraphDirectory = dir,   GraphFileName = paste(nazwa_zmiennej, 'target over time'), GraphSaveAs = "png", GraphBorder = 1,  Align = "center",
 					Width = 800, Height = 400, WidthHTML = NULL,     HeightHTML = NULL, GraphPointSize = 12, GraphBackGround = "white",     GraphRes = 72)
 			
-			R2HTML::HTML(wynik$rozklady$avg_t_tbl, caption="Mean target");
+			R2HTML::HTML(wynik$rozklady$avg_t_tbl, caption="Average target");
 			
 			dev.off();
 		}
-		R2HTML::HTML("<HR><HR><HR><HR><HR>")
 	}
 }
 

@@ -4,11 +4,13 @@
 \alias{univariate_anal_stats1}
 \title{Dyskretyzuje zmienn¹ i wylicza na niej statystyki}
 \usage{
-univariate_anal_stats1(x, y, locfit = FALSE, discret_treshold = 15,
+univariate_anal_stats1(x, y, locfit = FALSE,
+  discrete_threshold = numeric_var_treatment.params$discrete_threshold,
   NA_substit = numeric_var_treatment.params$NA_substit,
-  special_val = numeric_var_treatment.params$spcial_val, max_gleb = 3,
-  min_bucket = 200, interactive = FALSE, breaks = NULL, mapping = NULL,
-  forceContinous = FALSE, span = 0.9, ...)
+  special_val = numeric_var_treatment.params$special_val,
+  no_stats_threshold = numeric_var_treatment.params$no_stats_threshold,
+  max_gleb = 3, min_bucket = 200, interactive = FALSE, breaks = NULL,
+  mapping = NULL, forceContinous = FALSE, span = 0.9, ...)
 }
 \arguments{
 \item{x}{zmienna, po której procedura bêdzie sortowaæ.}
@@ -17,13 +19,16 @@ univariate_anal_stats1(x, y, locfit = FALSE, discret_treshold = 15,
 
 \item{locfit}{Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}.}
 
-\item{discret_treshold}{jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
+\item{discrete_threshold}{jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
 ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.}
 
 \item{NA_substit}{wartoœæ, któr¹ zast¹piæ brak danych}
 
 \item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 kategoryczne.}
+
+\item{no_stats_threshold}{liczba unikalnych wartoœci zmiennej kategorycznej, powy¿ej której nie s¹ generowane
+statystyki. W przypadku przekroczenia, zwracany jest komunikat "Too many categorical levels".}
 
 \item{max_gleb}{Maksymalna g³êbokoœc do której budujemy drzewo}
 
@@ -38,14 +43,14 @@ jest automatyczna.}
 \item{mapping}{zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.}
 
 \item{forceContinous}{wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-unikalnych wartoœci jest mniejsza ni¿ \code{discret_treshold}.}
+unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.}
 
 \item{span}{Parametr wyg³adzaj¹cy funkcji \code{locit}.}
 
 \item{...}{dodatkowe parametry graficzne.}
 }
 \description{
-W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discret_treshold}
+W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discrete_threshold}
 lub zmienna nie jest zmienn¹ numeryczn¹,
 uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
 wypadku dyskretyzuje zmienn¹ i wylicza statystyki.

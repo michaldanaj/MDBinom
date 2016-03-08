@@ -11,10 +11,11 @@ Description: Pakiet do dyskretyzacji zmiennych ci¹g³ych na cele budowy modelu lo
 	z tym b³êdem?
 License: What license is it under?
 LazyLoad: yes
+Depends:
+	reshape
 Suggests: 
     locfit,
     Hmisc,
-    reshape,
     R2HTML,
     lattice,
     testthat
