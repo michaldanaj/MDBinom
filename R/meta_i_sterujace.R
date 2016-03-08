@@ -20,8 +20,12 @@ special_val=c(-99999999, -10000001, -10000000, -9999999,  -9999998,  -9999997, -
 #' }
 #' @export 
 numeric_var_treatment.params<-list(
-		#przy jakiej wartoœci unikalnych wartoœci zmiennej ma j¹ traktowaæ jako dyskretn¹
-		discret_threshold=15,
+		#przy jakiej wartoœci unikalnych wartoœci zmiennej numerycznej ma j¹ traktowaæ jako dyskretn¹
+		discrete_threshold=15,
+		
+		#liczba unikalnych wartoœci zmiennej kategorycznej, powy¿ej której nie generuje statystyk
+		#w funkcji univariate_stats1. W przypadku przekroczenia, zwracany jest komunikat "Too many categorical levels".
+		no_stats_threshold=15,
 		
 		#kody ró¿nych wartoœci specjalnych. Bêd¹ one traktowane osobno, jako wartoœci dyskretne
 		special_val=-.Machine$integer.max,
