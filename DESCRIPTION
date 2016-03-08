@@ -11,11 +11,12 @@ Description: Pakiet do dyskretyzacji zmiennych ci¹g³ych na cele budowy modelu lo
 	z tym b³êdem?
 License: What license is it under?
 LazyLoad: yes
-Suggests:
+Suggests: 
     locfit,
     Hmisc,
     reshape,
     R2HTML,
-    lattice
+    lattice,
+    testthat
 Encoding: cp1250
 RoxygenNote: 5.0.1

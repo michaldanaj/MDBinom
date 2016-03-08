@@ -71,7 +71,6 @@ numeric_var_treatment<-function(x, y,
 					if (class(bucket_drzewo)=="try-error")
 						return(bucket_drzewo)
 				}	
-				print("  2  ")
 			}
 			
 			#zmieniam nazwê, bo póŸniej j¹ wykorzystujê (historycznie)			
@@ -186,22 +185,23 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 		}
 	}
 	
-	print('---xx')
-	
-	print(length(def))
-	print(length(freq))
-	print(length(score))
+	if (testy==TRUE){
+		print(length(def))
+		print(length(freq))
+		print(length(score))
+	}
 	
 	def_a<-tapply(def,score,sum);
 	freq_a<-tapply(freq, score, sum);
 	score_a<-unique(score);
 	
-	
-	print('---')
-	
-	print(length(def_a))
-	print(length(freq_a))
-	print(length(score_a))
+	if (testy==TRUE){
+		print('---')
+		
+		print(length(def_a))
+		print(length(freq_a))
+		print(length(score_a))
+	}
 	
 	#Zabezpieczam siê przed zminiejszeniem precyzji liczb w wektorze score podczas konwersji
 	#na zmienn¹ znakow¹, wykonywan¹ podczas wykonania funkcji tapply
@@ -335,8 +335,12 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 		print(length(def))
 	}
 	all_obs<-sum(freq);
-	print(table(freq,useNA='always'))
-	print(all_obs)
+	
+	if (testy==TRUE){
+		print(table(freq,useNA='always'))
+		print(all_obs)
+	}
+	
 	all_bad<-sum(def);
 	br_akt<-all_bad/all_obs;
 	gini_akt<-br_akt*(1-br_akt)*all_obs;
@@ -375,14 +379,17 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 			wezel$poprawa<-gini_roz[nr];
 			wezel$podzial<-(score[nr]+score[nr+1])/2;
 			l<-length(score);
-			print ('testy podzialu')
-			print(length(score)) 
-			print(length(def))
-			print('length(freq):')
-			print(length(freq))
-			print('nr:') 
-			print(nr)
-			print('nic')
+			
+			if (testy==TRUE){
+				print ('testy podzialu')
+				print(length(score)) 
+				print(length(def))
+				print('length(freq):')
+				print(length(freq))
+				print('nr:') 
+				print(nr)
+				print('nic')
+			}
 			wl<-drzewo_podzial(score[1:nr], def[1:nr], nr_wezla*2, od, wezel$podzial, freq[1:nr], glebokosc+1,
 					min_split, min_bucket, max_gleb);
 			wr<-drzewo_podzial(score[(nr+1):l], def[(nr+1):l], nr_wezla*2+1, wezel$podzial, do, freq[(nr+1):l], glebokosc+1,

@@ -120,21 +120,13 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 #' @export
 buckety_stat<-function (bucket, default, total = TRUE)
 {
-	print ('==============   buckety_stat  ==============')
-	print('bucket:')
-	
-	print(table(is.na(bucket)))
-	print('default:')
-	print(table(is.na(default)))
-	
-	print('==============================================')
-	
 	
 	if (any(is.na(bucket)) || any(is.na(default)))
-		stop("Brakom danych w funkcji 'buckety_stat' mówimy stanowcze NIE.")
+		stop("W argumentach funkcji pojawi³y siê braki danych.")
 	
 	if (is.factor(bucket))
 		bucket <- factor(bucket)
+	
 	obs <- table(bucket)
 	obs_all <- sum(obs)
 	bad <- as.vector(tapply(default, bucket, sum))
@@ -165,14 +157,14 @@ buckety_stat<-function (bucket, default, total = TRUE)
 
 #' Wylicza statystyki dla podanych przedzia³ów
 #'
-#' Dzieli zmienn¹ \code{score} na przedzia³y \code{(from, to)}
+#' Dzieli zmienn¹ \code{score} na przedzia³y okreœlone przez \code{breaks}
 #' i wylicza statystyki dla tak powsta³ych bucketów przy pomocy funkcji.
 #' 
 #' Do przypisania wartoœci do przedzia³u u¿ywana jest funkcja
 #' 
 #' \code{findInterval(score, breaks, rightmost.closed = TRUE, all.inside = TRUE)}.
 #' 
-#' @param breaks punktu podzia³u
+#' @param breaks punkty podzia³u
 #' @param score zmienna score'owa.
 #' @param def zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.
 #' @param total czy wyliczaæ wiersz z podsumowaniem.
@@ -182,18 +174,9 @@ buckety_stat<-function (bucket, default, total = TRUE)
 #' @export
 buckety_stat2<-function(breaks, score, def, total=FALSE){
 	
-	print('===============  buckety_stat2')
-	print('----------   breaks:')
-	print(table(is.na(breaks)))
-	print('score:')
-	print(length(score))
-	print('def:')
-	print(length(def))
-	print('---------')
-	print('===============  koniec buckety_stat2')
 	
 	if (any(is.na(breaks)) || any(is.na(score)) || any(is.na(def)))
-		stop("Brakom danych w funkcji 'buckety_stat2' mówimy stanowcze NIE.");
+		stop("W argumentach funkcji pojawi³y siê braki danych.");
 	
 	zakres_danych<-range(na.omit(score))
 	zakres_breaks<-range(breaks)
@@ -230,7 +213,7 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 	
 	rownames(buckety)<-labels;
 	buckety$label<-labels;
-	print ('+++++++++++++++++   wyjœcie z buckety_stat2  +++++++++++++++')
+
 	return(buckety);
 }
 
@@ -240,7 +223,7 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 #' 
 #' £¹czy buckety. W przypadku bucketów z przedzia³ami zmiennej ci¹g³ej, mo¿liwe jest 
 #' po³¹czenie tylko
-#' przedzia³ów przlegaj¹cych do siebie. Dla nowo powsta³ych bucketów wylicza statystyki. 
+#' przedzia³ów przylegaj¹cych do siebie. Dla nowo powsta³ych bucketów wylicza statystyki. 
 #' W przypadku ³¹czenia przedzia³ów zmiennej ci¹g³ej, wiersze z tymi bucketami zostan¹ ze sob¹
 #' po³¹czone i powstanie \code{data.frame} z liczb¹ wierszy o jeden mniejsz¹ ni¿ w \code{bucket}.
 #' Przy ³¹czeniu bucketów dyskretnych lub dyskretnego i ci¹g³ego, wiersze nie zostan¹ usuniête. 

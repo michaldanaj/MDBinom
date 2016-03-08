@@ -14,11 +14,19 @@ document()
 
 #check(check_dir =".")
 
-
 install('MDBinom')
 
 setwd('G:\\Michal\\eclipse - java\\MDbinom')
 build(pkg = 'MDBinom', path='.', binary = TRUE)
+
+
+
+#  testy
+devtools::test()
+
+
+####
+
 
 
 

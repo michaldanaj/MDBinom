@@ -1,3 +1,6 @@
+# v.5.0.0.9002 2016-03-01
+Dodane funkcje do generowania kodu SQL.
+
 # v.5.0.0.9001 2016-02-29
 Dużo małych rzeczy.
 

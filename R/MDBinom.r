@@ -606,14 +606,14 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 #' 		  modelem idealnym (np. w przypadku LGD).
 #' @author Micha³ Danaj
 #' @export 
-plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
+plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 {
 	plot_type<-match.arg(plot_type);
 
 	if (class(ar)=="AR")
 		ar<-list(ar=ar);
 
-	plot(c(0,1), c(0,1), type="l", lty=1, col=1, xlab="", ylab="");
+	plot(c(0,1), c(0,1), type="l", lty=1, col=1, xlab="", ylab="",...);
 	if (plot_type=="CAP" && is.null(ar[[1]][['perfect_lgd_table']])){
 		br<-ar[[1]]$stats["br"];
 		lines(c(0,br,1),c(0,1,1), col=1);

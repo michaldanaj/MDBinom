@@ -24,7 +24,7 @@
 #' 
 #' @author Michal Danaj
 #' @export
-univariate_list<-function(x_df
+univariate_loop<-function(x_df
 			, y
 			, vsub_bool = rep(TRUE, ncol(x_df))
 			, vsub_list = NULL
