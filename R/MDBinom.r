@@ -665,6 +665,8 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 #' @param col_line Kolor lini. 
 #' @param index jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
 #'				W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.
+#' @param glm czy rysowaæ dopasowanie modelu logistycznego do zmiennej.
+#' @param col_glm kolor wykresu z modelu logistycznego.
 #' @param ... dodatkowe parametry.
 #' @author Micha³ Danaj 
 #' @export
@@ -679,27 +681,41 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
-		col_line = "darkblue", index = FALSE, ...)
+		col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="red", ...)
 {
+	
 	dane <- data.frame(score, default)
+	
 	if (wytnij > 0){
 		do_usuniecia<-usun_konce(dane$score, prob = wytnij);
 		if (length(do_usuniecia)>0)
 			dane <- dane[-do_usuniecia,]
 	}
+	
 	bucket <- buckety_br(dane$score, dane$default, buckets, method = "eq_count")
+	
 	if (length(unique(default)) == 2)
 		l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",
 				link = "logit", data = dane)
 	else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane)
 	b2 <- predict(l, newdata = bucket$srodek)
+	
 	if (target == "br")
 		bucket2 <- cbind(bucket, fitted = b2)
 	else bucket2 <- cbind(bucket, fitted = log(b2/(1 - b2)))
+	
 	skala <- sqrt(bucket$n_obs/(length(score)/buckets))
 	x <- bucket2$srodek
+	
 	if (index)
 		x <- bucket$nr
+	
+	#model logistyczny
+	if (glm){
+		model<-glm(default~score, family=binomial)
+		pred<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
+	}
+	
 	if (plot) {
 		if (new == TRUE)
 			plot(x, with(bucket2, get(target)), col = col_points,
@@ -707,6 +723,11 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 		else points(x, with(bucket2, get(target)), cex = skala,
 					col = col_points, ...)
 		lines(x, bucket2$fitted, col = col_line, ...)
+		
+		if (glm){
+			lines(x[order(x)], pred[order(x)], col=col_glm)
+			points(x, pred, col=col_glm)
+		}
 	}
 	bucket2
 }
