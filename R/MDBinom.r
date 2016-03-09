@@ -681,7 +681,7 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
-		col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="red", ...)
+		col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="green", ...)
 {
 	
 	dane <- data.frame(score, default)
