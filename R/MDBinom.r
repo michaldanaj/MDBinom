@@ -779,3 +779,36 @@ usun_konce<-function (score, prob = 0.01, weights=NULL)
 	
 	return(which(score <= new_min | new_max <= score))
 }
+
+
+#' Sprawdzenie, czy estymacja modelu dobrze t³umaczy zale¿noœæ targetu od zmiennej
+#' 
+#' @param x wektror z wartoœciami zmiennej
+#' @param y wektor z predykcj¹ modelu 
+#' @param bucket grupowanie zmiennej
+#' @param subset podzbiór 
+#' @param ... dodatkowe parametry graficzne 
+#' @return bucket z dodanymi wyestymowanymi wartoœciami
+#' 
+#' @author Micha³ Danaj
+#' @export
+dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
+	if (!is.null(subset)){
+		x<-x[subset]
+		y<-y[subset]
+	}
+	if (any(is.na(y))){
+		ile_na<-sum(is.na(y))
+		warning(sprintf("W 'y' bylo %s brakow danych. Zostaly usuniete.", ile_na))
+		x<-x[!is.na(y)]
+		y<-y[!is.na(y)]
+	}
+	bucket_new<-bucket
+	bucket$fitted<-rownames(bucket)
+	pred<-przypisz2(x, bucket)
+	y_bucket<-tapply(y, pred, mean)
+	bucket_new$model<-y_bucket[rownames(bucket_new)]
+	plot(bucket_new$nr[-nrow(bucket_new)], bucket_new$br[-nrow(bucket_new)],...)
+	points(bucket_new$nr, bucket_new$model, col="green")
+	bucket_new
+}
