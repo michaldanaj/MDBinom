@@ -130,7 +130,7 @@ interakcja<-function(zm1, zm2, target){
 #' @param vars - wektor z nazwami zmiennych do ograniczenia.
 #' @param varname_sufix - Sufix wynikowych zmiennych.
 #' @export
-przypisz_woe<-function(bucket_list, data, vars=names(bucket_list), varname_sufix='woe'){
+przypisz_woe_z_listy<-function(bucket_list, data, vars=names(bucket_list), varname_sufix='woe'){
 	
 	data_out<-NULL
 	
@@ -173,4 +173,51 @@ przypisz_woe<-function(bucket_list, data, vars=names(bucket_list), varname_sufix
 }	
 
 
+przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='fitted', varname_sufix=colname){
+	
+	data_out<-NULL
+	
+	for (zmienna in names(bucket_list)){
+		
+		if (!(zmienna %in% vars)) 
+			next;
+		
+		####   wyliczam   woe    ######
+		
+		#Wyci¹gam element listy
+		bucket<-bucket_list[[zmienna]]
+		#bucket<-bucket[rownames(bucket)!='TOTAL',]
+		
+		#jeœli badów lub goodów jest 0, to przyjmujê ¿e jest 0.5	
+		
+		fitted = bucket[,colname]
+		
+		####   przypisujê woe    ######
+		
+		fitted_x<-przypisz2(data[,zmienna],
+				bucket_list[[zmienna]], 
+				fitted=fitted,
+				NA_subst = numeric_var_treatment.params$NA_substit,
+				interpol=FALSE)
+		
+		if (is.null(data_out))	{
+			data_out <- data.frame(fitted_x)
+			names(data_out)<-zmienna
+		}
+		else
+			data_out[,zmienna] <- c(fitted_x)
+		
+	}
+	
+	names(data_out)<-paste(names(data_out), varname_sufix, sep="_")
+	data_out
+}	
+
+
+
+
+korelacje_zmiennych<-function(model, data){
+	zmienne<-names(coef(model))[-1]
+	edit(cor(data[,zmienne]))
+}
 
