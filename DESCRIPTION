@@ -1,8 +1,8 @@
 Package: MDBinom
 Type: Package
 Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi
-Version: 5.0.0.9003
-Date: 2016-03-09
+Version: 5.0.0.9004
+Date: 2016-03-10
 Authors@R: person("Micha³", "Danaj", email = "michal.danaj@gmail.com",
   role = c("aut", "cre"))
 Author: Micha³ Danaj [aut, cre],
@@ -12,12 +12,12 @@ Description: Pakiet do dyskretyzacji zmiennych ci¹g³ych na cele budowy modelu lo
 License: What license is it under?
 LazyLoad: yes
 Depends:
-	reshape
-Suggests: 
+	reshape,
     locfit,
     Hmisc,
     R2HTML,
-    lattice,
+    lattice	
+Suggests: 
     testthat
 Encoding: cp1250
 RoxygenNote: 5.0.1

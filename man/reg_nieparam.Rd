@@ -8,7 +8,8 @@
 \usage{
 reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
   degree = 2, plot = TRUE, target = "br", new = TRUE,
-  col_points = "black", col_line = "darkblue", index = FALSE, ...)
+  col_points = "black", col_line = "darkblue", index = FALSE,
+  glm = FALSE, col_glm = "green", ...)
 }
 \arguments{
 \item{score}{Wektor zmiennych numerycznych.}
@@ -35,6 +36,10 @@ reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
 
 \item{index}{jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
 W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.}
+
+\item{glm}{czy rysowaæ dopasowanie modelu logistycznego do zmiennej.}
+
+\item{col_glm}{kolor wykresu z modelu logistycznego.}
 
 \item{...}{dodatkowe parametry.}
 }

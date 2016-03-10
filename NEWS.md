@@ -1,3 +1,12 @@
+# v.5.0.0.9004 xxxxxx
+
+* Dodanie w funkcji reg_nieparam rysowania dopasowania modelu logistycznego do zmiennej
+* Dodanie funkcji dopasowanie_do_zmiennej
+* Dodanie funkcji make_model_formula
+* Dodanie funkcji przypisz_z_listy
+* Zmiana nazwy z przypisz_woe na przypisz_woe_z_listy
+* Dodanie funkcji step_bez_kor
+
 # v.5.0.0.9002 2016-03-09
 
 * Dodanie funkcji univariate_loop 

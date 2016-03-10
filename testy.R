@@ -31,20 +31,7 @@ wynik<-univariate_loop(x_df=dane_tr, y=dane_tr$churn2_8)
 
 genRaport(wynik, dir="c:/temp/raport")
 
-univariate_anal_stats1<-function(x,y, 
-		locfit=FALSE, 
-		discrete_threshold=numeric_var_treatment.params$discrete_threshold,
-		NA_substit = numeric_var_treatment.params$NA_substit,
-		special_val=numeric_var_treatment.params$spcial_val, 
-		no_stats_threshold=numeric_var_treatment.params$spcial_val,
-		max_gleb=3, 
-		min_bucket=200, 
-		interactive=FALSE,
-		breaks=NULL, 
-		mapping=NULL, 
-		forceContinous=FALSE,
-		span=0.9,...){
-	
+
 
 univariate_anal_stats1(x=c(2,2,2,2), y=c(1,0,0,0))
 
@@ -54,4 +41,22 @@ univariate_anal_stats(x=dane_tr$Nazwisko_Nazwa, y=dane_tr$churn2_8)
 
 wyniki<-univariate_loop(dane_tr, dane_tr$churn2_8)
 genRaport(wyniki, dir="c:/temp/raport")
+
+
+wynik<-univariate_anal_stats(dane_tr$Wiek, dane_tr$churn2_8, czas=dane_tr$miesiacZamowienia)
+genRaport(wynik)
+
+windows()
+reg_nieparam(score=dane_tr$Wiek, default=dane_tr$churn2_8)
+
+
+model<-glm(churn2_8~Wiek, data=dane_tr, family='binomial')
+pred<-predict(model, type='response')
+
+dopasowanie_do_zmiennej(dane_tr$Wiek, pred, wynik[[1]])
+
+
+make_model_formula("daa",c("a","b"))
+
+step_bez_kor(data=dane_tr[,c("AboCenaPodstawowa","ModemCenaPodstawowa")], model=model, target_var_name='churn2_8')
 
