@@ -812,3 +812,56 @@ dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
 	points(bucket_new$nr, bucket_new$model, col="green")
 	bucket_new
 }
+
+
+
+#liczê korelacje zmiennych z modelu ze zmiennymi do dodania
+#' Wynik funkcji add1, po usuniêciu zmiennych skorelowanych
+#' 
+#' Sprawdza stopieñ korelacji zmiennych z danych \code{data} ze zmiennymi z modelu \code{model}. Jeœli korelacja
+#' przekracza \code{cor_threshold}, to zmienna usuwana jest z dalszych analiz. Dla pozosta³ych zmiennych 
+#' stosowana jest funkcja \code{\link{add1}}. W danych nie mo¿e byæ braków danych.
+#' TODO Funkcja nie przetestowana, jeszcze do dopracowania!!!
+#' @param data \code{data.frame} ze zmiennymi do dodania do modelu
+#' @param model model do rozszerzenia
+#' @param target_var_name nazwa zmiennej z targetem
+#' @param cor_threshold graniczna wartoœæ korelacji, po przekroczeniu której zmienna jest uwuwana z analiz
+#' @return Statystyki
+#' 
+#' @author Micha³ Danaj
+#' @export
+step_bez_kor<-function(data, model, target_var_name='target', cor_threshold=0.75){
+	
+	if (any(is.na(data)))
+		stop("W danych nie mo¿e byæ braków danych!")
+	
+	#zmienne w modelu
+	zmienne_model<-names(coef(model)[-1])
+	
+	#zmienne z danych z budowy modelu
+	#zmienne_budowa<-nazwy_zmiennych
+	zmienne_budowa<-names(data)
+	
+	#korelacja miêczy nimi
+	korel<-as.data.frame(cor(data[,zmienne_budowa]))
+	korel_zm_model<-korel[zmienne_model,]
+	
+	#gdzie akceptowalna korelacja
+	korelacje_max<-apply(abs(korel_zm_model), 2, max)	
+	czy_przekracza<-as.data.frame(abs(korel_zm_model)>cor_threshold)
+	czy_przekracza<-sapply(czy_przekracza, any)
+	
+	#TODO usun¹æ równie¿ kolumny
+	zmienne<-names(czy_przekracza[czy_przekracza==FALSE & !is.na(czy_przekracza)])
+	
+	#usuwam target
+	zmienne<-zmienne[zmienne!=target_var_name]
+	
+	#robiê stepa
+	#form<-make_model_formula('target',zmienne_budowa)
+	form<-make_model_formula(target_var_name, c(".",zmienne))
+	dodana_zmienne<-add1(model, scope= form, test='Chisq')	
+	kolejnosc_aic<-order(dodana_zmienne$AIC)
+	
+	cbind(dodana_zmienne[kolejnosc_aic,], cor_max=korelacje_max[rownames(dodana_zmienne[kolejnosc_aic,])])
+}
