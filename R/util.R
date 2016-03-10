@@ -99,3 +99,25 @@ lastDay<-function(dat, unit=c("month","quarter", "half_year", "year"),...) {
 	new_date<-as.Date(ISOdate(rok, mies, 1));
 	return(new_date-1);
 }
+
+
+#' Na podstawie nazwy zmiennej celu i zmiennych objaœniaj¹cych, tworzy formu³ê modelu
+#' 
+#' @param target zmienna celu 
+#' @param vars zmienne objaœniaj¹ce
+#' @return forum³a do zastosowania w modelu
+#' 
+#' @author Micha³ Danaj
+#' @export
+make_model_formula<-function(target, vars){
+	
+	#jeœli w nazwach zmiennych jest nazwa targetu, to j¹ usuwam
+	czy_jest_target<-target==vars
+	vars<-vars[!czy_jest_target]
+	
+	#suma zmiennych
+	suma_zmiennych<-paste(vars, collapse = ' + ')
+	
+	#wynik
+	formula(paste(target, suma_zmiennych, sep='~'))
+}
