@@ -38,6 +38,6 @@ drzewo(score, def, freq = NULL, wytnij = 0, min_split = 30,
 Dyskretyzuje zmienn¹ \code{score}
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

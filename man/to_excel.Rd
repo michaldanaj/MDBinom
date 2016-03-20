@@ -18,6 +18,6 @@ to_excel(table, row.names = FALSE)
 Wrzuca dane do schowka, do wklejenia do Excela
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

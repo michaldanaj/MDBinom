@@ -7,7 +7,7 @@
 assignScore(scoreCard, x, sufix = "_points")
 }
 \arguments{
-\item{scoreCard}{definicja karty scoringowej. Patrz \code{\link{getScoreCard}}.}
+\item{scoreCard}{defini`cja karty scoringowej. Patrz \code{\link{getScoreCard}}.}
 
 \item{x}{\code{data.frame} z kolumnami o nazwach takich, jak w definicji karty}
 

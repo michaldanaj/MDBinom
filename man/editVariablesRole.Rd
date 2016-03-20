@@ -21,6 +21,6 @@ jest data.frame ze zmienionymi rolami.}
 Generuje kod do zmiany roli zmiennych lub data.frame ze zmienionymi rolami.
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

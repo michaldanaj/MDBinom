@@ -1,29 +1,4 @@
 
-#' Ró¿ne dzia³ania na zmiennych dwumianowych.
-#'
-#' \tabular{ll}{
-#' Package: \tab MDBinom\cr
-#' Type: \tab Package\cr
-#' Version: \tab 4.4\cr
-#' Date: \tab 2012-08-01\cr
-#' License: \tab GPL (>= 2)\cr
-#' LazyLoad: \tab yes\cr
-#' }
-#'
-#' Ró¿ne dzia³ania na zmiennych dwumianowych.
-#'
-#' @name MDBinom-package	
-#' @aliases MDBinom
-#' @docType package
-#' @title Ró¿ne dzia³ania na zmiennych dwumianowych
-#' @author Micha³ Danaj \email{michal.danaj@@gmail.com}
-#' @keywords package
-
-
-#roxygen();
-NULL;
-#library(roxygen2);
-
 #' Liczy logit
 #'
 #' Liczy logit

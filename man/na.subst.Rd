@@ -18,6 +18,6 @@ na.subst(x, val)
 Zastêpuje braki danych
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

@@ -1,6 +1,6 @@
 # TODO: Add comment
 # 
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 #TODO dodaæ do struktur w dyskretyzacj¹, oraz do metadanych, typ danych
@@ -131,7 +131,7 @@ genSQLCase<-function(bucket, nazwaZmiennej, typZmiennej, nazwaZmiennejOut){
 #' @param varNames \code{vector} z nazwami zmiennych wynikowych.
 #' @return zwraca listê z kodami dla poszczególnych zmiennych.
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 genSQLCases<-function(wynik, dane, varNames){
 	
@@ -173,7 +173,7 @@ genSQLCases<-function(wynik, dane, varNames){
 #'			to znaczy ¿e nie by³o robionej dyskretyzacji i case jest dla tej zmeinnej
 #'			pominiêty.
 #' @return zwraca listê z kodami dla poszczególnych zmiennych.
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 genSQLCases2<-function(wynik, dane, mapping){
 	

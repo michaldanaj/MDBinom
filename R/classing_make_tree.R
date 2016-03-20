@@ -1,7 +1,7 @@
 # Z pliku "funkcje do analiz.r" przeniesione funkcje zwi¹zane z budow¹ drzewa
 #
 # Numeri_var_treatment i disretizetion to dwie alternatywne funkcje
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 
@@ -149,7 +149,7 @@ numeric_var_treatment<-function(x, y,
 #' @param ... Dodatkowe parametry do rysowania 
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, max_gleb=4, n_buckets=20, plot=TRUE, testy=FALSE,...)
 {
@@ -260,7 +260,7 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 #' @param ... Dodatkowe parametry graficzne.
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 drzewo_plot<-function(liscie_drzewa,...){
 	#liscie<-liscie_drzewa[liscie_drzewa$discret=="",];
@@ -324,7 +324,7 @@ drzewo_plot<-function(liscie_drzewa,...){
 #' @param testy  testy
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 		min_split=200, min_bucket=100, max_gleb=3, testy=FALSE)
 {

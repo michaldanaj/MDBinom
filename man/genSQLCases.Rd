@@ -20,6 +20,6 @@ zwraca listê z kodami dla poszczególnych zmiennych.
 Generujê listê kodów SQL z dyskretyzacj¹ wszystkich zmiennych z \code{wynik}.
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

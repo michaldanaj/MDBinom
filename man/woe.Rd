@@ -16,6 +16,6 @@ woe(br)
 Liczy WoE
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

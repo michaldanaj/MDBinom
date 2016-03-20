@@ -1,6 +1,6 @@
 # TODO: Add comment
 # 
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 
@@ -11,7 +11,7 @@
 #' @param target target.
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 model_dev<-function(predicted, target){
 	-2*sum(target*log(predicted)+(1-target)*log(1-predicted))
@@ -24,7 +24,7 @@ model_dev<-function(predicted, target){
 #' @param val jak¹ wartoœci¹ zast¹piæ brak danych. 
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 na.subst<-function(x, val){
 	x[is.na(x)]<-val;
@@ -37,7 +37,7 @@ na.subst<-function(x, val){
 #' @param row.names  czy przekazaæ równie¿ wiersze.
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 to_excel<-function(table, row.names=FALSE){
 	write.table(table, file='clipboard', sep='\t', row.names=row.names, dec=',')
@@ -50,7 +50,7 @@ to_excel<-function(table, row.names=FALSE){
 #' @param br wartoœæ prawdopodobieñstwa.
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 woe<-function(br){
 	br[br==0]<-0.5/length(br)

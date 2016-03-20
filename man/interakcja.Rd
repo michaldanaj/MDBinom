@@ -20,6 +20,6 @@ interakcja(zm1, zm2, target)
 Rysuje interakcje dwóch zmiennych
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

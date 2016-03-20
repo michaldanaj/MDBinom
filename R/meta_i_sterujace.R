@@ -1,6 +1,6 @@
 # TODO: Add comment
 # 
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 
@@ -60,7 +60,7 @@ numeric_var_treatment.params<-list(
 #'			jest data.frame ze zmienionymi rolami.  
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 editVariablesRole<-function(zmienne_rola, pattern=NULL, gen_code=TRUE){
 	

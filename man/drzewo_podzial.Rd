@@ -37,6 +37,6 @@ drzewo_podzial(score, def, nr_wezla, od, do, freq, glebokosc, min_split = 200,
 Podzia³ drzewa.
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

@@ -29,6 +29,6 @@ plotCalibr(score, response, estim, plt_type = c("br", "logit"),
 Rysuje kalibracjê modelu
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

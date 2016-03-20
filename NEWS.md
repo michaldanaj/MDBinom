@@ -1,3 +1,9 @@
+# v.5.1.0 2016-03-20
+
+W poprzednich deweloperskich wersjach zostały dodane wszyskie funkcje tworzone poza pakietem. Równocześnie zostały wprowadzone różne drobne poprawki i zmiany. Tym samym kończy się etap porządkowania i jest to moment na zmianę wersji pakietu z 4 na 5.
+
+Zmiany nie zostały wytestowane. Testy odbędą się w boju.  
+
 # v.5.0.0.9005 2016-03-20
 
 * Zmiana nazwy parametru na plt_type w plotCalibr.

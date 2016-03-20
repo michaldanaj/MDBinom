@@ -1,6 +1,6 @@
 # Funkcje zaczynaj¹ce siê na univariate
 # 
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 

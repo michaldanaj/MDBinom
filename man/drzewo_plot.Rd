@@ -18,6 +18,6 @@ drzewo_plot(liscie_drzewa, ...)
 Rysuje dyskretyzacjê w oparciu o drzewko
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

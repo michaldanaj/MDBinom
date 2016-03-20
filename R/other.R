@@ -1,6 +1,6 @@
 # TODO: Add comment
 # 
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 
@@ -18,7 +18,7 @@
 #' @param ... Parametry graficzne.
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 plotCalibr<-
 		function (score, response, estim, plt_type = c("br", "logit"), ylab=plt_type,
@@ -104,7 +104,7 @@ makeCoarseClassingTables<-function(wyniki){
 #' @param target Zmienna celu. 
 #' @return 
 #' 
-#' @author Piotr
+#' @author Micha³ Danaj
 #' @export
 interakcja<-function(zm1, zm2, target){
 	dwa<-tapply(target, list(zm1,zm2), mean)
@@ -173,6 +173,20 @@ przypisz_woe_z_listy<-function(bucket_list, data, vars=names(bucket_list), varna
 }	
 
 
+#' Na podstawie listy z bucketami przypisuje odpowiednie wartoœci
+#' 
+#' Na podsatwie listy \code{bucket_list} przypisuje zmiennych \code{vars} z tabeli \code{data}
+#' wartoœci znajduj¹ce siê w kolumnie \code{fitted} bucketów. Wartoœci przypisuje do kolumn
+#' o nazwie z po³¹cznia nazw \code{vars} i \code{varname_sufix}.
+#' @param bucket_list Lista bucketów.
+#' @param data Dane.
+#' @param vars Zmienne do przypisania.
+#' @param colname Nazwa kolumny z bucketa, na podstawie którego nale¿y dopisaæ wartoœci.
+#' @param varname_sufix Sufiks do nazw nowych zmiennych.
+#' @return 
+#' 
+#' @author Micha³ Danaj
+#' @export
 przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='fitted', varname_sufix=colname){
 	
 	data_out<-NULL
@@ -216,6 +230,14 @@ przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='
 
 
 
+#' Wyœwietla w gridzie wartoœci korelacji zmiennych z modelu 
+#' 
+#' @param model dopasowany model. 
+#' @param data  dane.
+#' @return 
+#' 
+#' @author Micha³ Dnaaj
+#' @export
 korelacje_zmiennych<-function(model, data){
 	zmienne<-names(coef(model))[-1]
 	edit(cor(data[,zmienne]))

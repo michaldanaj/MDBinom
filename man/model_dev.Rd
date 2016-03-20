@@ -18,6 +18,6 @@ model_dev(predicted, target)
 Odchylenie modelu
 }
 \author{
-Piotr
+Micha³ Danaj
 }
 

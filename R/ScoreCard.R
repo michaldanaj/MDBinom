@@ -1,13 +1,13 @@
 # TODO: Add comment
 # 
-# Author: Piotr
+# Author: Micha³ Danaj
 ###############################################################################
 
 
 
 #' Przypisuje score z definicji karty scoringowej.
 #' 
-#' @param scoreCard definicja karty scoringowej. Patrz \code{\link{getScoreCard}}.
+#' @param scoreCard defini`cja karty scoringowej. Patrz \code{\link{getScoreCard}}.
 #' @param x \code{data.frame} z kolumnami o nazwach takich, jak w definicji karty
 #' @param sufix ci¹g znaków dodany do nazw wynikowych kolumn.
 #' @seealso \code{\link{getScoreCard}}.
