@@ -19,7 +19,7 @@ informacje_kal(score, default, estym, buckets = 20, span = 0.8,
 
 \item{buckets}{Sugerowana liczba bucketów.}
 
-\item{span}{Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}}
+\item{span}{Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}}
 
 \item{hist_col}{Kolor histogramu}
 

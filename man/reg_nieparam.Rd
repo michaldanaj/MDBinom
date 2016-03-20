@@ -7,8 +7,9 @@
  Rysuje i zwraca statystyki dla bucketów.}
 \usage{
 reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
-  degree = 2, plot = TRUE, target = "br", new = TRUE,
-  col_points = "black", col_line = "darkblue", index = FALSE, ...)
+  degree = 2, plot = TRUE, plt_type = "br", new = TRUE,
+  col_points = "black", col_line = "darkblue", index = FALSE,
+  glm = FALSE, col_glm = "green", ...)
 }
 \arguments{
 \item{score}{Wektor zmiennych numerycznych.}
@@ -19,13 +20,13 @@ reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
 
 \item{wytnij}{Ile krañcowych obserwacji wyci¹æ.}
 
-\item{span}{Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link{locfit}}}
+\item{span}{Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}}
 
-\item{degree}{Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link{locfit}}}
+\item{degree}{Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}}
 
 \item{plot}{Czy rysowaæ wykres.}
 
-\item{target}{jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)}
+\item{plt_type}{jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)}
 
 \item{new}{Czy rysowaæ wykres od nowa.}
 
@@ -35,6 +36,10 @@ reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
 
 \item{index}{jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
 W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.}
+
+\item{glm}{czy rysowaæ dopasowanie modelu logistycznego do zmiennej.}
+
+\item{col_glm}{kolor wykresu z modelu logistycznego.}
 
 \item{...}{dodatkowe parametry.}
 }

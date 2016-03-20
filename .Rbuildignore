@@ -5,3 +5,5 @@
 ^gen.*
 ^NEWS\.md^
 ^NEWS\.old^
+^testy.R
+R/preliminary_statistics.R

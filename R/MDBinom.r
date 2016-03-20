@@ -1,29 +1,4 @@
 
-#' Ró¿ne dzia³ania na zmiennych dwumianowych.
-#'
-#' \tabular{ll}{
-#' Package: \tab MDBinom\cr
-#' Type: \tab Package\cr
-#' Version: \tab 4.4\cr
-#' Date: \tab 2012-08-01\cr
-#' License: \tab GPL (>= 2)\cr
-#' LazyLoad: \tab yes\cr
-#' }
-#'
-#' Ró¿ne dzia³ania na zmiennych dwumianowych
-#'
-#' @name MDBinom-package	
-#' @aliases MDBinom
-#' @docType package
-#' @title Ró¿ne dzia³ania na zmiennych dwumianowych
-#' @author Micha³ Danaj \email{michal.danaj@@gmail.com}
-#' @keywords package
-
-
-#roxygen();
-NULL;
-#library(roxygen2);
-
 #' Liczy logit
 #'
 #' Liczy logit
@@ -132,7 +107,7 @@ AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 500000
 		stop("AR_boot: Liczba jednorazowo wylosowanych elementów n_once musi byæ wiêksza, ni¿ \n\t\t\t\t\tliczba unikalnych wartoœci score!")
 	prob <- c(bad, good)/length(score)
 	ile_kolumn <- floor(n_once/length(obs))
-	N <- ceil(n_boot/ile_kolumn)
+	N <- Hmisc::ceil(n_boot/ile_kolumn)
 	wynik <- AR_quick(bad, obs)
 	
 	
@@ -208,48 +183,48 @@ AR_quick<-function(bad, obs)
 	#uwzgledniam bad rate w probce
 	return ( (2*AUC-1)/(1-def_all/obs_all)) ;
 }	
-
+#TODO zaktualizowaæ dokkumentacjê!
 #' Liczy Accuracy Ratio (GINI)
 #'
-#'  Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
-#'  informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
-#'  jest wartoœæ AR.
+#' Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
+#' informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
+#' jest wartoœæ AR.
 #'
-#'  @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}
-#'  @param def Wektor wartoœci \code{\{0,1\}} 
-#'  @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
-#'	@param return.table czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
+#' @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}
+#' @param def Wektor wartoœci \code{\{0,1\}} 
+#' @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
+#' @param return.table czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
 #'         wartoœci score
-#'  @param sort.order dla wartoœci równej "br", zamiast po \code{score}, 
+#' @param sort.order dla wartoœci równej "br", zamiast po \code{score}, 
 #'				 sortuje po wartoœci \code{br}. Mo¿e to byæ przydatne przy zmiennych dyskretnych.
-#'  @param label opis wyœwietlony w legendzie.
-#'  @param lgd_adjusted W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
+#' @param label opis wyœwietlony w legendzie.
+#' @param lgd_adjusted W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
 #' 			mniejsze ni¿ dla modelu PD i nie da siê go wyliczyæ analogicznym wzorem. Dlatego
 #' dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona u¿yta jako mianownik do
 #' wyliczenia AR. 
-#'  @param ... dodatkowe parametry.
-#'	@return Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
-#'	kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
-#'	Ka¿dy element listy ma postaæ:
-#'	  \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
-#'	  \item{bad}{Liczba bad-ów w przedziale.}
-#'	  \item{obs}{Liczba obserwacji w przedziale.}
-#'	  \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
-#'	  \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
-#'										wszystkich bad-ów.}
-#'	  \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
-#'										wszystkich good-ów.}
-#'	  \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
-#'	  \item{AR}{Wyliczone Accuracy Ratio.}							
+#' @param ... dodatkowe parametry.
+#'@return Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
+#'kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
+#'Ka¿dy element listy ma postaæ:
+#'  \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
+#'  \item{bad}{Liczba bad-ów w przedziale.}
+#'  \item{obs}{Liczba obserwacji w przedziale.}
+#'  \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
+#'  \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
+#'									wszystkich bad-ów.}
+#'  \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
+#'									wszystkich good-ów.}
+#'  \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
+#'  \item{AR}{Wyliczone Accuracy Ratio.}							
 #'
 #' @author Micha³ Danaj
 #' @export
-# @examples
-#	n<-1000;
-#	x<-rnorm(n);
-#	def<- as.numeric(x+rnorm(n)<0);
-#	AR(x,def,plot=TRUE);
-# TODO zaktualizowaæ dokkumentacjê!
+#' @examples
+#'	n<-1000;
+#'	x<-rnorm(n);
+#'	def<- as.numeric(x+rnorm(n)<0);
+#'	AR(x,def,plot=TRUE);
+ 
 AR<-function(score, def, plot=FALSE, return.table=FALSE, 
 									sort.order=NULL, label="", lgd_adjusted=FALSE,...)
 {
@@ -383,7 +358,6 @@ AR<-function(score, def, plot=FALSE, return.table=FALSE,
 #' 
 #' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
-#' @method print AR
 #' @export
 print.AR<-function(x){
 	print(x$label);
@@ -396,12 +370,11 @@ print.AR<-function(x){
 #' 
 #' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
-#' @method HTML AR
 HTML.AR<-function(x){
-	HTML(x$label);
-	HTML(x$stat);
+	R2HTML::HTML(x$label);
+	R2HTML::HTML(x$stat);
 	if (!is.null(x$table))
-		HTML(x$table);	
+		R2HTML::HTML(x$table);	
 }
 
 #' Zwraca statystyki przechowywane w obiekcie \code{\link{AR}}
@@ -422,7 +395,6 @@ getStats.AR<-function(x){
 #' Przekszta³ca obiekt na \code{\link{data.frame}}
 #' @param x obiekt klasy \code{AR}.
 #' @title Przekszta³ca obiekt na data.frame 
-#' @method as.data.frame AR
 #' @export   
 as.data.frame.AR<-function(x){
  s<-t(as.data.frame(x$stats))
@@ -440,10 +412,9 @@ as.data.frame.AR<-function(x){
 #' @param score Wektor ze zmienn¹ numeryczn¹. 
 #' @param default Wektor ze zmienn¹ dwumianow¹. 
 #' @param buckets Sugerowana liczba bucketów. 
-#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}
+#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}
 #' @param main Tytu³ wykresu. 
-#' @param hist_col Kolor histogramu 
-# @param method_bucket 
+#' @param hist_col Kolor histogramu  
 #' @param ylab Label
 #' @param xlab Label
 #' @param ... dodatkowe parametry.
@@ -465,9 +436,9 @@ informacje<-function(score, default, buckets=20, span=0.8, main="", hist_col="bl
 	h<-hist(score, plot=FALSE);
 #	w<-wygladz(score, default, buckets=buckets, span=span, type=type,  plot=FALSE, method_bucket=method_bucket);
 	if (length(unique(default))==2)
-		local<- locfit(default ~ lp(score, nn=span), family="binomial", link="logit")
+		local<- locfit::locfit(default ~ locfit::lp(score, nn=span), family="binomial", link="logit")
 	else
-		local<- locfit(default ~ lp(score, nn=span)) 
+		local<- locfit::locfit(default ~ locfit::lp(score, nn=span)) 
 	br2<-predict(local,newdata=h$mid, type="response");                                                                   
 	cut_<-cut(score, breaks=h$breaks);
 	br<-tapply(default, cut_, mean);
@@ -529,7 +500,7 @@ informacje<-function(score, default, buckets=20, span=0.8, main="", hist_col="bl
 #' @param default default.
 #' @param estym wartoœci wyestymowane przez model.
 #' @param buckets Sugerowana liczba bucketów. 
-#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link{locfit}}
+#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}
 #' @param hist_col Kolor histogramu 
 #' @param ylab Label
 #' @param xlab Label
@@ -551,9 +522,9 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 	par(mar = c(5, 4, 4, 5))
 	h <- hist(score, plot = FALSE, breaks=buckets)
 	if (length(unique(default)) == 2) 
-		local <- locfit(default ~ lp(score, nn = span), family = "binomial", 
+		local <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial", 
 				link = "logit")
-	else local <- locfit(default ~ lp(score, nn = span))
+	else local <- locfit::locfit(default ~ locfit::lp(score, nn = span))
 	br2 <- predict(local, newdata = h$mid, type = "response")
 	cut_ <- cut(score, breaks = h$breaks)
 	br <- tapply(default, cut_, mean)
@@ -610,22 +581,14 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 #' 		  modelem idealnym (np. w przypadku LGD).
 #' @author Micha³ Danaj
 #' @export 
-# @examples	
-#	n<-1000;
-#	x1<-rnorm(n);
-#	x2<-x1+rnorm(n);
-#	y<-(x1+rnorm(n))<0;
-#	
-#	ar<-AR(data.frame(x1,x2),y);
-#	plot_AR(ar, plot_type="ROC");
-plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
+plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 {
 	plot_type<-match.arg(plot_type);
 
 	if (class(ar)=="AR")
 		ar<-list(ar=ar);
 
-	plot(c(0,1), c(0,1), type="l", lty=1, col=1, xlab="", ylab="");
+	plot(c(0,1), c(0,1), type="l", lty=1, col=1, xlab="", ylab="",...);
 	if (plot_type=="CAP" && is.null(ar[[1]][['perfect_lgd_table']])){
 		br<-ar[[1]]$stats["br"];
 		lines(c(0,br,1),c(0,1,1), col=1);
@@ -657,7 +620,10 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 			col=kolej+1, cex=0.8, xjust=1, yjust=0, lty=kolej+1 )
 	
 }
- 
+
+# TODO Dodaæ opcjê subset.
+# TODO Co z b³edem out of vertex space?
+
 #'  Rysuje lokalnie wyg³adzon¹ funckjê.
 #'  
 #'  Rysuje i zwraca statystyki dla bucketów.  
@@ -665,15 +631,17 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 #' @param default Wektor zmiennej dwumianowej. 
 #' @param buckets Liczba bucketów, na ile nele¿y podzieliæ \code{score}. 
 #' @param wytnij Ile krañcowych obserwacji wyci¹æ. 
-#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link{locfit}}
-#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link{locfit}} 
+#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}
+#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}} 
 #' @param plot Czy rysowaæ wykres. 
-#' @param target jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
+#' @param plt_type jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
 #' @param new Czy rysowaæ wykres od nowa. 
 #' @param col_points Kolor punktów. 
 #' @param col_line Kolor lini. 
 #' @param index jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
 #'				W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.
+#' @param glm czy rysowaæ dopasowanie modelu logistycznego do zmiennej.
+#' @param col_glm kolor wykresu z modelu logistycznego.
 #' @param ... dodatkowe parametry.
 #' @author Micha³ Danaj 
 #' @export
@@ -685,39 +653,56 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE)
 #'		
 #'		reg_nieparam(x1,y, buckets=20)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
-# TODO Dodaæ opcjê subset.
-# TODO Co z b³edem out of vertex space?
 
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
-		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
-		col_line = "darkblue", index = FALSE, ...)
+		degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
+		col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="green", ...)
 {
+	
 	dane <- data.frame(score, default)
+	
 	if (wytnij > 0){
 		do_usuniecia<-usun_konce(dane$score, prob = wytnij);
 		if (length(do_usuniecia)>0)
 			dane <- dane[-do_usuniecia,]
 	}
+	
 	bucket <- buckety_br(dane$score, dane$default, buckets, method = "eq_count")
+	
 	if (length(unique(default)) == 2)
-		l <- locfit(default ~ lp(score, nn = span), family = "binomial",
+		l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",
 				link = "logit", data = dane)
-	else l <- locfit(default ~ lp(score, nn = span), data = dane)
+	else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane)
 	b2 <- predict(l, newdata = bucket$srodek)
-	if (target == "br")
+	
+	if (plt_type == "br")
 		bucket2 <- cbind(bucket, fitted = b2)
 	else bucket2 <- cbind(bucket, fitted = log(b2/(1 - b2)))
+	
 	skala <- sqrt(bucket$n_obs/(length(score)/buckets))
 	x <- bucket2$srodek
+	
 	if (index)
 		x <- bucket$nr
+	
+	#model logistyczny
+	if (glm){
+		model<-glm(default~score, family=binomial)
+		pred<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
+	}
+	
 	if (plot) {
 		if (new == TRUE)
-			plot(x, with(bucket2, get(target)), col = col_points,
+			plot(x, with(bucket2, get(plt_type)), col = col_points,
 					cex = skala, ...)
-		else points(x, with(bucket2, get(target)), cex = skala,
+		else points(x, with(bucket2, get(plt_type)), cex = skala,
 					col = col_points, ...)
 		lines(x, bucket2$fitted, col = col_line, ...)
+		
+		if (glm){
+			lines(x[order(x)], pred[order(x)], col=col_glm)
+			points(x, pred, col=col_glm)
+		}
 	}
 	bucket2
 }
@@ -768,4 +753,90 @@ usun_konce<-function (score, prob = 0.01, weights=NULL)
 		new_max <- as.numeric(names(s[temp]));
 	
 	return(which(score <= new_min | new_max <= score))
+}
+
+
+#' Sprawdzenie, czy estymacja modelu dobrze t³umaczy zale¿noœæ targetu od zmiennej
+#' 
+#' @param x wektror z wartoœciami zmiennej
+#' @param y wektor z predykcj¹ modelu 
+#' @param bucket grupowanie zmiennej
+#' @param subset podzbiór 
+#' @param ... dodatkowe parametry graficzne 
+#' @return bucket z dodanymi wyestymowanymi wartoœciami
+#' 
+#' @author Micha³ Danaj
+#' @export
+dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
+	if (!is.null(subset)){
+		x<-x[subset]
+		y<-y[subset]
+	}
+	if (any(is.na(y))){
+		ile_na<-sum(is.na(y))
+		warning(sprintf("W 'y' bylo %s brakow danych. Zostaly usuniete.", ile_na))
+		x<-x[!is.na(y)]
+		y<-y[!is.na(y)]
+	}
+	bucket_new<-bucket
+	bucket$fitted<-rownames(bucket)
+	pred<-przypisz2(x, bucket)
+	y_bucket<-tapply(y, pred, mean)
+	bucket_new$model<-y_bucket[rownames(bucket_new)]
+	plot(bucket_new$nr[-nrow(bucket_new)], bucket_new$br[-nrow(bucket_new)],...)
+	points(bucket_new$nr, bucket_new$model, col="blue", pch=4)
+	bucket_new
+}
+
+
+
+#liczê korelacje zmiennych z modelu ze zmiennymi do dodania
+#' Wynik funkcji add1, po usuniêciu zmiennych skorelowanych
+#' 
+#' Sprawdza stopieñ korelacji zmiennych z danych \code{data} ze zmiennymi z modelu \code{model}. Jeœli korelacja
+#' przekracza \code{cor_threshold}, to zmienna usuwana jest z dalszych analiz. Dla pozosta³ych zmiennych 
+#' stosowana jest funkcja \code{\link{add1}}. W danych nie mo¿e byæ braków danych.
+#' TODO Funkcja nie przetestowana, jeszcze do dopracowania!!!
+#' @param data \code{data.frame} ze zmiennymi do dodania do modelu
+#' @param model model do rozszerzenia
+#' @param target_var_name nazwa zmiennej z targetem
+#' @param cor_threshold graniczna wartoœæ korelacji, po przekroczeniu której zmienna jest uwuwana z analiz
+#' @return Statystyki
+#' 
+#' @author Micha³ Danaj
+#' @export
+step_bez_kor<-function(data, model, target_var_name='target', cor_threshold=0.75){
+	
+	if (any(is.na(data)))
+		stop("W danych nie mo¿e byæ braków danych!")
+	
+	#zmienne w modelu
+	zmienne_model<-names(coef(model)[-1])
+	
+	#zmienne z danych z budowy modelu
+	#zmienne_budowa<-nazwy_zmiennych
+	zmienne_budowa<-names(data)
+	
+	#korelacja miêczy nimi
+	korel<-as.data.frame(cor(data[,zmienne_budowa]))
+	korel_zm_model<-korel[zmienne_model,]
+	
+	#gdzie akceptowalna korelacja
+	korelacje_max<-apply(abs(korel_zm_model), 2, max)	
+	czy_przekracza<-as.data.frame(abs(korel_zm_model)>cor_threshold)
+	czy_przekracza<-sapply(czy_przekracza, any)
+	
+	#TODO usun¹æ równie¿ kolumny
+	zmienne<-names(czy_przekracza[czy_przekracza==FALSE & !is.na(czy_przekracza)])
+	
+	#usuwam target
+	zmienne<-zmienne[zmienne!=target_var_name]
+	
+	#robiê stepa
+	#form<-make_model_formula('target',zmienne_budowa)
+	form<-make_model_formula(target_var_name, c(".",zmienne))
+	dodana_zmienne<-add1(model, scope= form, test='Chisq')	
+	kolejnosc_aic<-order(dodana_zmienne$AIC)
+	
+	cbind(dodana_zmienne[kolejnosc_aic,], cor_max=korelacje_max[rownames(dodana_zmienne[kolejnosc_aic,])])
 }
