@@ -659,7 +659,7 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 #' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}
 #' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}} 
 #' @param plot Czy rysowaæ wykres. 
-#' @param target jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
+#' @param plt_type jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
 #' @param new Czy rysowaæ wykres od nowa. 
 #' @param col_points Kolor punktów. 
 #' @param col_line Kolor lini. 
@@ -680,7 +680,7 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
 
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
-		degree = 2, plot = TRUE, target = "br", new = TRUE, col_points = "black",
+		degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
 		col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="green", ...)
 {
 	
@@ -700,7 +700,7 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane)
 	b2 <- predict(l, newdata = bucket$srodek)
 	
-	if (target == "br")
+	if (plt_type == "br")
 		bucket2 <- cbind(bucket, fitted = b2)
 	else bucket2 <- cbind(bucket, fitted = log(b2/(1 - b2)))
 	
@@ -718,9 +718,9 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	
 	if (plot) {
 		if (new == TRUE)
-			plot(x, with(bucket2, get(target)), col = col_points,
+			plot(x, with(bucket2, get(plt_type)), col = col_points,
 					cex = skala, ...)
-		else points(x, with(bucket2, get(target)), cex = skala,
+		else points(x, with(bucket2, get(plt_type)), cex = skala,
 					col = col_points, ...)
 		lines(x, bucket2$fitted, col = col_line, ...)
 		
@@ -809,7 +809,7 @@ dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
 	y_bucket<-tapply(y, pred, mean)
 	bucket_new$model<-y_bucket[rownames(bucket_new)]
 	plot(bucket_new$nr[-nrow(bucket_new)], bucket_new$br[-nrow(bucket_new)],...)
-	points(bucket_new$nr, bucket_new$model, col="green")
+	points(bucket_new$nr, bucket_new$model, col="blue", pch=4)
 	bucket_new
 }
 
