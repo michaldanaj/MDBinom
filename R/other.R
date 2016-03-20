@@ -11,8 +11,8 @@
 #' Rysuje kalibracjê modelu
 #' @param score Zmienna na osi OX.
 #' @param response Zmienna celu.
-#' @param estim Wyestymowana wartoœæ przez model.
-#' @param target Co ma byæ na osi OY.
+#' @param estim Wyestymowane wartoœæ przez model(e). Mo¿e byœ wektor lub lista wektorów.
+#' @param plt_type Co ma byæ na osi OY. Czy œrednia z wartoœci \code{response}, czy logit.
 #' @param ylab Opis osi OY.
 #' @param xlab Opis osi OX.
 #' @param ... Parametry graficzne.
@@ -21,26 +21,26 @@
 #' @author Piotr
 #' @export
 plotCalibr<-
-		function (score, response, estim, target = c("br", "logit"), ylab=y_name,
+		function (score, response, estim, plt_type = c("br", "logit"), ylab=plt_type,
 				xlab="score",    ...)
 {
-	target <- match.arg(target)
+	plt_type <- match.arg(plt_type)
 	if (!is.list(estim))
 		estim <- list(estim)
-	y_name <- "PD"
-	if (target == "logit")
-		y_name <- "logit"
-	buck <- reg_nieparam(score, response, target = target, ylab = ylab,
+
+	buck <- reg_nieparam(score, response, plt_type = plt_type, ylab = ylab,
 			xlab = xlab, ...)
 	grupy_skala <- data.frame(od = buck$od, do = buck$do, fitted = buck$nr)
 	grupy <- przypisz(score, grupy_skala)
 	kolejnosc <- order(score)
+	
 	for (i in 1:length(estim)) {
 		estim_grp <- tapply(estim[[i]], grupy, mean)
+		
 		buck <- cbind(buck, estim_grp)
 		names(buck) <- c(names(buck)[1:(ncol(buck) - 1)], paste(names(estim[i]),
 						"br", sep = "_"))
-		if (target == "logit") {
+		if (plt_type == "logit") {
 			estim[[i]] <- logit(estim[[i]])
 			buck <- cbind(buck, logit(estim_grp))
 			names(buck) <- c(names(buck)[1:(ncol(buck) - 1)],
