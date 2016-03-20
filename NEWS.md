@@ -1,3 +1,12 @@
+# v.5.0.0.9005 2016-03-20
+
+* Zmiana nazwy parametru na plt_type w plotCalibr.
+* Dodany plik preliminary i funkcje prel*.
+* Drobne zmiany w funkcjach reg_nieparam i plotCalibr
+*  w reg_nieparam zmiana nazwy parametru target na plt_type
+*  w dopasowanie_do_zmiennej zmiana koloru i typu punktu
+
+
 # v.5.0.0.9004 xxxxxx
 
 * Dodanie w funkcji reg_nieparam rysowania dopasowania modelu logistycznego do zmiennej

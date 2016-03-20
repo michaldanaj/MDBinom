@@ -254,14 +254,10 @@ univariate_anal_stats1<-function(x,y,
 		forceContinous=FALSE,
 		span=0.9,...){
 	
+		
 	if (length(x)!=length(y))
 		stop("paramet ry 'x' i 'y' maj¹ ró¿ne d³ugoœci!");
-	
-	#Mimo, ¿e przygotowywya³em funkcjê do obs³ugi null-i, to rezygnujê z tego
-	#ze wzglêdów bezpieczeñstwa.
-	#if (any(is.na(y)))
-	#	stop ("W 'y' nie mo¿e byæ NA!");
-	
+		
 	
 	## jeœli s¹ jakieœ nulle w x, to odpowiednio siê nimi zajmujê
 	nulle<-is.na(x)
@@ -277,11 +273,6 @@ univariate_anal_stats1<-function(x,y,
 		
 	}
 	
-	## patrzê, czy nie ma skupisk w jakichœ wartoœciach. Jeœli tak, to bêdê je traktowaæ jako wartoœci specjalne
-	## skupiska_freq<-prop.table(table(x))
-	## skupiska <- skupiska_freq>numeric_var_treatment.params$separate_value_thr;
-	## special_val<-unique(c(special_val,names(skupiska_freq)[skupiska]))
-	
 	
 	## jeœli jest to zmienna dyskretna lub mapowanie
 	if (!is.null(mapping)||((length(unique(x))<=discrete_threshold || !is.numeric(x))&&
@@ -292,6 +283,7 @@ univariate_anal_stats1<-function(x,y,
 		
 		discret<-buckety_stat(x, y, total=TRUE);
 		
+		#Sprawdzam, czy nie ma za du¿o zmiennnych kategorycznych. Parametr okreœlony z parametru.
 		if(nrow(discret)-1 > no_stats_threshold)
 			return("Too many categorical levels")
 		

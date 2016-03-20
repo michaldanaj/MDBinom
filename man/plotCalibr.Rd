@@ -4,17 +4,17 @@
 \alias{plotCalibr}
 \title{Rysuje kalibracjê modelu}
 \usage{
-plotCalibr(score, response, estim, target = c("br", "logit"), ylab = y_name,
-  xlab = "score", ...)
+plotCalibr(score, response, estim, plt_type = c("br", "logit"),
+  ylab = plt_type, xlab = "score", ...)
 }
 \arguments{
 \item{score}{Zmienna na osi OX.}
 
 \item{response}{Zmienna celu.}
 
-\item{estim}{Wyestymowana wartoœæ przez model.}
+\item{estim}{Wyestymowane wartoœæ przez model(e). Mo¿e byœ wektor lub lista wektorów.}
 
-\item{target}{Co ma byæ na osi OY.}
+\item{plt_type}{Co ma byæ na osi OY. Czy œrednia z wartoœci \code{response}, czy logit.}
 
 \item{ylab}{Opis osi OY.}
 

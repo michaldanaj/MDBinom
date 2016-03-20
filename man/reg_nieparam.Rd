@@ -7,7 +7,7 @@
  Rysuje i zwraca statystyki dla bucketów.}
 \usage{
 reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
-  degree = 2, plot = TRUE, target = "br", new = TRUE,
+  degree = 2, plot = TRUE, plt_type = "br", new = TRUE,
   col_points = "black", col_line = "darkblue", index = FALSE,
   glm = FALSE, col_glm = "green", ...)
 }
@@ -26,7 +26,7 @@ reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
 
 \item{plot}{Czy rysowaæ wykres.}
 
-\item{target}{jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)}
+\item{plt_type}{jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)}
 
 \item{new}{Czy rysowaæ wykres od nowa.}
 
