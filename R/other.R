@@ -98,26 +98,6 @@ makeCoarseClassingTables<-function(wyniki){
 
 
 
-#' Rysuje interakcje dwóch zmiennych
-#' @param zm1 Pierwsza zmienna.
-#' @param zm2 Druga zmienna.
-#' @param target Zmienna celu. 
-#' @return 
-#' 
-#' @author Micha³ Danaj
-#' @export
-interakcja<-function(zm1, zm2, target){
-	dwa<-tapply(target, list(zm1,zm2), mean)
-	jeden<-log(dwa/(1-dwa))
-	#jeden<-jeden[-grep('-999', rownames(jeden)),];
-	#jeden<-jeden[,-grep('-999', colnames(jeden))];
-	mfrow_oryg<-par('mfrow')
-	par(mfrow=c(2,1))
-	matplot(dwa, type=rep('b', ncol(jeden)))
-	matplot(jeden, type=rep('b', ncol(jeden)))
-	par(mfrow=mfrow_oryg)
-	dwa
-}
 
 
 #' Przypisuje woe na podstawie br z bucketa.
@@ -196,12 +176,18 @@ przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='
 		if (!(zmienna %in% vars)) 
 			next;
 		
-		####   wyliczam   woe    ######
 		
 		#Wyci¹gam element listy
 		bucket<-bucket_list[[zmienna]]
 		#bucket<-bucket[rownames(bucket)!='TOTAL',]
-		
+
+		#Sprawdzam, czy nie jest to komunikat o niespe³nieniu kryteriów dyskretyzacji. Jeœli tak, 
+		#to wypisujê stosowny komunikat.
+		if (class(bucket)=="character"){
+			warning(paste("Zmienna", zmienna, "nie ma obiektu z dysretyzacj¹. Przyczyna braku dyksretyzacji to:", bucket,". Zmienna ta zostanie pominiêta w liœcie z wynikiem zwróconym przez funkcjê."))
+			next;
+		}
+			
 		#jeœli badów lub goodów jest 0, to przyjmujê ¿e jest 0.5	
 		
 		fitted = bucket[,colname]
