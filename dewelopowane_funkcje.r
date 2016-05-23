@@ -1,3 +1,74 @@
+
+
+library('Hmisc')
+library('MDBinom')
+
+#########
+
+
+load("C:\\Users\\Piotr\\workspace\\CP\\dane02.RData")
+load("C:\\Users\\Piotr\\workspace\\CP\\wyniki_univ.RData") 
+
+######
+
+###########################################  interakcje ##########################################
+
+lista_zmiennych<-c('AboCenaPodstawowa','Kara','WhiteListPESEL','dataAktNajstarszegoKontr','Wiek')
+
+zmienne_raport<-univariate_loop(dane, dane$target, 
+		vsub_list = lista_zmiennych)
+genRaport(zmienne_dyskr, show=TRUE, )
+
+
+zmienne_dyskr <- lapply(zmienne_raport, function(x)x[[1]])
+
+
+dane_nowe_zmienne<-przypisz_z_listy(bucket_list = zmienne_dyskr
+						, data = dane
+						, vars = lista_zmiennych
+						, colname='label'
+						, varname_sufix='label')
+				
+
+				
+target<-dane$target
+var1<-dane_nowe_zmienne$AboCenaPodstawowa_label
+var2<-dane_nowe_zmienne$Wiek_label
+
+interactionsTest(var1,var2, target)
+
+wynik<-interactionsTestAll(dane
+		, zmienne_dyskr)
+
+		, vars_names=names(discr_list)
+		, target=dane$target
+		, colname='label'
+		, varname_sufix='label')
+
+
+data<-dane
+discr_list <- zmienne_dyskr
+vars_names=names(discr_list)
+target=dane$target
+colname='label'
+varname_sufix='label'
+
+
+
+
+
+
+
+
+windows()
+interakcja(var1, var2, target)
+interakcja(var2, var1, target)
+
+
+##################################################################################################
+
+
+
 buckety_stat_wtd<-function(bucket, default, weights=rep(1,length(bucket)), total=TRUE)
 {
 

@@ -5,7 +5,7 @@
 \title{Na podstawie listy z bucketami przypisuje odpowiednie wartoœci}
 \usage{
 przypisz_z_listy(bucket_list, data, vars = names(bucket_list),
-  colname = "fitted", varname_sufix = colname)
+  colname = "fitted", varname_sufix = colname, sep_sufix = "_")
 }
 \arguments{
 \item{bucket_list}{Lista bucketów.}
@@ -17,6 +17,9 @@ przypisz_z_listy(bucket_list, data, vars = names(bucket_list),
 \item{colname}{Nazwa kolumny z bucketa, na podstawie którego nale¿y dopisaæ wartoœci.}
 
 \item{varname_sufix}{Sufiks do nazw nowych zmiennych.}
+
+\item{sep_sufix}{Parametr umo¿liwiaj¹cy zmianê separatora sufiksa. Domyœlnie podkreœlenie - zosta³a ustalona
+w celu zachowania kompatybilnoœci z wersj¹ funkcji bez tego parametru.}
 }
 \value{
 

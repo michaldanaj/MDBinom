@@ -1,3 +1,9 @@
+# v.5.1.1 2016-05-23
+
+* Wyciągnięcie funkcji interakcje do nowego pliku interakcje.R. 
+* W przypisz_z_listy uwzględnienie, że w elemencie listy może znaleść się
+komentarz a nie data.frame.
+
 # v.5.1.0 2016-03-20
 
 W poprzednich deweloperskich wersjach zostały dodane wszyskie funkcje tworzone poza pakietem. Równocześnie zostały wprowadzone różne drobne poprawki i zmiany. Tym samym kończy się etap porządkowania i jest to moment na zmianę wersji pakietu z 4 na 5.
