@@ -163,11 +163,13 @@ przypisz_woe_z_listy<-function(bucket_list, data, vars=names(bucket_list), varna
 #' @param vars Zmienne do przypisania.
 #' @param colname Nazwa kolumny z bucketa, na podstawie którego nale¿y dopisaæ wartoœci.
 #' @param varname_sufix Sufiks do nazw nowych zmiennych.
+#' @param sep_sufix Parametr umo¿liwiaj¹cy zmianê separatora sufiksa. Domyœlnie podkreœlenie - zosta³a ustalona
+#' 		w celu zachowania kompatybilnoœci z wersj¹ funkcji bez tego parametru.
 #' @return 
 #' 
 #' @author Micha³ Danaj
 #' @export
-przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='fitted', varname_sufix=colname){
+przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='fitted', varname_sufix=colname, sep_sufix="_"){
 	
 	data_out<-NULL
 	
@@ -209,7 +211,7 @@ przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='
 		
 	}
 	
-	names(data_out)<-paste(names(data_out), varname_sufix, sep="_")
+	names(data_out)<-paste(names(data_out), varname_sufix, sep=sep_sufix)
 	data_out
 }	
 
