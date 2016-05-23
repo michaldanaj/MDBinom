@@ -1,3 +1,8 @@
+# v.5.1.2 2016-05-23
+
+* Dodanie funkcji do interakcji. 
+* Kilka innych drobnych zmian
+
 # v.5.1.1 2016-05-23
 
 * Wyciągnięcie funkcji interakcje do nowego pliku interakcje.R. 

@@ -9,22 +9,22 @@ interactionsTest(var1, var2, target)
 \arguments{
 \item{var1}{wektor z wartoœciami pierwszej zmiennej.}
 
-\item{var2}{wektro z wartoœciami drugiej zmiennej.}
+\item{var2}{wektor z wartoœciami drugiej zmiennej.}
 
 \item{target}{wektor z wartoœciami zmiennej celu.}
 }
 \value{
 Zwraca listê z szeregiem statystyk:
 \item{"p-value"}{p-value interakcji} 
-\item{licznosc}{licznoœci obserwacji na przeciêciu zmiennych}
-\item{licznosc_target}{licznoœci targetu na przeciêciu zmiennych}
-\item{mean_real}{œrednia wartoœæ targetu  na przeciêciu zmiennych}
-\item{mean_pred1}{predykcja z modelu bez interakcji na przeciêciu zmiennych} 
-\item{mean_pred2}{precykcja z modelu z interakcjami na przeciêciu zmiennych}
+\item{licznosc}{licznoœci obserwacji na przeciêciach zmiennych}
+\item{licznosc_target}{licznoœci targetu na przeciêciach zmiennych}
+\item{mean_real}{œrednia wartoœæ targetu  na przeciêciach zmiennych}
+\item{mean_pred1}{predykcja z modelu bez interakcji na przeciêciach zmiennych} 
+\item{mean_pred2}{precykcja z modelu z interakcjami na przeciêciach zmiennych}
 }
 \description{
 Funkcja zak³ada, ¿e \code{var1} oraz \code{var2} s¹ zmiennymi dyskretnymi. Konwertowane s¹ one do
-typu \code{factror} i sprawdzany jest p-value modelu z interakcjami w stosunku do modelu bez interakcji.
+typu \code{factor} i sprawdzany jest p-value modelu z interakcjami w stosunku do modelu bez interakcji.
 Wykorzystany jest test Chi-kwadrat odchylenia modelu.
 }
 \author{
