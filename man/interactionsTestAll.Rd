@@ -21,12 +21,12 @@ przypisania dyskretyzacji zmiennej.}
 }
 \value{
 Zwrócona zostanie lista z dwoma elementami:
-\item{pvalue_table} Zawiera \code{data.frame} z nazw¹ pierwszej zmiennej, drugiej zmiennej, oraz p-value interakcji.
-\item{details} Zawiera listê ze statystykami zwróconymi przez \code{\link{interactionsTest}}.
+\item{pvalue_table}{Zawiera \code{data.frame} z nazw¹ pierwszej zmiennej, drugiej zmiennej, oraz p-value interakcji.}
+\item{details}{Zawiera listê ze statystykami zwróconymi przez \code{\link{interactionsTest}}.}
 }
 \description{
 Na podstawie zmiennych Ÿród³owych oraz definicji
-dyskretyzacji z\code{discr_list}, funkcja przypisuje zmiennym ich wartoœci dyskretne oraz
+dyskretyzacji z \code{discr_list}, funkcja przypisuje zmiennym ich wartoœci dyskretne oraz
 testuje interakcjê ka¿dej pary ze zmiennych okreœlonych w \code{vars_names}. Do testowania korzysta z funkcji \code{\link{interactionsTest}}.
 }
 \author{
