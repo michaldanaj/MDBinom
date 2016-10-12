@@ -1,34 +1,41 @@
-# Funkcje zaczynaj¹ce siê na univariate
+# Funkcje zaczynajÄ…ce siÄ™ na univariate
 # 
 # Author: Piotr
 ###############################################################################
 
 
-# TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki, bo póŸniej
-# sortujemy i odnosimy siê tym porz¹dkiem do pocz¹tkowego porz¹dku
-# TODO obs³uga jednego przedzia³u dla interpolacji
-#' Przypisuje wartoœci zdefiowane w \code{bucket} 
+# TODO  BUG! JeÅ›li bucket wiersze nie bÄ™dÄ… posortowane, to bÄ™dÄ… bÅ‚Ä™dne wyniki, bo pÃ³Åºniej
+# sortujemy i odnosimy siÄ™ tym porzÄ…dkiem do poczÄ…tkowego porzÄ…dku
+# TODO obsÅ‚uga jednego przedziaÅ‚u dla interpolacji
+# TODO do przetestowania zaokrÄ…glenia
+#' Przypisuje wartoÅ›ci zdefiowane w \code{bucket} 
 #' 
-#' Znajduje przedzia³ opisany w \code{bucket}, do którego nale¿y \code{x} i 
-#' przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
+#' Znajduje przedziaÅ‚ opisany w \code{bucket}, do ktÃ³rego naleÅ¼y \code{x} i 
+#' przypisuje wartoÅ›Ä‡ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjÄ™.
 #'
-#' Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹ 
-#' œrodki przedzia³ów, pomiêdzy którymi le¿y \code{x}, a wartoœciami
-#' \code{bucket$fitted} odpowiadaj¹ce tym œrodkom.  
+#' JeÅ›li \code{interpor=TRUE}, wykonuje interpolacjÄ™, ktÃ³rej wÄ™zÅ‚ami sÄ… 
+#' Å›rodki przedziaÅ‚Ã³w, pomiÄ™dzy ktÃ³rymi leÅ¼y \code{x}, a wartoÅ›ciami
+#' \code{bucket$fitted} odpowiadajÄ…ce tym Å›rodkom.  
+#' 
+#' Aby zapobiec skutkom bÅ‚edÃ³w numerycznych, domyÅ›lnie wartoÅ›ci \code{x}, jak i \code{bucket$srodek},
+#' \code{bucket$od}, \code{bucket$do} zaokrÄ…glone sÄ… do 15-tej cyfry znaczÄ…cej.
 #' 
 #' @param x Wektor zmiennych numerycznych. 
 #' @param bucket \code{data.frame} z kolumnami:
 #'		\itemize{
-#' 			\item od. Dolny kraniec przedzia³u.
-#' 			\item do Górny kreniec przedzia³u.
-#' 			\item srodek Œrodek przedzia³u.
-#' 			\item fitted Wartoœæ przypisana do danego przedzia³u.
+#' 			\item od. Dolny kraniec przedziaÅ‚u.
+#' 			\item do GÃ³rny kreniec przedziaÅ‚u.
+#' 			\item srodek Åšrodek przedziaÅ‚u.
+#' 			\item fitted WartoÅ›Ä‡ przypisana do danego przedziaÅ‚u.
 #' 		}
-#' @param interpol Czy przeprowadziæ interpolacjê?
+#' @param interpol Czy przeprowadziÄ‡ interpolacjÄ™?
+#' @param round Czy zaokrÄ…glaÄ‡. DomyÅ›lnie tak.
+#' @param digits Do ktÃ³rej cyfry znaczÄ…cej zaokrÄ…glaÄ‡. DomyÅ›lnie do 15-tej.
 #' 
-#' @return  Wektor wartoœci.
-#' 
-#' @author Micha³ Danaj
+#' @return  Wektor wartoÅ›ci.
+#' @seealso \code{\link{przypisz}}
+#' @seealso \code{\link{mapuj}}
+#' @author MichaÅ‚ Danaj
 #' 
 #' @examples
 #' 		n<-1000;
@@ -47,8 +54,16 @@
 #' 
 #' @export
 
-przypisz<-function (x, bucket, interpol = FALSE)
+przypisz<-function (x, bucket, interpol = FALSE, round=TRUE, digits=15)
 {
+	#zaokrÄ…glam
+	if (round){
+		x <- signif(x,digits)
+		bucket$srodek <- signif(bucket$srodek,digits)
+		bucket$od <- signif(bucket$od,digits)
+		bucket$do <- signif(bucket$do,digits)
+	}
+	
 	n <- dim(bucket)[1]
 	{
 		if (interpol) {
@@ -75,40 +90,60 @@ przypisz<-function (x, bucket, interpol = FALSE)
 }
 
 
-# TODO  BUG! Jeœli bucket wiersze nie bêd¹ posortowane, to bêd¹ b³êdne wyniki,
-# TODO Coœ nie dzia³a obs³uga,  gdy w x s¹ NA, np. zmienna Wiek
-#' Przypisuje dyskretyzacjê
+# TODO  BUG! JeÅ›li bucket wiersze nie bÄ™dÄ… posortowane, to bÄ™dÄ… bÅ‚Ä™dne wyniki,
+# TODO CoÅ› nie dziaÅ‚a obsÅ‚uga,  gdy w x sÄ… NA, np. zmienna Wiek
+#' Przypisuje dyskretyzacjÄ™
 #' 
-#' Przypisuje zmienne dyskretne oraz ci¹g³e w oparciu o podane przedzia³y, uwzglêdnia wartoœci
-#' specjalne
+#' Przypisuje zmienne dyskretne oraz ciÄ…gÅ‚e w oparciu o podane przedziaÅ‚y, uwzglÄ™dnia wartoÅ›ci
+#' specjalne.
+#' 
+#' #' Aby zapobiec skutkom bÅ‚edÃ³w numerycznych, domyÅ›lnie wartoÅ›ci \code{x}, jak i \code{bucket$srodek},
+#' \code{bucket$od}, \code{bucket$do} zaokrÄ…glone sÄ… do 15-tej cyfry znaczÄ…cej. Podobnie przy zmiennych
+#' dyskretnych numerycznych. WiÄ™cej szczegÃ³Å‚Ã³w w \code{\link{przypisz}}.
+#' 
+#'
 #' @param x Wektor zmiennych numerycznych. 
 #' @param bucket \code{data.frame} z bucketami.
-#' @param interpol Czy przeprowadziæ interpolacjê?
-#' @param fitted Nadpisuje wektor \code{bucket$fitted} i na tej podstawie przypisuje wartoœci.  
-#' @param NA_substit wartoœæ do podstawienia za brak danych
+#' @param interpol Czy przeprowadziÄ‡ interpolacjÄ™?
+#' @param fitted Nadpisuje wektor \code{bucket$fitted} i na tej podstawie przypisuje wartoÅ›ci.  
+#' @param NA_substit wartoÅ›Ä‡ do podstawienia za brak danych
+#' @param round Czy zaokrÄ…glaÄ‡. DomyÅ›lnie tak.
+#' @param digits Do ktÃ³rej cyfry znaczÄ…cej zaokrÄ…glaÄ‡. DomyÅ›lnie do 15-tej.
 #' @seealso \code{\link{przypisz}}
-#' @return  Wektor wartoœci.
-#' @author Micha³ Danaj
+#' @seealso \code{\link{mapuj}}
+#' @return  Wektor wartoÅ›ci.
+#' @author MichaÅ‚ Danaj
 #' @export
-przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-2147483647)
+przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-2147483647, round=TRUE, digits=15)
 {
 	
 	if (!is.null(fitted))
 		bucket$fitted<-as.vector(fitted);
 	
 	if (is.null(bucket$fitted) & is.null(fitted))
-		stop("Brak kolumny 'bucket$fitted' oraz parametru 'fitted'. Przynajmniej jeden powinien byæ uszupe³niony.")
+		stop("Brak kolumny 'bucket$fitted' oraz parametru 'fitted'. Przynajmniej jeden powinien byÄ‡ uszupeÅ‚niony.")
 	
 	if (is.factor(bucket$fitted))
-		warning("przypisz2: Uwaga! bucket$fitted jest typu factor, co prowadzi do dziwnych wyników!");
+		warning("przypisz2: Uwaga! bucket$fitted jest typu factor, co prowadzi do dziwnych wynikÃ³w!");
 	
-	#inicjujê wektor z wynikami
+	# ZokrÄ…glenia.
+	if (round & is.numeric(x)){
+		x <- signif(x,digits)
+		bucket$srodek <- signif(bucket$srodek,digits)
+		bucket$od <- signif(bucket$od,digits)
+		bucket$do <- signif(bucket$do,digits)	
+		
+		if (is.numeric(bucket$discret))
+			bucket$discret<-signif(bucket$discret,digits)
+	}	
+	
+	#inicjujÄ™ wektor z wynikami
 	if (is.numeric(bucket$fitted))
 		wynik<-rep(NA, length(x))
 	else
 		wynik<-rep("<NA>", length(x));
 	#print(bucket)
-	#Jeœli buckety okreœlone s¹ przez warunki mapuj¹ce
+	#JeÅ›li buckety okreÅ›lone sÄ… przez warunki mapujÄ…ce
 	jest_mapowanie=FALSE
 	if (!is.null(bucket$mapping_war))
 		if(any(!is.na(bucket$mapping_war)))
@@ -119,12 +154,12 @@ przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-21474836
 		wynik<-mapuj(x, mmm[,1:2])
 	}
 	else{
-		#rozdzielam na wartoœci dyskretne i ci¹g³e
+		#rozdzielam na wartoÅ›ci dyskretne i ciÄ…gÅ‚e
 		ciagle_buck<-bucket[!is.na(bucket$od),];
-		#wybieram dyskretne wartoœci i usuwam totala
+		#wybieram dyskretne wartoÅ›ci i usuwam totala
 		dyskretne_buck<-bucket[is.na(bucket$od) & bucket$discret!="<TOTAL>",];
 		
-		#czy s¹ jakieœ przedzia³y
+		#czy sÄ… jakieÅ› przedziaÅ‚y
 		if (nrow(ciagle_buck)>0){
 			if (interpol)
 			{
@@ -149,28 +184,28 @@ przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-21474836
 		}
 		
 		
-		# Jeœli bucket zdefiniowa³ obs³ugê braków danych, to wszystkie braki podmieniam
-		# wartoœci¹ specjaln¹ oznaczajac¹ brak danych
+		# JeÅ›li bucket zdefiniowaÅ‚ obsÅ‚ugÄ™ brakÃ³w danych, to wszystkie braki podmieniam
+		# wartoÅ›ciÄ… specjalnÄ… oznaczajacÄ… brak danych
 		if (any(rownames(bucket)== NA_substit))
 			x[is.na(x)]<-NA_substit;
 		
-		## I jeszcze wartoœci dyskretne lub specjalne
-		# gdzie s¹
+		## I jeszcze wartoÅ›ci dyskretne lub specjalne
+		# gdzie sÄ…
 		spec_bool<- x %in% dyskretne_buck$discret;
 		#jakie_sa
 		spec_idx<- match(x, dyskretne_buck$discret);
-		#nadpisujê
+		#nadpisujÄ™
 		wynik[spec_bool]<- dyskretne_buck$fitted[na.omit(spec_idx)];
 		
 	}
 	
 	
-	#sprawdzam, czy s¹ jakieœ nieprzypisane wartoœci. Jeœli tak, to rzucam ostrze¿enie;
+	#sprawdzam, czy sÄ… jakieÅ› nieprzypisane wartoÅ›ci. JeÅ›li tak, to rzucam ostrzeÅ¼enie;
 	if (is.numeric(bucket$fitted)){
 		if (any(is.na(wynik)))
-			warning("przypisz2: Nie wszystkie wartoœci zosta³y przypisane do bucketa. Pozosta³y braki danych.")	
+			warning("przypisz2: Nie wszystkie wartoÅ›ci zostaÅ‚y przypisane do bucketa. PozostaÅ‚y braki danych.")	
 	} 	else if(any(wynik=="<NA>"))
-		warning("przypisz2: Nie wszystkie wartoœci zosta³y przypisane do bucketa. Pozosta³y braki danych,
+		warning("przypisz2: Nie wszystkie wartoÅ›ci zostaÅ‚y przypisane do bucketa. PozostaÅ‚y braki danych,
 						oznaczone jako <NA>'.")
 	
 	if (!is.numeric(wynik))
@@ -181,35 +216,35 @@ przypisz2<-function(x, bucket, interpol=FALSE, fitted=NULL, NA_substit=-21474836
 
 
 
-#' Na podstawie zadanych warunków przypisuje etykiety
+#' Na podstawie zadanych warunkÃ³w przypisuje etykiety
 #' 
-#' Na podstawie zadanych warunków w \code{mapping$war} przypisuje etykietê \code{mapping$label}.
-#' W \code{mapping$label} nie mo¿e byæ wartoœci pustych stringów. Pusty string stosowany jest jako
-#' brak danych. Jeœli dla jakieœ elementu ¿aden warunek nie zachodzi, zwracany jest pusty string.    
+#' Na podstawie zadanych warunkÃ³w w \code{mapping$war} przypisuje etykietÄ™ \code{mapping$label}.
+#' W \code{mapping$label} nie moÅ¼e byÄ‡ wartoÅ›ci pustych stringÃ³w. Pusty string stosowany jest jako
+#' brak danych. JeÅ›li dla jakieÅ› elementu Å¼aden warunek nie zachodzi, zwracany jest pusty string.    
 #'
-#' Mo¿liwe jest okreœlenie warunku \code{else} poprzez wpisanie w \code{mapping$war} stringa "else".
+#' MoÅ¼liwe jest okreÅ›lenie warunku \code{else} poprzez wpisanie w \code{mapping$war} stringa "else".
 #'
-#' @param data \code{data.frame} do którego bêdzie przypisywane mapowanie
+#' @param data \code{data.frame} do ktÃ³rego bÄ™dzie przypisywane mapowanie
 #' @param mapping   \code{data.frame} z dwoma kolumnami znakowymi (lub do przerobienia przez \code{as.character})
 #'			  \code{war} oraz \code{label}
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 mapuj<-function(data, mapping){
 	
 	
-	#jeœli nie znakowe, to przerabiam na znakowe
+	#jeÅ›li nie znakowe, to przerabiam na znakowe
 	if (!is.character((mapping$war)))
 		mapping$war<-as.character(mapping$war)
 	if (!is.character((mapping$label)))
 		mapping$label<-as.character(mapping$label)	
 	if (!is.data.frame(data))
-		stop("Funkcja mapuj: Dane musz¹ byæ typu data.frame, z kolumnami wykorzystywanymi w warunkach mapuj¹cych!")
+		stop("Funkcja mapuj: Dane muszÄ… byÄ‡ typu data.frame, z kolumnami wykorzystywanymi w warunkach mapujÄ…cych!")
 	
 	wynik<-rep("", nrow(data))
 	
 	gdzie_else<-which(mapping$war=='else')
 	
-	#jeœli jest else, to go wydzielam
+	#jeÅ›li jest else, to go wydzielam
 	if (length(gdzie_else>0)){
 		lab_else<-mapping$label[gdzie_else]
 		mapping<-mapping[-gdzie_else,]
@@ -222,13 +257,13 @@ mapuj<-function(data, mapping){
 		wynik[war]<-mapping$label[i]
 	}
 	
-	#jeœli jest else, to go stosujê
+	#jeÅ›li jest else, to go stosujÄ™
 	if (length(gdzie_else)>0)
 		wynik[wynik==""]<-lab_else
 	
-	#sprawdzam, czy coœ siê nie przypisa³o
+	#sprawdzam, czy coÅ› siÄ™ nie przypisaÅ‚o
 	if (any(wynik==""))
-		warning("mapuj: Nie wszystkie wartoœci zosta³y przypisane.")
+		warning("mapuj: Nie wszystkie wartoÅ›ci zostaÅ‚y przypisane.")
 	
 	return(wynik)
 }
