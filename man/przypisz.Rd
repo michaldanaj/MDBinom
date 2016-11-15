@@ -2,34 +2,41 @@
 % Please edit documentation in R/classing_assign.R
 \name{przypisz}
 \alias{przypisz}
-\title{Przypisuje wartoœci zdefiowane w \code{bucket}}
+\title{Przypisuje wartoÅ›ci zdefiowane w \code{bucket}}
 \usage{
-przypisz(x, bucket, interpol = FALSE)
+przypisz(x, bucket, interpol = FALSE, round = TRUE, digits = 15)
 }
 \arguments{
 \item{x}{Wektor zmiennych numerycznych.}
 
 \item{bucket}{\code{data.frame} z kolumnami:
 \itemize{
-        \item od. Dolny kraniec przedzia³u.
-        \item do Górny kreniec przedzia³u.
-        \item srodek Œrodek przedzia³u.
-        \item fitted Wartoœæ przypisana do danego przedzia³u.
+        \item od. Dolny kraniec przedziaÅ‚u.
+        \item do GÃ³rny kreniec przedziaÅ‚u.
+        \item srodek Åšrodek przedziaÅ‚u.
+        \item fitted WartoÅ›Ä‡ przypisana do danego przedziaÅ‚u.
     }}
 
-\item{interpol}{Czy przeprowadziæ interpolacjê?}
+\item{interpol}{Czy przeprowadziÄ‡ interpolacjÄ™?}
+
+\item{round}{Czy zaokrÄ…glaÄ‡. DomyÅ›lnie tak.}
+
+\item{digits}{Do ktÃ³rej cyfry znaczÄ…cej zaokrÄ…glaÄ‡. DomyÅ›lnie do 15-tej.}
 }
 \value{
-Wektor wartoœci.
+Wektor wartoÅ›ci.
 }
 \description{
-Znajduje przedzia³ opisany w \code{bucket}, do którego nale¿y \code{x} i 
-przypisuje wartoœæ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjê.
+Znajduje przedziaÅ‚ opisany w \code{bucket}, do ktÃ³rego naleÅ¼y \code{x} i 
+przypisuje wartoÅ›Ä‡ z \code{bucket_fitted}. Ewentualnie wykonuje interpolacjÄ™.
 }
 \details{
-Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹ 
-œrodki przedzia³ów, pomiêdzy którymi le¿y \code{x}, a wartoœciami
-\code{bucket$fitted} odpowiadaj¹ce tym œrodkom.
+JeÅ›li \code{interpor=TRUE}, wykonuje interpolacjÄ™, ktÃ³rej wÄ™zÅ‚ami sÄ… 
+Å›rodki przedziaÅ‚Ã³w, pomiÄ™dzy ktÃ³rymi leÅ¼y \code{x}, a wartoÅ›ciami
+\code{bucket$fitted} odpowiadajÄ…ce tym Å›rodkom.
+
+Aby zapobiec skutkom bÅ‚edÃ³w numerycznych, domyÅ›lnie wartoÅ›ci \code{x}, jak i \code{bucket$srodek},
+\code{bucket$od}, \code{bucket$do} zaokrÄ…glone sÄ… do 15-tej cyfry znaczÄ…cej.
 }
 \examples{
 		n<-1000;
@@ -46,9 +53,13 @@ Jeœli \code{interpor=TRUE}, wykonuje interpolacjê, której wêz³ami s¹
 		plot(x1, y_fitted) 
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
 \seealso{
+\code{\link{przypisz}}
+
+\code{\link{mapuj}}
+
 \code{\link{przypisz2}}
 }
 

@@ -4,56 +4,33 @@
 \alias{AR}
 \title{Liczy Accuracy Ratio (GINI)}
 \usage{
-AR(score, def, plot = FALSE, return.table = FALSE, sort.order = NULL,
-  label = "", lgd_adjusted = FALSE, ...)
+AR(score, def, plot = FALSE, sort.order = -1, label = "", ...)
 }
 \arguments{
-\item{score}{wektor    wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}}
+\item{score}{wektor    wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}.}
 
-\item{def}{Wektor wartoœci \code{\{0,1\}}}
+\item{def}{Wektor wartoœci \code{\{0,1\}}.}
 
 \item{plot}{Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}.}
 
-\item{return.table}{czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
-wartoœci score}
-
-\item{sort.order}{dla wartoœci równej "br", zamiast po \code{score}, 
-sortuje po wartoœci \code{br}. Mo¿e to byæ przydatne przy zmiennych dyskretnych.}
+\item{sort.order}{Dla \code{sort.order=1} sortuje rosn¹co, a dla \code{sort.order=-1} malej¹co
+po \code{score}.}
 
 \item{label}{opis wyœwietlony w legendzie.}
-
-\item{lgd_adjusted}{W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
-            mniejsze ni¿ dla modelu PD i nie da siê go wyliczyæ analogicznym wzorem. Dlatego
-dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona u¿yta jako mianownik do
-wyliczenia AR.}
 
 \item{...}{dodatkowe parametry.}
 }
 \value{
-Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
-kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
-Ka¿dy element listy ma postaæ:
- \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
- \item{bad}{Liczba bad-ów w przedziale.}
- \item{obs}{Liczba obserwacji w przedziale.}
- \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
- \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
-								wszystkich bad-ów.}
- \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
-								wszystkich good-ów.}
- \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
- \item{AR}{Wyliczone Accuracy Ratio.}
+Zwraca wektor ze statystykami jakoœci modelu.
+ \item{AUCAP}{Powierzchnia pod krzyw¹ CAP.}
+ \item{AR}{Wyliczone Accuracy Ratio (GINI).}
+ \item{AUC}{Powierzchnia pod krzyw¹ ROC.}							
+ \item{KS}{Statystyka Ko³mogorowa-Smirnowa.}
 }
 \description{
-Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
-informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
-jest wartoœæ AR.
-}
-\examples{
-n<-1000;
-x<-rnorm(n);
-def<- as.numeric(x+rnorm(n)<0);
-AR(x,def,plot=TRUE);
+Wylicza Accuracy Ratio (GINI). Funkcja jest znacznie uproszczona w porównaniu z poprzedni¹ wersj¹ 
+i funkcje nie s¹ ze sob¹ kompatybilne. Najwiêksz¹ zmian¹ jest wykorzystanie biblioteki \code{data.table},
+dziêki czemu nieporównywalnie zwiêkszona zosta³a prêdkoœæ dzia³ania.
 }
 \author{
 Micha³ Danaj

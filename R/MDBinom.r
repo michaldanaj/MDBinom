@@ -224,8 +224,7 @@ AR_quick<-function(bad, obs)
 #'	x<-rnorm(n);
 #'	def<- as.numeric(x+rnorm(n)<0);
 #'	AR(x,def,plot=TRUE);
- 
-AR<-function(score, def, plot=FALSE, return.table=FALSE, 
+AR_old<-function(score, def, plot=FALSE, return.table=FALSE, 
 									sort.order=NULL, label="", lgd_adjusted=FALSE,...)
 {
 	
@@ -353,6 +352,113 @@ AR<-function(score, def, plot=FALSE, return.table=FALSE,
 	class(wynik)<-"AR";
 	return(wynik);
 }
+
+# TODO Dorobiæ wyliczenia dla LGD
+#' Liczy Accuracy Ratio (GINI)
+#'
+#' Wylicza Accuracy Ratio (GINI). Funkcja jest znacznie uproszczona w porównaniu z poprzedni¹ wersj¹ 
+#' i funkcje nie s¹ ze sob¹ kompatybilne. Najwiêksz¹ zmian¹ jest wykorzystanie biblioteki \code{data.table},
+#' dziêki czemu nieporównywalnie zwiêkszona zosta³a prêdkoœæ dzia³ania. 
+#'
+#' @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}.
+#' @param def Wektor wartoœci \code{\{0,1\}}.
+#' @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
+#' @param sort.order Dla \code{sort.order=1} sortuje rosn¹co, a dla \code{sort.order=-1} malej¹co
+#' po \code{score}.
+#' @param label opis wyœwietlony w legendzie.
+#' @param ... dodatkowe parametry.
+#'@return Zwraca wektor ze statystykami jakoœci modelu.
+#'  \item{AUCAP}{Powierzchnia pod krzyw¹ CAP.}
+#'  \item{AR}{Wyliczone Accuracy Ratio (GINI).}
+#'  \item{AUC}{Powierzchnia pod krzyw¹ ROC.}							
+#'  \item{KS}{Statystyka Ko³mogorowa-Smirnowa.}							
+#'
+#' @author Micha³ Danaj
+#' @export
+AR<-function(score, def, plot=FALSE,  
+		sort.order=-1, label='', ...)
+{
+	
+	if (is.null(score))
+		stop("Zmienna 'score' musi byæ ró¿na od NULL!");
+	if (is.null(def))
+		stop("Zmienna 'def' musi byæ ró¿na od NULL!");
+	
+	#sprawdzam, czy def jest z zakresu [0,1]
+	if (min(def)<0 || max(def)>1) 
+		stop("Zmienna 'def' musi byæ z zakresu [0,1].");
+	
+	# tworzê data.table
+	DT <- data.table(score, def)
+	setorderv(DT, "score", sort.order)
+	
+	# statystyki globalne próby
+	total <- DT[,.(
+					def_all=sum(def),
+					obs_all=length(def)
+			)
+	][,good_all:=obs_all-def_all]
+	
+	
+	# Agregujê na score
+	DT2 <- DT[,.(
+					bad=sum(def),
+					obs=.N),
+			.(score)
+	]
+	
+	#usuwam score'y, gdzie nie ma obserwacji
+	DT2<-DT2[obs!=0,]
+	DT2[,br:=bad/obs]
+	
+	# statystyki na score
+	DT2 <- DT2[,':='(def_all=sum(def), obs_all=sum(obs), good_all = sum(obs)-sum(def))]
+	DT2 <- DT2[,':='(pct_all=obs/obs_all,
+					pct_bad=bad/def_all,
+					pct_good=(obs-bad)/good_all
+			)]
+	
+	# agregaty skumulowane
+	DT3 <- DT2[,.(  cum_pct_obs=cumsum(pct_all),
+					cum_pct_bad=cumsum(pct_bad),
+					cum_pct_good=cumsum(pct_good)
+			)][,':='(cum_pct_bad_prev=shift(cum_pct_bad, 1, fill=0),
+					cum_pct_obs_prev=shift(cum_pct_obs, 1, fill=0))]
+	
+	#licze kawalki powierzchni
+	DT3 <- DT3[,AUC_part := (cum_pct_obs-cum_pct_obs_prev)*(cum_pct_bad+cum_pct_bad_prev)/2];
+	
+	# zaczynam sk³adaæ wyniki
+	#wynik<-c(bad=total$def_all, good=total$good_all, obs=total$obs_all, br=total$def_all/total$obs_all)
+	
+	#sumuje cala powierzchnie
+	wynik <- c(AUCAP=DT3[,sum(AUC_part)]);
+	
+	#uwzgledniam bad rate w probce
+	wynik['AR']<-(2*wynik['AUCAP']-1)/(1-total$def_all/total$obs_all);
+	wynik['AUC'] <- (wynik['AR']+1)/2
+	wynik['KS']<-max(abs(DT3$cum_pct_bad-DT3$cum_pct_good));
+	#wynik['IV']<-sum((DT2$pct_good-DT2$pct_bad)*log(DT2$pct_good/DT2$pct_bad));
+	
+	
+	#wykres
+	if (plot){
+		plot(c(0,1), c(0,1), type="l", lty=1, col=1, xlab="", ylab="",...);
+		lines(c(0,total$def_all/total$obs_all,1),c(0,1,1), col=1);
+		lines(c(0,DT3$cum_pct_obs), c(0,DT3$cum_pct_bad), type="l", lty=1);
+	}
+	
+	#kolej<-order(ARt);
+	ARt=round(wynik['AR']*100,2);
+	if (plot)
+		#legend(1,0,paste(names(score)[kolej], " (", ARt[kolej], "%)", sep="" ),lty=1, 
+		#	 col=kolej+1, cex=0.8, xjust=1, yjust=0 );
+		legend(1,0,paste(label, " (", ARt, "%)", sep="" ),lty=1, 
+				cex=0.8, xjust=1, yjust=0 );
+	
+	return(wynik);
+}
+
 
 #' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' 

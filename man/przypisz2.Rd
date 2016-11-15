@@ -2,33 +2,44 @@
 % Please edit documentation in R/classing_assign.R
 \name{przypisz2}
 \alias{przypisz2}
-\title{Przypisuje dyskretyzacj�}
+\title{Przypisuje dyskretyzację}
 \usage{
 przypisz2(x, bucket, interpol = FALSE, fitted = NULL,
-  NA_substit = -2147483647)
+  NA_substit = -2147483647, round = TRUE, digits = 15)
 }
 \arguments{
 \item{x}{Wektor zmiennych numerycznych.}
 
 \item{bucket}{\code{data.frame} z bucketami.}
 
-\item{interpol}{Czy przeprowadzi� interpolacj�?}
+\item{interpol}{Czy przeprowadzić interpolację?}
 
-\item{fitted}{Nadpisuje wektor \code{bucket$fitted} i na tej podstawie przypisuje warto�ci.}
+\item{fitted}{Nadpisuje wektor \code{bucket$fitted} i na tej podstawie przypisuje wartości.}
 
-\item{NA_substit}{warto�� do podstawienia za brak danych}
+\item{NA_substit}{wartość do podstawienia za brak danych}
+
+\item{round}{Czy zaokrąglać. Domyślnie tak.}
+
+\item{digits}{Do której cyfry znaczącej zaokrąglać. Domyślnie do 15-tej.}
 }
 \value{
-Wektor warto�ci.
+Wektor wartości.
 }
 \description{
-Przypisuje zmienne dyskretne oraz ci�g�e w oparciu o podane przedzia�y, uwzgl�dnia warto�ci
-specjalne
+Przypisuje zmienne dyskretne oraz ciągłe w oparciu o podane przedziały, uwzględnia wartości
+specjalne.
+}
+\details{
+#' Aby zapobiec skutkom błedów numerycznych, domyślnie wartości \code{x}, jak i \code{bucket$srodek},
+\code{bucket$od}, \code{bucket$do} zaokrąglone są do 15-tej cyfry znaczącej. Podobnie przy zmiennych
+dyskretnych numerycznych. Więcej szczegółów w \code{\link{przypisz}}.
 }
 \author{
-Micha� Danaj
+Michał Danaj
 }
 \seealso{
 \code{\link{przypisz}}
+
+\code{\link{mapuj}}
 }
 

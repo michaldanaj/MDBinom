@@ -2,21 +2,21 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_anal_stats3}
 \alias{univariate_anal_stats3}
-\title{Wylicza AR po czasie i w podziale na zadane próby}
+\title{Wylicza AR po czasie i w podziale na zadane prÃ³by}
 \usage{
 univariate_anal_stats3(score, y, czas, proby)
 }
 \arguments{
-\item{score}{zmienna, po której procedura bêdzie sortowaæ.}
+\item{score}{zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.}
 
 \item{y}{zmienna odpowiedzi.}
 
-\item{czas}{podzia³ na okresy czasowe.}
+\item{czas}{podziaÅ‚ na okresy czasowe.}
 
-\item{proby}{\code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
-zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.}
+\item{proby}{\code{data.frame}, w ktÃ³rym kaÅ¼da kolumna jest wektorem logicznym,
+zawierajÄ…cym informacje, czy obserwacja naleÅ¼y do danej prÃ³by.}
 }
 \description{
-Wylicza AR po czasie i w podziale na zadane próby
+Wylicza AR po czasie i w podziale na zadane prÃ³by
 }
 

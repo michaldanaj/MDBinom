@@ -2,23 +2,23 @@
 % Please edit documentation in R/preliminary.R
 \name{prel_numeric_one_value}
 \alias{prel_numeric_one_value}
-\title{Wyœwietla zmienne z wartoœci¹ o du¿ym udziale w rozk³adzie}
+\title{WyÅ“wietla zmienne z wartoÅ“ciÂ¹ o duÂ¿ym udziale w rozkÂ³adzie}
 \usage{
 prel_numeric_one_value(dane, rate = 0.98)
 }
 \arguments{
 \item{dane}{Dane.}
 
-\item{rate}{Graniczny udzia³ jedenej wartoœci.}
+\item{rate}{Graniczny udziaÂ³ jedenej wartoÅ“ci.}
 }
 \value{
 
 }
 \description{
-Wyœwietla nazwy zmiennych, dla których istenieje taka wartoœæ, ¿e jej udzia³ przekracza \code{rate}
-próby.
+WyÅ“wietla nazwy zmiennych, dla ktÃ³rych istenieje taka wartoÅ“Ã¦, Â¿e jej udziaÂ³ przekracza \code{rate}
+prÃ³by.
 }
 \author{
-Micha³ Danaj
+MichaÂ³ Danaj
 }
 

@@ -2,28 +2,28 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_stats_new_data}
 \alias{univariate_stats_new_data}
-\title{Wylicza statystyki dla zmiennej score'owej i objaœnianej wg zadanych bucketów}
+\title{Wylicza statystyki dla zmiennej score'owej i objaÅ›nianej wg zadanych bucketÃ³w}
 \usage{
 univariate_stats_new_data(buckets, x, y, czas, proby = rep(TRUE, length(y)))
 }
 \arguments{
-\item{buckets}{\code{data.frame} z podzia³em zmiennej na buckety.}
+\item{buckets}{\code{data.frame} z podziaÅ‚em zmiennej na buckety.}
 
-\item{x}{zmienna, po której procedura bêdzie sortowaæ.}
+\item{x}{zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.}
 
 \item{y}{zmienna odpowiedzi.}
 
-\item{czas}{podzia³ na okresy czasowe.}
+\item{czas}{podziaÅ‚ na okresy czasowe.}
 
-\item{proby}{\code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
-zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.}
+\item{proby}{\code{data.frame}, w ktÃ³rym kaÅ¼da kolumna jest wektorem logicznym,
+zawierajÄ…cym informacje, czy obserwacja naleÅ¼y do danej prÃ³by.}
 }
 \description{
-Wylicza statystyki i zwraca je w postaci listy. Do wyliczenia \code{AR} u¿ywa jako zmiennej
-score'owej oryginalnych wartoœci BR przypisanych do bucketu. Tzn, mimo ¿e na nowych danych kolejnoœæ
-bucketów, sortuj¹c je po br mo¿e byæ inna ni¿ oryginalnie, to stosowana jest oryginalna kolejnoœæ.
+Wylicza statystyki i zwraca je w postaci listy. Do wyliczenia \code{AR} uÅ¼ywa jako zmiennej
+score'owej oryginalnych wartoÅ›ci BR przypisanych do bucketu. Tzn, mimo Å¼e na nowych danych kolejnoÅ›Ä‡
+bucketÃ³w, sortujÄ…c je po br moÅ¼e byÄ‡ inna niÅ¼ oryginalnie, to stosowana jest oryginalna kolejnoÅ›Ä‡.
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/preliminary.R
 \name{prel_factors}
 \alias{prel_factors}
-\title{Podstawowe statystyki faktorów}
+\title{Podstawowe statystyki faktorÃ³w}
 \usage{
 prel_factors(dane)
 }
@@ -13,10 +13,10 @@ prel_factors(dane)
 
 }
 \description{
-Wiele z faktorów zaczytanych bezpoœrednio z pliku nie nadaje siê do modelowania. Funkcja umo¿liwia wstêpn¹ 
-analizê faktorów.
+Wiele z faktorÃ³w zaczytanych bezpoÅ“rednio z pliku nie nadaje siÃª do modelowania. Funkcja umoÂ¿liwia wstÃªpnÂ¹ 
+analizÃª faktorÃ³w.
 }
 \author{
-Micha³ Danaj
+MichaÂ³ Danaj
 }
 
