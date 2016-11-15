@@ -1,3 +1,16 @@
+# v.5.1.3 2016-11-16
+
+### Zaokrąglanie wartości w funkcjach przypisz
+* W celu eliminacji problemów numerycznych przy przypisywaniu do przynależności do bucketu, wprowadzono zaokrąglenie w tabeli określającej buckety oraz w wektorze wartości.
+
+### Przemeblowanie w funkcjach AR.
+* Funkcja AR zmieniona na AR_old.
+* Nowa funkcja AR oparta na pakiecie data.table, dzięki czemu jest mega
+szybka. Funkcja została uproszczona, wywalone niewykorzysytywane rzeczy
+jak zwrot tabeli. Zamiast listy zwracany jest wektor z kilkoma
+statystykami jakości. Zerwałem z konmpatybilnością wsteczną.
+
+
 # v.5.1.2 2016-05-23
 
 * Dodanie funkcji do interakcji. 
