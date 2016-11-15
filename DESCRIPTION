@@ -1,8 +1,8 @@
 Package: MDBinom
 Type: Package
 Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi
-Version: 5.1.2
-Date: 2016-05-23
+Version: 5.1.3
+Date: 2016-11-16
 Authors@R: person("Micha³", "Danaj", email = "michal.danaj@gmail.com",
   role = c("aut", "cre"))
 Author: Micha³ Danaj [aut, cre],
@@ -15,7 +15,8 @@ Depends:
     locfit,
     Hmisc,
     R2HTML,
-    lattice	
+    lattice,
+    data.table
 Suggests: 
     testthat
 Encoding: cp1250

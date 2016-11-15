@@ -2,50 +2,50 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_anal_stats}
 \alias{univariate_anal_stats}
-\title{Dyskretyzuje zmienn¹ i wylicza dla niej statystyki}
+\title{Dyskretyzuje zmiennÄ… i wylicza dla niej statystyki}
 \usage{
 univariate_anal_stats(x, y, czas, proby = rep(TRUE, length(y)),
   interactive = FALSE, min_bucket = floor(0.05 * length(x)),
   breaks = NULL, mapping = NULL, forceContinous = FALSE,
-  special_val = numeric_var_treatment.params$spcial_val,
+  special_val = numeric_var_treatment.params$special_val,
   NA_subst = numeric_var_treatment.params$NA_substit, span = 0.9)
 }
 \arguments{
-\item{x}{zmienna, po której procedura bêdzie sortowaæ.}
+\item{x}{zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.}
 
 \item{y}{zmienna odpowiedzi.}
 
-\item{czas}{podzia³ na okresy czasowe.}
+\item{czas}{podziaÅ‚ na okresy czasowe.}
 
-\item{proby}{\code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
-zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.}
+\item{proby}{\code{data.frame}, w ktÃ³rym kaÅ¼da kolumna jest wektorem logicznym,
+zawierajÄ…cym informacje, czy obserwacja naleÅ¼y do danej prÃ³by.}
 
-\item{interactive}{TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
-przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
+\item{interactive}{TRUE, jeÅ›li zmienna ma byÄ‡ dyskretyzowana interaktywnie. W
+przeciwnym razie, co jest wartoÅ›ciÄ… domyÅ›lnÄ…, dyskretyzacja
 jest automatyczna.}
 
 \item{min_bucket}{minimalna liczba obserwacji w buckecie, przy dzieleniu drzewem.}
 
-\item{breaks}{zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].}
+\item{breaks}{zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ wartoÅ›ci przedziaÅ‚Ã³w (from,to].}
 
-\item{mapping}{zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.}
+\item{mapping}{zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ mapowanie.}
 
-\item{forceContinous}{wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.}
+\item{forceContinous}{wymusza potraktowanie zmiennej jako ciÄ…gÅ‚Ä…, mimo Å¼e liczba
+unikalnych wartoÅ›ci jest mniejsza niÅ¼ \code{discrete_threshold}.}
 
-\item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
+\item{special_val}{WartoÅ›ci specjalne do usuniÄ™cia z automatycznego podziaÅ‚u. BÄ™dÄ… traktowane jako zmienne
 kategoryczne.}
 
-\item{NA_subst}{wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
-bêd¹ przeporwadzone w standardowy sposób. Jeœli jednak wartoœæ \code{NA_subst} zostanie
-    dodana do \code{special_val}, zostanie ona potraktowana jako wartoœæ dyskretna.}
+\item{NA_subst}{wartoÅ›Ä‡ jaka ma byÄ‡ przypisana w miejsce brakÃ³w danych. Dalsze analizy
+bÄ™dÄ… przeporwadzone w standardowy sposÃ³b. JeÅ›li jednak wartoÅ›Ä‡ \code{NA_subst} zostanie
+    dodana do \code{special_val}, zostanie ona potraktowana jako wartoÅ›Ä‡ dyskretna.}
 
-\item{span}{Parametr wyg³adzaj¹cy funkcji \code{\link[locfit]{locfit}}.}
+\item{span}{Parametr wygÅ‚adzajÄ…cy funkcji \code{\link[locfit]{locfit}}.}
 }
 \description{
 Wylicza statystyki i zwraca je w postaci listy.
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
 

@@ -2,21 +2,21 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_anal_stats2}
 \alias{univariate_anal_stats2}
-\title{Robi rozk³ad zmiennej po czasie (lub innym podziale)}
+\title{Robi rozkÅ‚ad zmiennej po czasie (lub innym podziale)}
 \usage{
 univariate_anal_stats2(x_discr, y, czas, estim)
 }
 \arguments{
-\item{x_discr}{zmienna objaœniaj¹ca.}
+\item{x_discr}{zmienna objaÅ›niajÄ…ca.}
 
 \item{y}{zmienna odpowiedzi.}
 
 \item{czas}{Czas.}
 
-\item{estim}{wartoœæ wyestymowana przez model.}
+\item{estim}{wartoÅ›Ä‡ wyestymowana przez model.}
 }
 \description{
-Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y} oraz \code{esitm}
-w podziale na zadane grupy czasowe \code{czas} (lub podzia³ innego typu).
+Wylicza licznoÅ›ci dla kaÅ¼dego poziomu \code{x_discr} oraz Å›redniÄ… wartoÅ›Ä‡ \code{y} oraz \code{esitm}
+w podziale na zadane grupy czasowe \code{czas} (lub podziaÅ‚ innego typu).
 }
 

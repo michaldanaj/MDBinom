@@ -2,25 +2,25 @@
 % Please edit documentation in R/classing_assign.R
 \name{mapuj}
 \alias{mapuj}
-\title{Na podstawie zadanych warunkÛw przypisuje etykiety}
+\title{Na podstawie zadanych warunk√≥w przypisuje etykiety}
 \usage{
 mapuj(data, mapping)
 }
 \arguments{
-\item{data}{\code{data.frame} do ktÛrego bÍdzie przypisywane mapowanie}
+\item{data}{\code{data.frame} do kt√≥rego bƒôdzie przypisywane mapowanie}
 
 \item{mapping}{\code{data.frame} z dwoma kolumnami znakowymi (lub do przerobienia przez \code{as.character})
 \code{war} oraz \code{label}}
 }
 \description{
-Na podstawie zadanych warunkÛw w \code{mapping$war} przypisuje etykietÍ \code{mapping$label}.
-W \code{mapping$label} nie moøe byÊ wartoúci pustych stringÛw. Pusty string stosowany jest jako
-brak danych. Jeúli dla jakieú elementu øaden warunek nie zachodzi, zwracany jest pusty string.
+Na podstawie zadanych warunk√≥w w \code{mapping$war} przypisuje etykietƒô \code{mapping$label}.
+W \code{mapping$label} nie mo≈ºe byƒá warto≈õci pustych string√≥w. Pusty string stosowany jest jako
+brak danych. Je≈õli dla jakie≈õ elementu ≈ºaden warunek nie zachodzi, zwracany jest pusty string.
 }
 \details{
-Moøliwe jest okreúlenie warunku \code{else} poprzez wpisanie w \code{mapping$war} stringa "else".
+Mo≈ºliwe jest okre≈õlenie warunku \code{else} poprzez wpisanie w \code{mapping$war} stringa "else".
 }
 \author{
-Micha≥ Danaj
+Micha≈Ç Danaj
 }
 

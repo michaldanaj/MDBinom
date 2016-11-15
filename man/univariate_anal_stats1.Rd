@@ -2,7 +2,7 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_anal_stats1}
 \alias{univariate_anal_stats1}
-\title{Dyskretyzuje zmienn¹ i wylicza na niej statystyki}
+\title{Dyskretyzuje zmiennÄ… i wylicza na niej statystyki}
 \usage{
 univariate_anal_stats1(x, y, locfit = FALSE,
   discrete_threshold = numeric_var_treatment.params$discrete_threshold,
@@ -13,47 +13,47 @@ univariate_anal_stats1(x, y, locfit = FALSE,
   mapping = NULL, forceContinous = FALSE, span = 0.9, ...)
 }
 \arguments{
-\item{x}{zmienna, po której procedura bêdzie sortowaæ.}
+\item{x}{zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.}
 
 \item{y}{zmienna odpowiedzi.}
 
-\item{locfit}{Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}.}
+\item{locfit}{Czy z automatu dopasowaÄ‡ funkcjÄ™ z modelu \code{locfit}.}
 
-\item{discrete_threshold}{jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
-ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.}
+\item{discrete_threshold}{jeÅ›li liczba unikalnych wartoÅ›ci zmiennej jest nie wiÄ™ksza
+ta wartoÅ›Ä‡, zmienna uznana jest za dyskretnÄ… i nie jest poddawana dyskretyzacji.}
 
-\item{NA_substit}{wartoœæ, któr¹ zast¹piæ brak danych}
+\item{NA_substit}{wartoÅ›Ä‡, ktÃ³rÄ… zastÄ…piÄ‡ brak danych}
 
-\item{special_val}{Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
+\item{special_val}{WartoÅ›ci specjalne do usuniÄ™cia z automatycznego podziaÅ‚u. BÄ™dÄ… traktowane jako zmienne
 kategoryczne.}
 
-\item{no_stats_threshold}{liczba unikalnych wartoœci zmiennej kategorycznej, powy¿ej której nie s¹ generowane
+\item{no_stats_threshold}{liczba unikalnych wartoÅ›ci zmiennej kategorycznej, powyÅ¼ej ktÃ³rej nie sÄ… generowane
 statystyki. W przypadku przekroczenia, zwracany jest komunikat "Too many categorical levels".}
 
-\item{max_gleb}{Maksymalna g³êbokoœc do której budujemy drzewo}
+\item{max_gleb}{Maksymalna gÅ‚Ä™bokoÅ›c do ktÃ³rej budujemy drzewo}
 
-\item{min_bucket}{Minimalna wielkoœæ liœcia}
+\item{min_bucket}{Minimalna wielkoÅ›Ä‡ liÅ›cia}
 
-\item{interactive}{TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
-przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
+\item{interactive}{TRUE, jeÅ›li zmienna ma byÄ‡ dyskretyzowana interaktywnie. W
+przeciwnym razie, co jest wartoÅ›ciÄ… domyÅ›lnÄ…, dyskretyzacja
 jest automatyczna.}
 
-\item{breaks}{zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].}
+\item{breaks}{zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ wartoÅ›ci przedziaÅ‚Ã³w (from,to].}
 
-\item{mapping}{zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.}
+\item{mapping}{zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ mapowanie.}
 
-\item{forceContinous}{wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
-unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.}
+\item{forceContinous}{wymusza potraktowanie zmiennej jako ciÄ…gÅ‚Ä…, mimo Å¼e liczba
+unikalnych wartoÅ›ci jest mniejsza niÅ¼ \code{discrete_threshold}.}
 
-\item{span}{Parametr wyg³adzaj¹cy funkcji \code{locit}.}
+\item{span}{Parametr wygÅ‚adzajÄ…cy funkcji \code{locit}.}
 
 \item{...}{dodatkowe parametry graficzne.}
 }
 \description{
-W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discrete_threshold}
-lub zmienna nie jest zmienn¹ numeryczn¹,
-uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
-wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
+W przypadku, gdy liczba unikalnych wartoÅ›ci zmiennej jest <= \code{discrete_threshold}
+lub zmienna nie jest zmiennÄ… numerycznÄ…,
+uznaje Å¼e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
+wypadku dyskretyzuje zmiennÄ… i wylicza statystyki.
 }
 \seealso{
 \code{\link{buckety_stat}}.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_loop}
 \alias{univariate_loop}
-\title{Grupuje zmienne i generuje dla nich listê statystyk}
+\title{Grupuje zmienne i generuje dla nich listÄ™ statystyk}
 \usage{
 univariate_loop(x_df, y, vsub_bool = rep(TRUE, ncol(x_df)),
   vsub_list = NULL, vsub_rola = NULL, proby = rep(TRUE, length(y)),
@@ -11,28 +11,28 @@ univariate_loop(x_df, y, vsub_bool = rep(TRUE, ncol(x_df)),
 \arguments{
 \item{x_df}{\code{data.frame} ze zmiennymi do anliz.}
 
-\item{y}{\code{vector} z wartoœciami zmiennej odpowiedzi.}
+\item{y}{\code{vector} z wartoÅ›ciami zmiennej odpowiedzi.}
 
-\item{vsub_bool}{\code{vector} logiczny okreœlaj¹cy, które zmienne z \code{df} powinny zostaæ zanalizowane.}
+\item{vsub_bool}{\code{vector} logiczny okreÅ›lajÄ…cy, ktÃ³re zmienne z \code{df} powinny zostaÄ‡ zanalizowane.}
 
-\item{vsub_list}{\code{vector} z nazwami zmiennych z \code{df}, które powinny zostaæ zanalizowane.}
+\item{vsub_list}{\code{vector} z nazwami zmiennych z \code{df}, ktÃ³re powinny zostaÄ‡ zanalizowane.}
 
-\item{vsub_rola}{\code{vector} z rol¹ ka¿dej ze zmiennych. Zostan¹ zanalizowane zmienne, dla których rola 
+\item{vsub_rola}{\code{vector} z rolÄ… kaÅ¼dej ze zmiennych. ZostanÄ… zanalizowane zmienne, dla ktÃ³rych rola 
 ustawiona jest na \code{'explanatory'}.}
 
-\item{proby}{\code{data.frame} z wektorami logicznymi, okreœlaj¹cymi podpróby na których nale¿y przeanalizowaæ podpróby.}
+\item{proby}{\code{data.frame} z wektorami logicznymi, okreÅ›lajÄ…cymi podprÃ³by na ktÃ³rych naleÅ¼y przeanalizowaÄ‡ podprÃ³by.}
 
-\item{czas}{\code{vector} ze zmienn¹ czasow¹, po której zostan¹ podzielone analizy.}
+\item{czas}{\code{vector} ze zmiennÄ… czasowÄ…, po ktÃ³rej zostanÄ… podzielone analizy.}
 
 \item{...}{dodatkowe parametry do funkcji \code{\link{univariate_anal_stats}}.}
 }
 \value{
-lista ze statstykami dla ka¿dej ze zmiennych okreœlonych przez któryœ z wektorów vsub\*. Nazwy elementów listy
-	s¹ nazwami zmiennych.
+lista ze statstykami dla kaÅ¼dej ze zmiennych okreÅ›lonych przez ktÃ³ryÅ› z wektorÃ³w vsub\*. Nazwy elementÃ³w listy
+	sÄ… nazwami zmiennych.
 }
 \description{
-Funkcja grupuje zmienne ci¹g³e, zgodnie z domyœlnymi parametrami. Na grupach oraz na zmiennych kategorycznych 
-wylicza statytystyki i przedstawia je w formie listy, osobno dla ka¿dej ze zmiennych. Wykorzystuje do tego funkcjê
+Funkcja grupuje zmienne ciÄ…gÅ‚e, zgodnie z domyÅ›lnymi parametrami. Na grupach oraz na zmiennych kategorycznych 
+wylicza statytystyki i przedstawia je w formie listy, osobno dla kaÅ¼dej ze zmiennych. Wykorzystuje do tego funkcjÄ™
 \code{\link{univariate_anal_stats}}.
 }
 \author{

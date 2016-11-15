@@ -18,7 +18,7 @@ install('MDBinom')
 
 setwd('G:\\Michal\\eclipse - java\\MDbinom')
 build(pkg = 'MDBinom', path='.', binary = TRUE)
-
+x	
 
 
 #  testy
