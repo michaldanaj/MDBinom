@@ -10,6 +10,7 @@ Maintainer: Micha³ Danj <michal.danaj@gmail.com>
 Description: Pakiet do dyskretyzacji zmiennych ci¹g³ych na cele budowy modelu logistycznego.
 License: What license is it under?
 LazyLoad: yes
+LazyData: true
 Depends:
 	reshape,
     locfit,
