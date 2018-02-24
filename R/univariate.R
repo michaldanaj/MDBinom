@@ -185,12 +185,12 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 	
 	for (i in 1:ncol(proby)){
 		proba<-razem[proby[,i], ];
-		AR_calosc<-AR(proba$score, proba$y)[[1]]['AR'];
+		AR_calosc<-AR(proba$score, proba$y)['AR'];
 		aery<-sapply(split(proba, proba$czas), FUN=function(pr){
 					
 					if (nrow(pr)==0)
 						return(NA);
-					wyn<-AR(pr$score, pr$y)[[1]]['AR'];
+					wyn<-AR(pr$score, pr$y)['AR'];
 					names(wyn)<-NULL;
 					return(wyn)
 				}
