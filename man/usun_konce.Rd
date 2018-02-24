@@ -2,25 +2,25 @@
 % Please edit documentation in R/MDBinom.r
 \name{usun_konce}
 \alias{usun_konce}
-\title{Usuwa krañcowe wartoœci.}
+\title{Usuwa kraÅ„cowe wartoÅ›ci.}
 \usage{
 usun_konce(score, prob = 0.01, weights = NULL)
 }
 \arguments{
-\item{score}{Wektor wartoœci numerycznych.}
+\item{score}{Wektor wartoÅ›ci numerycznych.}
 
-\item{prob}{Jak¹ czêœæ obserwacj nale¿y usun¹æ z jednego krañca.}
+\item{prob}{JakÄ… czÄ™Å›Ä‡ obserwacj naleÅ¼y usunÄ…Ä‡ z jednego kraÅ„ca.}
 
 \item{weights}{Wagi.}
 }
 \value{
-Zwraca wektor z indeksami elementów, które powinny zostaæ usuniête.
+Zwraca wektor z indeksami elementÃ³w, ktÃ³re powinny zostaÄ‡ usuniÄ™te.
 }
 \description{
-Zwraca indeksy \code{prob} najmniejszych i \code{prob} najwiêkszych wartoœci. Jeœli
-jednak nie jest mo¿liwe ustalenie co najwy¿ej \code{prob} obserwacji, nie 
-zostaje wybrana ¿adna. Ma to zapobiec sytuacji, gdy np. najmniejsz¹ wartoœci¹ jest 0
-i w próbie znajduje siê 10\% takich obserwacji, a my chcemy usun¹æ tylko 1\%.
+Zwraca indeksy \code{prob} najmniejszych i \code{prob} najwiÄ™kszych wartoÅ›ci. JeÅ›li
+jednak nie jest moÅ¼liwe ustalenie co najwyÅ¼ej \code{prob} obserwacji, nie 
+zostaje wybrana Å¼adna. Ma to zapobiec sytuacji, gdy np. najmniejszÄ… wartoÅ›ciÄ… jest 0
+i w prÃ³bie znajduje siÄ™ 10\% takich obserwacji, a my chcemy usunÄ…Ä‡ tylko 1\%.
 }
 \examples{
 x<-sort(rnorm(10));
@@ -28,13 +28,12 @@ x
 usun<-usun_konce(x, prob=0.01);
 x[-usun]
 
-#usuwa tylko obserwacjê z prawego krañca
+#usuwa tylko obserwacjÄ™ z prawego kraÅ„ca
 x2<-c(rep(min(x),5),x[5:10])
 x2
 usun<-usun_konce(x2, prob=0.01);
 x2[-usun]
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

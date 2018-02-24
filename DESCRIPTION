@@ -19,5 +19,5 @@ Depends:
     data.table
 Suggests: 
     testthat
-Encoding: cp1250
-RoxygenNote: 5.0.1
+Encoding: UTF-8
+RoxygenNote: 6.0.1

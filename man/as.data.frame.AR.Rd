@@ -2,7 +2,7 @@
 % Please edit documentation in R/MDBinom.r
 \name{as.data.frame.AR}
 \alias{as.data.frame.AR}
-\title{Przekszta≥ca obiekt na data.frame}
+\title{Przekszta≈Çca obiekt na data.frame}
 \usage{
 \method{as.data.frame}{AR}(x)
 }
@@ -10,9 +10,8 @@
 \item{x}{obiekt klasy \code{AR}.}
 }
 \description{
-Przekszta≥ca obiekt na \code{\link{data.frame}}
+Przekszta≈Çca obiekt na \code{\link{data.frame}}
 }
 \details{
-Przekszta≥ca obiekt na \code{\link{data.frame}}
+Przekszta≈Çca obiekt na \code{\link{data.frame}}
 }
-

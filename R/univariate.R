@@ -1,33 +1,33 @@
-# Funkcje zaczynajÄ…ce siÄ™ na univariate
+# Funkcje zaczynaj¹ce siê na univariate
 # 
-# Author: MichaÅ‚ Danaj
+# Author: Micha³ Danaj
 ###############################################################################
 
 
 
-#' Dyskretyzuje zmiennÄ… i wylicza dla niej statystyki
+#' Dyskretyzuje zmienn¹ i wylicza dla niej statystyki.
 #'
 #' Wylicza statystyki i zwraca je w postaci listy.
-#' @param x zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.
+#' @param x zmienna, po której procedura bêdzie sortowaæ.
 #' @param y zmienna odpowiedzi.
-#' @param czas podziaÅ‚ na okresy czasowe.
-#' @param proby \code{data.frame}, w ktÃ³rym kaÅ¼da kolumna jest wektorem logicznym,
-#'       zawierajÄ…cym informacje, czy obserwacja naleÅ¼y do danej prÃ³by.
-#' @param interactive TRUE, jeÅ›li zmienna ma byÄ‡ dyskretyzowana interaktywnie. W
-#'                   przeciwnym razie, co jest wartoÅ›ciÄ… domyÅ›lnÄ…, dyskretyzacja
+#' @param czas podzia³ na okresy czasowe.
+#' @param proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
+#'       zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
 #' @param min_bucket minimalna liczba obserwacji w buckecie, przy dzieleniu drzewem.
-#' @param breaks zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ wartoÅ›ci przedziaÅ‚Ã³w (from,to].
-#' @param mapping zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ mapowanie.
-#' @param forceContinous wymusza potraktowanie zmiennej jako ciÄ…gÅ‚Ä…, mimo Å¼e liczba
-#'                      unikalnych wartoÅ›ci jest mniejsza niÅ¼ \code{discrete_threshold}.
-#' @param special_val WartoÅ›ci specjalne do usuniÄ™cia z automatycznego podziaÅ‚u. BÄ™dÄ… traktowane jako zmienne
+#' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param mapping zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.
+#' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
+#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.
+#' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 #' 					  kategoryczne.
-#' @param NA_subst wartoÅ›Ä‡ jaka ma byÄ‡ przypisana w miejsce brakÃ³w danych. Dalsze analizy
-#'		bÄ™dÄ… przeporwadzone w standardowy sposÃ³b. JeÅ›li jednak wartoÅ›Ä‡ \code{NA_subst} zostanie
-#' 		dodana do \code{special_val}, zostanie ona potraktowana jako wartoÅ›Ä‡ dyskretna.
-#' @param span Parametr wygÅ‚adzajÄ…cy funkcji \code{\link[locfit]{locfit}}.  
-#' @author MichaÅ‚ Danaj
+#' @param NA_subst wartoœæ jaka ma byæ przypisana w miejsce braków danych. Dalsze analizy
+#'		bêd¹ przeporwadzone w standardowy sposób. Jeœli jednak wartoœæ \code{NA_subst} zostanie
+#' 		dodana do \code{special_val}, zostanie ona potraktowana jako wartoœæ dyskretna.
+#' @param span Parametr wyg³adzaj¹cy funkcji \code{\link[locfit]{locfit}}.  
+#' @author Micha³ Danaj
 #' @export
 univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 		interactive=FALSE, min_bucket=floor(0.05*length(x)), breaks=NULL,
@@ -36,12 +36,12 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 		NA_subst=numeric_var_treatment.params$NA_substit,
 		span=0.9){
 	
-	# zamieniam braki danych na liczbÄ™.
+	# zamieniam braki danych na liczbê.
 	#if (is.numeric(x) & !is.null(NA_subst))
 	#	x[is.na(x)]<-NA_subst;
 	
 	
-	# dyskretyzujÄ™ zmiennÄ… i wyliczam pierwsze statystyki
+	# dyskretyzujê zmienn¹ i wyliczam pierwsze statystyki
 	stat1<-univariate_anal_stats1(x,y, special_val=special_val,
 			max_gleb=3,plot=FALSE, min_bucket=min_bucket,
 			interactive=interactive, breaks=breaks, mapping=mapping,
@@ -49,22 +49,22 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 	
 	stat2<-NULL;
 	stat3<-NULL;
-	#Dalsze statystyki robiÄ™ pod warunkiem, Å¼e jest wiÄ™cej niÅ¼ jedna wartoÅ›Ä‡ dyskretna
-	#(W stat1 jest teÅ¼ <TOTAL>, dlatego 2)
+	#Dalsze statystyki robiê pod warunkiem, ¿e jest wiêcej ni¿ jedna wartoœæ dyskretna
+	#(W stat1 jest te¿ <TOTAL>, dlatego 2)
 	if (typeof(stat1)!="character"){
 		
-		# przypisujÄ™ nazwÄ™ bucketu
+		# przypisujê nazwê bucketu
 		stat1$fitted<-stat1$label;
 		x_discr<-przypisz2(x,stat1);
 		
-		# przypisujÄ™ BR
+		# przypisujê BR
 		stat1$fitted<-stat1$br;
 		BR_discr<-przypisz2(x,stat1);
 		
 		# wyliczam drugie statystyki
 		stat2<-univariate_anal_stats2(x_discr, y, czas, BR_discr);
 		
-		# wyliczam trzecie statystyki (GINI) po zadanych prÃ³bach i czasie
+		# wyliczam trzecie statystyki (GINI) po zadanych próbach i czasie
 		stat3<-univariate_anal_stats3(score=-BR_discr, y, czas, proby);
 		
 	}
@@ -86,18 +86,18 @@ univariate_anal_stats<-function(x,y,czas,proby=rep(TRUE, length(y)),
 
 
 
-#' Wylicza statystyki dla zmiennej score'owej i objaÅ›nianej wg zadanych bucketÃ³w
+#' Wylicza statystyki dla zmiennej score'owej i objaœnianej wg zadanych bucketów
 #'
-#' Wylicza statystyki i zwraca je w postaci listy. Do wyliczenia \code{AR} uÅ¼ywa jako zmiennej
-#' score'owej oryginalnych wartoÅ›ci BR przypisanych do bucketu. Tzn, mimo Å¼e na nowych danych kolejnoÅ›Ä‡
-#' bucketÃ³w, sortujÄ…c je po br moÅ¼e byÄ‡ inna niÅ¼ oryginalnie, to stosowana jest oryginalna kolejnoÅ›Ä‡.
-#' @param buckets \code{data.frame} z podziaÅ‚em zmiennej na buckety.
-#' @param x zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.
+#' Wylicza statystyki i zwraca je w postaci listy. Do wyliczenia \code{AR} u¿ywa jako zmiennej
+#' score'owej oryginalnych wartoœci BR przypisanych do bucketu. Tzn, mimo ¿e na nowych danych kolejnoœæ
+#' bucketów, sortuj¹c je po br mo¿e byæ inna ni¿ oryginalnie, to stosowana jest oryginalna kolejnoœæ.
+#' @param buckets \code{data.frame} z podzia³em zmiennej na buckety.
+#' @param x zmienna, po której procedura bêdzie sortowaæ.
 #' @param y zmienna odpowiedzi.
-#' @param czas podziaÅ‚ na okresy czasowe.
-#' @param proby \code{data.frame}, w ktÃ³rym kaÅ¼da kolumna jest wektorem logicznym,
-#'       zawierajÄ…cym informacje, czy obserwacja naleÅ¼y do danej prÃ³by.
-#' @author MichaÅ‚ Danaj
+#' @param czas podzia³ na okresy czasowe.
+#' @param proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
+#'       zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.
+#' @author Micha³ Danaj
 #' @export
 univariate_stats_new_data<-function(buckets,x,y,czas,proby=rep(TRUE, length(y))){
 	buckets$fitted<-buckets$label;
@@ -109,42 +109,42 @@ univariate_stats_new_data<-function(buckets,x,y,czas,proby=rep(TRUE, length(y)))
 	
 	stat2<-NULL;
 	stat3<-NULL;
-	#Dalsze statystyki robiÄ™ pod warunkiem, Å¼e jest wiÄ™cej niÅ¼ jedna wartoÅ›Ä‡ dyskretna
-	#(W stat1 jest teÅ¼ <TOTAL>, dlatego 2)
+	#Dalsze statystyki robiê pod warunkiem, ¿e jest wiêcej ni¿ jedna wartoœæ dyskretna
+	#(W stat1 jest te¿ <TOTAL>, dlatego 2)
 	if (nrow(stat1)>2){
-		# przypisujÄ™ nazwÄ™ bucketu
+		# przypisujê nazwê bucketu
 		stat1$fitted<-stat1$label;
 		x_discr<-przypisz2(x,stat1);
 		
-		# przypisujÄ™ BR
+		# przypisujê BR
 		stat1$fitted<-stat1$br;
 		BR_discr<-przypisz2(x,stat1);
 		
 		# wyliczam drugie statystyki
 		stat2<-univariate_anal_stats2(x_discr, y, czas, BR_discr);
 		
-		# wyliczam trzecie statystyki (GINI) po zadanych prÃ³bach i czasie
+		# wyliczam trzecie statystyki (GINI) po zadanych próbach i czasie
 		buckets$fitted<-buckets$br;
 		stare_BR<-przypisz2(x,buckets);
 		stat3<-univariate_anal_stats3(-stare_BR, y, czas, proby);
-		attr(stat3,'comment')<-"AR policzony w oparciu o oryginalne wartoÅ›ci BR."
+		attr(stat3,'comment')<-"AR policzony w oparciu o oryginalne wartoœci BR."
 	}
 	return(list(dyskretyzacja=stat1, rozklady=stat2, dyskryminacja=stat3));
 }
 
 
-#' Robi rozkÅ‚ad zmiennej po czasie (lub innym podziale)
+#' Robi rozk³ad zmiennej po czasie (lub innym podziale)
 #'
-#' Wylicza licznoÅ›ci dla kaÅ¼dego poziomu \code{x_discr} oraz Å›redniÄ… wartoÅ›Ä‡ \code{y} oraz \code{esitm}
-#' w podziale na zadane grupy czasowe \code{czas} (lub podziaÅ‚ innego typu).
-#' @param x_discr zmienna objaÅ›niajÄ…ca.
+#' Wylicza licznoœci dla ka¿dego poziomu \code{x_discr} oraz œredni¹ wartoœæ \code{y} oraz \code{esitm}
+#' w podziale na zadane grupy czasowe \code{czas} (lub podzia³ innego typu).
+#' @param x_discr zmienna objaœniaj¹ca.
 #' @param y zmienna odpowiedzi.
 #' @param czas Czas.
-#' @param estim wartoÅ›Ä‡ wyestymowana przez model.
+#' @param estim wartoœæ wyestymowana przez model.
 #' @export
 univariate_anal_stats2<-function(x_discr, y, czas, estim){
 	
-	#licznoÅ›ci po czasie i zmiennej
+	#licznoœci po czasie i zmiennej
 	total<-table(x_discr);
 	total_czas<-table(czas);
 	all_tbl<-cbind(table(x_discr, czas), TOTAL=total);
@@ -152,10 +152,10 @@ univariate_anal_stats2<-function(x_discr, y, czas, estim){
 	rownames(all_tbl)[nrow(all_tbl)]<-'TOTAL';
 	
 	
-	#rozkÅ‚ad kaÅ¼dego bucketu po czasie (agregujÄ…c po czasie zsumuje siÄ™ do 1)
+	#rozk³ad ka¿dego bucketu po czasie (agreguj¹c po czasie zsumuje siê do 1)
 	pct_all_tbl<-sweep(all_tbl, 2, STATS=c(total_czas,length(x_discr)), FUN="/");
 	
-	#Å›rednie LGD po czasie i zmiennej
+	#œrednie LGD po czasie i zmiennej
 	total<-tapply(y, list(x_discr), mean)
 	avg_y<-tapply(y, list(x_discr,czas), mean);
 	avg_y<-cbind(avg_y, TOTAL=total);
@@ -166,13 +166,13 @@ univariate_anal_stats2<-function(x_discr, y, czas, estim){
 					estim=tapply(estim, czas, mean)));
 }
 
-#' Wylicza AR po czasie i w podziale na zadane prÃ³by
+#' Wylicza AR po czasie i w podziale na zadane próby
 #'
-#' @param score zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.
+#' @param score zmienna, po której procedura bêdzie sortowaæ.
 #' @param y zmienna odpowiedzi.
-#' @param czas podziaÅ‚ na okresy czasowe.
-#' @param proby \code{data.frame}, w ktÃ³rym kaÅ¼da kolumna jest wektorem logicznym,
-#'       zawierajÄ…cym informacje, czy obserwacja naleÅ¼y do danej prÃ³by.
+#' @param czas podzia³ na okresy czasowe.
+#' @param proby \code{data.frame}, w którym ka¿da kolumna jest wektorem logicznym,
+#'       zawieraj¹cym informacje, czy obserwacja nale¿y do danej próby.
 #' @export
 univariate_anal_stats3<-function (score, y, czas, proby){
 	razem<-data.frame(score,y,czas);
@@ -211,32 +211,32 @@ univariate_anal_stats3<-function (score, y, czas, proby){
 
 
 
-#' Dyskretyzuje zmiennÄ… i wylicza na niej statystyki
+#' Dyskretyzuje zmienn¹ i wylicza na niej statystyki
 #'
-#' W przypadku, gdy liczba unikalnych wartoÅ›ci zmiennej jest <= \code{discrete_threshold}
-#' lub zmienna nie jest zmiennÄ… numerycznÄ…,
-#' uznaje Å¼e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
-#' wypadku dyskretyzuje zmiennÄ… i wylicza statystyki.
-#' @param x zmienna, po ktÃ³rej procedura bÄ™dzie sortowaÄ‡.
+#' W przypadku, gdy liczba unikalnych wartoœci zmiennej jest <= \code{discrete_threshold}
+#' lub zmienna nie jest zmienn¹ numeryczn¹,
+#' uznaje ¿e zmienna jest dyskretna i jedynie wylicza dla niej statystyki. W przeciwnym
+#' wypadku dyskretyzuje zmienn¹ i wylicza statystyki.
+#' @param x zmienna, po której procedura bêdzie sortowaæ.
 #' @param y zmienna odpowiedzi.
-#' @param locfit Czy z automatu dopasowaÄ‡ funkcjÄ™ z modelu \code{locfit}. 
-#' @param discrete_threshold jeÅ›li liczba unikalnych wartoÅ›ci zmiennej jest nie wiÄ™ksza
-#'        ta wartoÅ›Ä‡, zmienna uznana jest za dyskretnÄ… i nie jest poddawana dyskretyzacji.
-#' @param no_stats_threshold liczba unikalnych wartoÅ›ci zmiennej kategorycznej, powyÅ¼ej ktÃ³rej nie sÄ… generowane
+#' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}. 
+#' @param discrete_threshold jeœli liczba unikalnych wartoœci zmiennej jest nie wiêksza
+#'        ta wartoœæ, zmienna uznana jest za dyskretn¹ i nie jest poddawana dyskretyzacji.
+#' @param no_stats_threshold liczba unikalnych wartoœci zmiennej kategorycznej, powy¿ej której nie s¹ generowane
 #' 		  statystyki. W przypadku przekroczenia, zwracany jest komunikat "Too many categorical levels".
-#' @param NA_substit wartoÅ›Ä‡, ktÃ³rÄ… zastÄ…piÄ‡ brak danych
-#' @param special_val WartoÅ›ci specjalne do usuniÄ™cia z automatycznego podziaÅ‚u. BÄ™dÄ… traktowane jako zmienne
+#' @param NA_substit wartoœæ, któr¹ zast¹piæ brak danych
+#' @param special_val Wartoœci specjalne do usuniêcia z automatycznego podzia³u. Bêd¹ traktowane jako zmienne
 #' 					  kategoryczne.
-#' @param max_gleb Maksymalna gÅ‚Ä™bokoÅ›c do ktÃ³rej budujemy drzewo
-#' @param min_bucket Minimalna wielkoÅ›Ä‡ liÅ›cia
-#' @param interactive TRUE, jeÅ›li zmienna ma byÄ‡ dyskretyzowana interaktywnie. W
-#'                   przeciwnym razie, co jest wartoÅ›ciÄ… domyÅ›lnÄ…, dyskretyzacja
+#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @param min_bucket Minimalna wielkoœæ liœcia
+#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
+#'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
 #'                   jest automatyczna.
-#' @param breaks zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ wartoÅ›ci przedziaÅ‚Ã³w (from,to].
-#' @param mapping zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ mapowanie.
-#' @param forceContinous wymusza potraktowanie zmiennej jako ciÄ…gÅ‚Ä…, mimo Å¼e liczba
-#'                      unikalnych wartoÅ›ci jest mniejsza niÅ¼ \code{discrete_threshold}.
-#' @param span Parametr wygÅ‚adzajÄ…cy funkcji \code{locit}.
+#' @param breaks zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
+#' @param mapping zamiast automatycznego dzielenia, mo¿na podaæ mapowanie.
+#' @param forceContinous wymusza potraktowanie zmiennej jako ci¹g³¹, mimo ¿e liczba
+#'                      unikalnych wartoœci jest mniejsza ni¿ \code{discrete_threshold}.
+#' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
 #' @param ...  dodatkowe parametry graficzne.
 #' @seealso \code{\link{buckety_stat}}.
 #' @export
@@ -256,17 +256,17 @@ univariate_anal_stats1<-function(x,y,
 	
 		
 	if (length(x)!=length(y))
-		stop("paramet ry 'x' i 'y' majÄ… rÃ³Å¼ne dÅ‚ugoÅ›ci!");
+		stop("paramet ry 'x' i 'y' maj¹ ró¿ne d³ugoœci!");
 		
 	
-	## jeÅ›li sÄ… jakieÅ› nulle w x, to odpowiednio siÄ™ nimi zajmujÄ™
+	## jeœli s¹ jakieœ nulle w x, to odpowiednio siê nimi zajmujê
 	nulle<-is.na(x)
 	if (any(nulle)){
 		
-		#jeÅ›li nulli jest mniej niÅ¼ zaÅ‚oÅ¼ona czÄ™Å›Ä‡ populacji, to imputujÄ™ je. W przeciwnym razie przypisujÄ™ jako osobnÄ… grupÄ™.
+		#jeœli nulli jest mniej ni¿ za³o¿ona czêœæ populacji, to imputujê je. W przeciwnym razie przypisujê jako osobn¹ grupê.
 		ile_nulli<-prop.table(table(nulle))
 		if (ile_nulli["TRUE"]<numeric_var_treatment.params$nulle_do_imp_thr)
-			#TODO zobaczyÄ‡, czy y ma dwie wartoÅ›ci i jest to 0 i 1
+			#TODO zobaczyæ, czy y ma dwie wartoœci i jest to 0 i 1
 			x<-missing_bin_target(x, y)
 		else
 			x[nulle]<-NA_substit;
@@ -274,7 +274,7 @@ univariate_anal_stats1<-function(x,y,
 	}
 	
 	
-	## jeÅ›li jest to zmienna dyskretna lub mapowanie
+	## jeœli jest to zmienna dyskretna lub mapowanie
 	if (!is.null(mapping)||((length(unique(x))<=discrete_threshold || !is.numeric(x))&&
 				is.null(breaks) && !forceContinous)){
 		
@@ -283,17 +283,17 @@ univariate_anal_stats1<-function(x,y,
 		
 		discret<-buckety_stat(x, y, total=TRUE);
 		
-		#Sprawdzam, czy nie ma za duÅ¼o zmiennnych kategorycznych. Parametr okreÅ›lony z parametru.
+		#Sprawdzam, czy nie ma za du¿o zmiennnych kategorycznych. Parametr okreœlony z parametru.
 		if(nrow(discret)-1 > no_stats_threshold)
 			return("Too many categorical levels")
 		
-		#jeÅ›li tylko jedna wartoÅ›Ä‡, to zwracam komunikat
+		#jeœli tylko jedna wartoœæ, to zwracam komunikat
 		if(nrow(discret) == 2)
 			return("One value")
 	
-		## uzupeÅ‚niam statystyki ##
+		## uzupe³niam statystyki ##
 		
-		# ciÄ…gÅ‚e
+		# ci¹g³e
 		discret$od<-NA;
 		discret$do<-NA;
 		discret$srodek<-NA;
@@ -319,7 +319,7 @@ univariate_anal_stats1<-function(x,y,
 						'br','woe','logit')]
 		discret$predicted<-discret$br
 	}
-	## jeÅ›li jest to zmienna ciÄ…gÅ‚a
+	## jeœli jest to zmienna ci¹g³a
 	else{
 		discret<-numeric_var_treatment(x,y, special_val=special_val, NA_substit = NA_substit,
 				max_gleb=max_gleb,min_bucket=min_bucket,breaks=breaks,
@@ -340,16 +340,16 @@ univariate_anal_stats1<-function(x,y,
 #' @param ...  dodatkowe parametry graficzne.
 #' @return 
 #' 
-#' @author MichaÅ‚ Danaj
+#' @author Micha³ Danaj
 #' @export
 univariate_anal_stats4<-function(dane, mapowanie, czas=lastDay(dane$reportingdate, unit = "quater"),...){
 	dyskretne<-mapuj(dane,mapowanie)
 	wynik<-univariate_anal_stats(dyskretne, dane$def, czas,...)
 	
-	#funkcja univariate_anal_stats zmienia kolejnoÅ›Ä‡, dlatego wracamy jÄ…
+	#funkcja univariate_anal_stats zmienia kolejnoœæ, dlatego wracamy j¹
 	kolejnosc<-match(mapowanie$label,wynik$dyskretyzacja$label)
 	
-	#dodajÄ™ totala
+	#dodajê totala
 	kolejnosc<-c(kolejnosc,length(kolejnosc)+1)
 	wynik$dyskretyzacja<-wynik$dyskretyzacja[kolejnosc,]
 	wynik$rozklady$obs_all_tbl<-wynik$rozklady$obs_all_tbl[kolejnosc,]
@@ -368,22 +368,22 @@ univariate_anal_stats4<-function(dane, mapowanie, czas=lastDay(dane$reportingdat
 
 
 
-#' Grupuje zmienne i generuje dla nich listÄ™ statystyk
+#' Grupuje zmienne i generuje dla nich listê statystyk
 #' 
-#' Funkcja grupuje zmienne ciÄ…gÅ‚e, zgodnie z domyÅ›lnymi parametrami. Na grupach oraz na zmiennych kategorycznych 
-#' wylicza statytystyki i przedstawia je w formie listy, osobno dla kaÅ¼dej ze zmiennych. Wykorzystuje do tego funkcjÄ™
+#' Funkcja grupuje zmienne ci¹g³e, zgodnie z domyœlnymi parametrami. Na grupach oraz na zmiennych kategorycznych 
+#' wylicza statytystyki i przedstawia je w formie listy, osobno dla ka¿dej ze zmiennych. Wykorzystuje do tego funkcjê
 #' \code{\link{univariate_anal_stats}}.
 #' @param x_df \code{data.frame} ze zmiennymi do anliz.
-#' @param y \code{vector} z wartoÅ›ciami zmiennej odpowiedzi.
-#' @param vsub_bool \code{vector} logiczny okreÅ›lajÄ…cy, ktÃ³re zmienne z \code{df} powinny zostaÄ‡ zanalizowane.
-#' @param vsub_list \code{vector} z nazwami zmiennych z \code{df}, ktÃ³re powinny zostaÄ‡ zanalizowane.
-#' @param vsub_rola \code{vector} z rolÄ… kaÅ¼dej ze zmiennych. ZostanÄ… zanalizowane zmienne, dla ktÃ³rych rola 
+#' @param y \code{vector} z wartoœciami zmiennej odpowiedzi.
+#' @param vsub_bool \code{vector} logiczny okreœlaj¹cy, które zmienne z \code{df} powinny zostaæ zanalizowane.
+#' @param vsub_list \code{vector} z nazwami zmiennych z \code{df}, które powinny zostaæ zanalizowane.
+#' @param vsub_rola \code{vector} z rol¹ ka¿dej ze zmiennych. Zostan¹ zanalizowane zmienne, dla których rola 
 #' 	ustawiona jest na \code{'explanatory'}. 
-#' @param proby \code{data.frame} z wektorami logicznymi, okreÅ›lajÄ…cymi podprÃ³by na ktÃ³rych naleÅ¼y przeanalizowaÄ‡ podprÃ³by.
-#' @param czas \code{vector} ze zmiennÄ… czasowÄ…, po ktÃ³rej zostanÄ… podzielone analizy.
+#' @param proby \code{data.frame} z wektorami logicznymi, okreœlaj¹cymi podpróby na których nale¿y przeanalizowaæ podpróby.
+#' @param czas \code{vector} ze zmienn¹ czasow¹, po której zostan¹ podzielone analizy.
 #' @param ... dodatkowe parametry do funkcji \code{\link{univariate_anal_stats}}. 
-#' @return lista ze statstykami dla kaÅ¼dej ze zmiennych okreÅ›lonych przez ktÃ³ryÅ› z wektorÃ³w vsub\*. Nazwy elementÃ³w listy
-#' 	sÄ… nazwami zmiennych.
+#' @return lista ze statstykami dla ka¿dej ze zmiennych okreœlonych przez któryœ z wektorów vsub\*. Nazwy elementów listy
+#' 	s¹ nazwami zmiennych.
 #' @seealso \code{\link{univariate_anal_stats}}
 #' 
 #' @author Michal Danaj
@@ -399,7 +399,7 @@ univariate_loop<-function(x_df
 	
 	zmienne_names <- names(x_df)
 	
-	#ktÃ³re zmienne do analizy
+	#które zmienne do analizy
 	if (!is.null(vsub_rola))
 		vsub_bool <- vsub_rola=='explanatory'
 	

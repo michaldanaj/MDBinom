@@ -7,12 +7,11 @@
 logit(p)
 }
 \arguments{
-\item{p}{wartoœæ.}
+\item{p}{wartoÅ›Ä‡.}
 }
 \description{
 Liczy logit
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

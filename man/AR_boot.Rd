@@ -2,57 +2,57 @@
 % Please edit documentation in R/MDBinom.r
 \name{AR_boot}
 \alias{AR_boot}
-\title{Wylicza rozk³ad AR(GINI) metod¹ bootstrap}
+\title{Wylicza rozkÅ‚ad AR(GINI) metodÄ… bootstrap}
 \usage{
 AR_boot(score, def, n_boot, obs = rep(1, length(score)), n_once = 5e+07,
   seed = NULL)
 }
 \arguments{
-\item{score}{wektor z wartoœciami score.}
+\item{score}{wektor z wartoÅ›ciami score.}
 
-\item{def}{wektor z liczb¹ defaultów dla danego rekordu danych.}
+\item{def}{wektor z liczbÄ… defaultÃ³w dla danego rekordu danych.}
 
-\item{n_boot}{liczba prób bootstrap do wygenerowania.}
+\item{n_boot}{liczba prÃ³b bootstrap do wygenerowania.}
 
-\item{obs}{wektor z liczb¹ obserwacji dla danego rekordu danych.}
+\item{obs}{wektor z liczbÄ… obserwacji dla danego rekordu danych.}
 
-\item{n_once}{ile jednorazowo maksymalnie mo¿e byæ wylosowanych obserwacji. Parametr dodany jedynie, 
-aby nie przekroczyæ dostêpnej pamiêci. Nie ma wp³ywu na koñcowy wynik.}
+\item{n_once}{ile jednorazowo maksymalnie moÅ¼e byÄ‡ wylosowanych obserwacji. Parametr dodany jedynie, 
+aby nie przekroczyÄ‡ dostÄ™pnej pamiÄ™ci. Nie ma wpÅ‚ywu na koÅ„cowy wynik.}
 
 \item{seed}{ziarno.}
 }
 \value{
-Zwraca wektor d³ugoœci \code{b_boot+1}. Pierwszy element wektora
-			 zawiera wyliczony AR na ca³ej próbie, w dalszej kolejnoœci znajduj¹
-			 siê wartoœci wyliczone w oparciu o próby bootstrap.
+Zwraca wektor dÅ‚ugoÅ›ci \code{b_boot+1}. Pierwszy element wektora
+			 zawiera wyliczony AR na caÅ‚ej prÃ³bie, w dalszej kolejnoÅ›ci znajdujÄ…
+			 siÄ™ wartoÅ›ci wyliczone w oparciu o prÃ³by bootstrap.
 }
 \description{
-Algorytm dzia³a w nastêpuj¹cy sposób. Na wstêpie agregowane s¹ wartoœci
-do poziomu score. Tak przygotowane informacje pos³u¿¹
-do wygenerowania losowo liczby badów i goodów dla ka¿dego score, jakie zosta³yby wylosowane
-w eksperymencie losowania ze zwracaniem z wyjœciowej próby. 
-Jednorazowo losowanych jest tyle prób bootstrap, aby liczba wszystkich wylosowanych 
+Algorytm dziaÅ‚a w nastÄ™pujÄ…cy sposÃ³b. Na wstÄ™pie agregowane sÄ… wartoÅ›ci
+do poziomu score. Tak przygotowane informacje posÅ‚uÅ¼Ä…
+do wygenerowania losowo liczby badÃ³w i goodÃ³w dla kaÅ¼dego score, jakie zostaÅ‚yby wylosowane
+w eksperymencie losowania ze zwracaniem z wyjÅ›ciowej prÃ³by. 
+Jednorazowo losowanych jest tyle prÃ³b bootstrap, aby liczba wszystkich wylosowanych 
 obserwacji
-nie przekroczy³a \code{n_once}. Ma to zapobiec przekroczeniu dostêpnej wielkoœci pamiêci.
-Z wylosowanych obserwacji tworzone s¹ macierze
+nie przekroczyÅ‚a \code{n_once}. Ma to zapobiec przekroczeniu dostÄ™pnej wielkoÅ›ci pamiÄ™ci.
+Z wylosowanych obserwacji tworzone sÄ… macierze
 do funkcji \code{\link{AR_quick}}, gdzie jedna kolumna odpowiada jedemu eksperymentowi. 
-Jeœli liczba kolumn w macierzy jest mniejsza ni¿ \code{n_boot}, co mo¿e byæ
+JeÅ›li liczba kolumn w macierzy jest mniejsza niÅ¼ \code{n_boot}, co moÅ¼e byÄ‡
 spowodowane ograniczeniem przez \code{n_once}, wykonywana jest
-kolejna pêtla. Algorytm zosta³ zoptymalizowany pod k¹tem prób, w których
-wystêpuje ma³a liczba unikalnych wartoœci \code{score}, w stosunku do liczby obserwacji w próbie.
+kolejna pÄ™tla. Algorytm zostaÅ‚ zoptymalizowany pod kÄ…tem prÃ³b, w ktÃ³rych
+wystÄ™puje maÅ‚a liczba unikalnych wartoÅ›ci \code{score}, w stosunku do liczby obserwacji w prÃ³bie.
 }
 \details{
-Dane wejœciowe mog¹ byæ ju¿ w jakiœ sposób zagregowane (np.do poziomu score), lub nie.
+Dane wejÅ›ciowe mogÄ… byÄ‡ juÅ¼ w jakiÅ› sposÃ³b zagregowane (np.do poziomu score), lub nie.
 }
 \examples{
-## dane do przyk³adu
-n<-100000; #liczba obserwacji w próbie
-nb<-100; #liczba prób bootstrap
+## dane do przykÅ‚adu
+n<-100000; #liczba obserwacji w prÃ³bie
+nb<-100; #liczba prÃ³b bootstrap
 score<-rnorm(n); #generowanie score
-def<-as.numeric(score+rnorm(n)<0) #generowanie defaultów
-score<-floor(200*score) #dyskretyzacja wartoœci score
+def<-as.numeric(score+rnorm(n)<0) #generowanie defaultÃ³w
+score<-floor(200*score) #dyskretyzacja wartoÅ›ci score
 
-#liczba unikalnych wartoœci score
+#liczba unikalnych wartoÅ›ci score
 length(unique(score))
 #[1] 1362
 
@@ -61,18 +61,17 @@ system.time(AR_boot(score, def, nb))
 #user  system elapsed 
 # .41    0.00    1.53 
 
-#porównanie z czasem wykonania w przypadku pêtli i stadradowej funkcji 
+#porÃ³wnanie z czasem wykonania w przypadku pÄ™tli i stadradowej funkcji 
 #do wyliczania GINI
 system.time(
 sapply(1:nb, function(i){
 			id<-sample(length(score), replace=TRUE);
-			AR(score[id], def[id])[[1]]['AR']
+			AR(score[id], def[id])['AR']
 	})
 ) 
 # user  system elapsed 
 #83.66    1.62   92.44 
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

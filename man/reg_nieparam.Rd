@@ -2,9 +2,9 @@
 % Please edit documentation in R/MDBinom.r
 \name{reg_nieparam}
 \alias{reg_nieparam}
-\title{Rysuje lokalnie wyg³adzon¹ funckjê.
+\title{Rysuje lokalnie wygÅ‚adzonÄ… funckjÄ™.
  
- Rysuje i zwraca statystyki dla bucketów.}
+ Rysuje i zwraca statystyki dla bucketÃ³w.}
 \usage{
 reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
   degree = 2, plot = TRUE, plt_type = "br", new = TRUE,
@@ -16,37 +16,37 @@ reg_nieparam(score, default, buckets = 100, wytnij = 0, span = 0.7,
 
 \item{default}{Wektor zmiennej dwumianowej.}
 
-\item{buckets}{Liczba bucketów, na ile nele¿y podzieliæ \code{score}.}
+\item{buckets}{Liczba bucketÃ³w, na ile neleÅ¼y podzieliÄ‡ \code{score}.}
 
-\item{wytnij}{Ile krañcowych obserwacji wyci¹æ.}
+\item{wytnij}{Ile kraÅ„cowych obserwacji wyciÄ…Ä‡.}
 
-\item{span}{Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}}
+\item{span}{WspÃ³Å‚czynnik wygÅ‚adzania. SzegÃ³Å‚y w funkcji \code{\link[locfit]{locfit}}}
 
-\item{degree}{Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}}
+\item{degree}{StopieÅ„ wielomianu do lokalnego wygÅ‚adzania. SzegÃ³Å‚y w funkcji \code{\link[locfit]{locfit}}}
 
-\item{plot}{Czy rysowaæ wykres.}
+\item{plot}{Czy rysowaÄ‡ wykres.}
 
-\item{plt_type}{jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)}
+\item{plt_type}{jeÅ›li \code{br}, to na osi OY bÄ™dzie BR. W przeciwnym razie bÄ™dzie logit(BR)}
 
-\item{new}{Czy rysowaæ wykres od nowa.}
+\item{new}{Czy rysowaÄ‡ wykres od nowa.}
 
-\item{col_points}{Kolor punktów.}
+\item{col_points}{Kolor punktÃ³w.}
 
 \item{col_line}{Kolor lini.}
 
-\item{index}{jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
-W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.}
+\item{index}{jeÅ›li \code{TRUE}, na osi OX bÄ™dÄ… numery kolejnych bucketÃ³w.
+W przeciwnym razie na osi OX bÄ™dÄ… wartoÅ›ci \code{score}.}
 
-\item{glm}{czy rysowaæ dopasowanie modelu logistycznego do zmiennej.}
+\item{glm}{czy rysowaÄ‡ dopasowanie modelu logistycznego do zmiennej.}
 
 \item{col_glm}{kolor wykresu z modelu logistycznego.}
 
 \item{...}{dodatkowe parametry.}
 }
 \description{
-Rysuje lokalnie wyg³adzon¹ funckjê.
+Rysuje lokalnie wygÅ‚adzonÄ… funckjÄ™.
  
- Rysuje i zwraca statystyki dla bucketów.
+ Rysuje i zwraca statystyki dla bucketÃ³w.
 }
 \examples{
 	n<-1000;
@@ -58,6 +58,5 @@ Rysuje lokalnie wyg³adzon¹ funckjê.
 	reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

@@ -8,46 +8,46 @@ AR_old(score, def, plot = FALSE, return.table = FALSE, sort.order = NULL,
   label = "", lgd_adjusted = FALSE, ...)
 }
 \arguments{
-\item{score}{wektor    wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}}
+\item{score}{wektor    wartoÅ›ci, wedÅ‚ug ktÃ³ry naleÅ¼y posortowaÄ‡ wartoÅ›ci \code{def}}
 
-\item{def}{Wektor wartoœci \code{\{0,1\}}}
+\item{def}{Wektor wartoÅ›ci \code{\{0,1\}}}
 
-\item{plot}{Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}.}
+\item{plot}{Czy narysowaÄ‡ krzywÄ… CAP. DomyÅ›lnie \code{FALSE}.}
 
-\item{return.table}{czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
-wartoœci score}
+\item{return.table}{czy zwracaÄ‡ tabelÄ™ z agregatami na poziomie pojedynczej 
+wartoÅ›ci score}
 
-\item{sort.order}{dla wartoœci równej "br", zamiast po \code{score}, 
-sortuje po wartoœci \code{br}. Mo¿e to byæ przydatne przy zmiennych dyskretnych.}
+\item{sort.order}{dla wartoÅ›ci rÃ³wnej "br", zamiast po \code{score}, 
+sortuje po wartoÅ›ci \code{br}. MoÅ¼e to byÄ‡ przydatne przy zmiennych dyskretnych.}
 
-\item{label}{opis wyœwietlony w legendzie.}
+\item{label}{opis wyÅ›wietlony w legendzie.}
 
 \item{lgd_adjusted}{W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
-            mniejsze ni¿ dla modelu PD i nie da siê go wyliczyæ analogicznym wzorem. Dlatego
-dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona u¿yta jako mianownik do
+            mniejsze niÅ¼ dla modelu PD i nie da siÄ™ go wyliczyÄ‡ analogicznym wzorem. Dlatego
+dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona uÅ¼yta jako mianownik do
 wyliczenia AR.}
 
 \item{...}{dodatkowe parametry.}
 }
 \value{
-Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
-kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
-Ka¿dy element listy ma postaæ:
- \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
- \item{bad}{Liczba bad-ów w przedziale.}
+Zwraca listÄ™ obiektÃ³w \code{data.frame}. Elementy tej listy odpowiadajÄ… kolejnym
+kolumnom ze \code{score_wiele} i majÄ… takie same nazwy, jak kolumny ze \code{score_wiele}.
+KaÅ¼dy element listy ma postaÄ‡:
+ \item{do }{GÃ³rna granica przedziaÅ‚u, dla ktÃ³rego podane sÄ… statystyki.}
+ \item{bad}{Liczba bad-Ã³w w przedziale.}
  \item{obs}{Liczba obserwacji w przedziale.}
- \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
- \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
-								wszystkich bad-ów.}
- \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
-								wszystkich good-ów.}
- \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
+ \item{pct_all}{Procentowy udziaÅ‚ obserwacji w danym przedziale.}
+ \item{pct_bad}{Procentowy udziaÅ‚ bad-Ã³w w danym przedziale w stosunku do 
+								wszystkich bad-Ã³w.}
+ \item{pct_good}{Procentowy udziaÅ‚ good-Ã³w w danym przedziale w stosunku do 
+								wszystkich good-Ã³w.}
+ \item{br}{Stosunek bad-Ã³w do good-Ã³w w danym przedziale (bad rate).}
  \item{AR}{Wyliczone Accuracy Ratio.}
 }
 \description{
-Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
-informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
-jest wartoœæ AR.
+Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowujÄ…cy
+informacje pozwalajÄ…ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
+jest wartoÅ›Ä‡ AR.
 }
 \examples{
 n<-1000;
@@ -56,6 +56,5 @@ def<- as.numeric(x+rnorm(n)<0);
 AR(x,def,plot=TRUE);
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-
