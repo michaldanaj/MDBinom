@@ -2,7 +2,7 @@
 % Please edit documentation in R/MDBinom.r
 \name{print.AR}
 \alias{print.AR}
-\title{Wyúwietla statystyki przechowywane w obiekcie \code{\link{AR}}}
+\title{Wy≈õwietla statystyki przechowywane w obiekcie \code{\link{AR}}}
 \usage{
 \method{print}{AR}(x)
 }
@@ -10,6 +10,5 @@
 \item{x}{obiekt klasy \code{AR}.}
 }
 \description{
-Wyúwietla statystyki przechowywane w obiekcie \code{\link{AR}}
+Wy≈õwietla statystyki przechowywane w obiekcie \code{\link{AR}}
 }
-

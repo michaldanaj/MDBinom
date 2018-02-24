@@ -2,28 +2,27 @@
 % Please edit documentation in R/MDBinom.r
 \name{dopasowanie_do_zmiennej}
 \alias{dopasowanie_do_zmiennej}
-\title{Sprawdzenie, czy estymacja modelu dobrze t≥umaczy zaleønoúÊ targetu od zmiennej}
+\title{Sprawdzenie, czy estymacja modelu dobrze t≈Çumaczy zale≈ºno≈õƒá targetu od zmiennej}
 \usage{
 dopasowanie_do_zmiennej(x, y, bucket, subset = NULL, ...)
 }
 \arguments{
-\item{x}{wektror z wartoúciami zmiennej}
+\item{x}{wektror z warto≈õciami zmiennej}
 
-\item{y}{wektor z predykcjπ modelu}
+\item{y}{wektor z predykcjƒÖ modelu}
 
 \item{bucket}{grupowanie zmiennej}
 
-\item{subset}{podzbiÛr}
+\item{subset}{podzbi√≥r}
 
 \item{...}{dodatkowe parametry graficzne}
 }
 \value{
-bucket z dodanymi wyestymowanymi wartoúciami
+bucket z dodanymi wyestymowanymi warto≈õciami
 }
 \description{
-Sprawdzenie, czy estymacja modelu dobrze t≥umaczy zaleønoúÊ targetu od zmiennej
+Sprawdzenie, czy estymacja modelu dobrze t≈Çumaczy zale≈ºno≈õƒá targetu od zmiennej
 }
 \author{
-Micha≥ Danaj
+Micha≈Ç Danaj
 }
-

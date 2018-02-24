@@ -85,7 +85,7 @@ nvl2<-function(x, val_not_null, val_null){
 #' system.time(
 #'	sapply(1:nb, function(i){
 #' 			id<-sample(length(score), replace=TRUE);
-#' 			AR(score[id], def[id])[[1]]['AR']
+#' 			AR(score[id], def[id])['AR']
 #' 	})
 #' ) 
 #' # user  system elapsed 

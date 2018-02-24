@@ -1,18 +1,18 @@
 # TODO: Add comment
 # 
-# Author: Micha³ Danaj
+# Author: Micha^3 Danaj
 ###############################################################################
 
 
 
-#' Podstawowe statystyki faktorów
+#' Podstawowe statystyki faktor�w
 #' 
-#' Wiele z faktorów zaczytanych bezpoœrednio z pliku nie nadaje siê do modelowania. Funkcja umo¿liwia wstêpn¹ 
-#' analizê faktorów. 
+#' Wiele z faktor�w zaczytanych bezpooerednio z pliku nie nadaje sie do modelowania. Funkcja umo?liwia wstepn^1 
+#' analize faktor�w. 
 #' @param dane 
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author Micha^3 Danaj
 #' @export
 prel_factors<-function(dane){
 	faktory<-sapply(dane, is.factor)
@@ -22,13 +22,13 @@ prel_factors<-function(dane){
 
 
 
-#' Wyœwietla zmienne numeryczne z wariancj¹ == 0
+#' Wyoewietla zmienne numeryczne z wariancj^1 == 0
 #' 
-#' Wyœwietla zmienne numeryczne z jedn¹ wartoœci¹.
+#' Wyoewietla zmienne numeryczne z jedn^1 wartooeci^1.
 #' @param dane  
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author Micha^3 Danaj
 #' @export
 prel_numeric_sd0 <- function(dane){
 	ciagle<-sapply(dane, function(x)is.numeric(x) & !is.factor(x))
@@ -43,15 +43,15 @@ prel_numeric_sd0 <- function(dane){
 }
 
 
-#' Wyœwietla zmienne z wartoœci¹ o du¿ym udziale w rozk³adzie
+#' Wyoewietla zmienne z wartooeci^1 o du?ym udziale w rozk^3adzie
 #' 
-#' Wyœwietla nazwy zmiennych, dla których istenieje taka wartoœæ, ¿e jej udzia³ przekracza \code{rate}
-#' próby. 
+#' Wyoewietla nazwy zmiennych, dla kt�rych istenieje taka wartooeae, ?e jej udzia^3 przekracza \code{rate}
+#' pr�by. 
 #' @param dane Dane.
-#' @param rate Graniczny udzia³ jedenej wartoœci.
+#' @param rate Graniczny udzia^3 jedenej wartooeci.
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author Micha^3 Danaj
 #' @export
 prel_numeric_one_value <- function(dane, rate=0.98){
 	
@@ -70,15 +70,15 @@ prel_numeric_one_value <- function(dane, rate=0.98){
 
 
 
-#' Wyœwietla wektory logiczne
+#' Wyoewietla wektory logiczne
 #' 
-#' Po wczytaniu danych z pliku tekstowego nie powinno byæ wektorów logicznych w innych przypadkach ni¿
-#' pusty wektor (tego nie jestem tak na prawdê teraz pewny). Funkcja wypisuje wszystkie wektory logiczne
-#' ¿eby mo¿na by³o je obejrzeæ. 
+#' Po wczytaniu danych z pliku tekstowego nie powinno byae wektor�w logicznych w innych przypadkach ni?
+#' pusty wektor (tego nie jestem tak na prawde teraz pewny). Funkcja wypisuje wszystkie wektory logiczne
+#' ?eby mo?na by^3o je obejrzeae. 
 #' @param dane 
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author Micha^3 Danaj
 #' @export
 prel_logical<-function(dane){
 	names(dane)[unlist(sapply(dane,function(x)class(x)=='logical'))]

@@ -2,22 +2,21 @@
 % Please edit documentation in R/MDBinom.r
 \name{nvl}
 \alias{nvl}
-\title{Podstawia liczbê za brak danych}
+\title{Podstawia liczbÄ™ za brak danych}
 \usage{
 nvl(x, val)
 }
 \arguments{
 \item{x}{objekt zmiennych numerycznych}
 
-\item{val}{wartoœæ, któr¹ ma zostaæ zast¹piony brak danych \code{NA}}
+\item{val}{wartoÅ›Ä‡, ktÃ³rÄ… ma zostaÄ‡ zastÄ…piony brak danych \code{NA}}
 }
 \value{
-Zwraca pierwotny obiekt z wartoœci¹ \code{val} w miejsce braku danych
+Zwraca pierwotny obiekt z wartoÅ›ciÄ… \code{val} w miejsce braku danych
 }
 \description{
-Podstawia liczbê za brak danych
+Podstawia liczbÄ™ za brak danych
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

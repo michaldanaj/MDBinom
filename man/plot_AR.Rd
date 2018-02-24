@@ -11,16 +11,15 @@ plot_AR(ar, plot_type = c("ROC", "CAP"), adjusted_AR = FALSE, ...)
 
 \item{plot_type}{Typ wykresu.}
 
-\item{adjusted_AR}{zmienna logiczna. TRUE, gdy trzeba osobno wyliczyæ pole pod
+\item{adjusted_AR}{zmienna logiczna. TRUE, gdy trzeba osobno wyliczyÄ‡ pole pod
 modelem idealnym (np. w przypadku LGD).}
 }
 \description{
-Dla obiektu zwróconego przez funkcjê \code{\link{AR}} rysuje krzyw¹ ROC lub CAP.
+Dla obiektu zwrÃ³conego przez funkcjÄ™ \code{\link{AR}} rysuje krzywÄ… ROC lub CAP.
 }
 \details{
-Dla obiektu zwróconego przez funkcjê \code{\link{AR}} rysuje krzyw¹ ROC lub CAP.
+Dla obiektu zwrÃ³conego przez funkcjÄ™ \code{\link{AR}} rysuje krzywÄ… ROC lub CAP.
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

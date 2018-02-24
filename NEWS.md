@@ -1,3 +1,9 @@
+# v.5.1.4 2018-02-24
+
+### Drobne zmiany:
+* Poprawa korzystania z wyników funkcji AR
+* Polskie znaki z dokumentacji
+
 # v.5.1.3 2016-11-16
 
 ### Zaokrąglanie wartości w funkcjach przypisz

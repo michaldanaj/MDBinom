@@ -9,15 +9,15 @@ informacje(score, default, buckets = 20, span = 0.8, main = "",
   xlab = "Calibrated score", ...)
 }
 \arguments{
-\item{score}{Wektor ze zmienn¹ numeryczn¹.}
+\item{score}{Wektor ze zmiennÄ… numerycznÄ….}
 
-\item{default}{Wektor ze zmienn¹ dwumianow¹.}
+\item{default}{Wektor ze zmiennÄ… dwumianowÄ….}
 
-\item{buckets}{Sugerowana liczba bucketów.}
+\item{buckets}{Sugerowana liczba bucketÃ³w.}
 
-\item{span}{Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}}
+\item{span}{WspÃ³Å‚czynnik wygÅ‚adzajÄ…cy, wykorzystywany przez funkcjÄ™ \code{\link[locfit]{locfit}}}
 
-\item{main}{Tytu³ wykresu.}
+\item{main}{TytuÅ‚ wykresu.}
 
 \item{hist_col}{Kolor histogramu}
 
@@ -28,9 +28,9 @@ informacje(score, default, buckets = 20, span = 0.8, main = "",
 \item{...}{dodatkowe parametry.}
 }
 \description{
-Rysuje histogram zmiennej \code{score}, dla ka¿dego przedzia³u histogramu
- rysuje bad rate, oraz rysujê krzyw¹ regresji dla \code{default~score}. Pod
- wykresem wyœwietla informacje o Accuracy Ratios i bad rate.
+Rysuje histogram zmiennej \code{score}, dla kaÅ¼dego przedziaÅ‚u histogramu
+ rysuje bad rate, oraz rysujÄ™ krzywÄ… regresji dla \code{default~score}. Pod
+ wykresem wyÅ›wietla informacje o Accuracy Ratios i bad rate.
 }
 \examples{
 x<-rnorm(100);
@@ -38,6 +38,5 @@ y<-(x+rnorm(100))>0;
 informacje(x, y, buckets=15, span=0.8, main="", hist_col="blue", type="br", method_bucket="eq_length")
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-
