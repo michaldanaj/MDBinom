@@ -1,12 +1,12 @@
 Package: MDBinom
 Type: Package
 Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi
-Version: 5.1.3
-Date: 2016-11-16
+Version: 5.1.4
+Date: 2018-02-24
 Authors@R: person("Micha³", "Danaj", email = "michal.danaj@gmail.com",
   role = c("aut", "cre"))
 Author: Micha³ Danaj [aut, cre],
-Maintainer: Micha³ Danj <michal.danaj@gmail.com>  
+Maintainer: Micha³ Danaj <michal.danaj@gmail.com>  
 Description: Pakiet do dyskretyzacji zmiennych ci¹g³ych na cele budowy modelu logistycznego.
 License: What license is it under?
 LazyLoad: yes
@@ -19,5 +19,5 @@ Depends:
     data.table
 Suggests: 
     testthat
-Encoding: UTF-8
+Encoding: cp1250
 RoxygenNote: 6.0.1
