@@ -155,6 +155,115 @@ buckety_stat<-function (bucket, default, total = TRUE)
 	return(wynik)
 }
 
+#TODO za³o¿yæ ¿e jak jest 0, o daæ 0.5 do wyliczenia woe i logit
+#' Wylicza statystyki zmiennej \code{y} dla podanych grup \code{x}
+#'
+#' Wylicza statystyki zmiennej \code{y} dla podanych grup \code{x}. W za³o¿eniu
+#' \code{y} jest zmienn¹ dwumianow¹ o wartoœciach {0,1}.
+#' 
+#' @param x wektor z identyfikatorami bucketów.Nie mo¿e byæ braków danych.
+#' @param y wektor zmiennych numerycznych. Z za³o¿enia zmienna dwumianowa, ale statystyki
+#' zostan¹ policzone dla ka¿dej innej zmiennej numerycznej.Nie mo¿e byæ braków danych.
+#' @param weights wektor z wagami.
+#' @param avg \code{vector}, \code{data.frame}, \code{data.table} z wartoœciami dla których
+#' zostan¹ wyliczone œrednie.
+#' @param total czy do³¹czyæ wiersz z podsumowaniem.
+#' @param sort_x jeœli \code{TRUE}, wynikowa tabela zostanie posortowana po wartoœciach 
+#' cechy \code{x}. W przeciwnym wypadku sortowanie bêdzie zgodne z porz¹dkiem w danych.
+#' 
+#' @return Zwraca \code{data.table} ze statystykami.
+#' @author Micha³ Danaj 
+#' @export
+bckt_stats<-function (x, y, weights=rep(1, length(x)), avg=NULL ,total = TRUE, sort_x=TRUE)
+{
+
+  dt <- data.table(x, y, weights)
+
+  if (any(is.na(dt$x)) || any(is.na(dt$y)))
+    stop("W argumentach funkcji pojawi³y siê braki danych.")
+  
+  if (is.factor(dt$x))
+    dt$x <- factor(dt$x)
+
+  
+  #jeœli zosta³y podane kolumny 'avg', liczymy od razu dla nich œrednie
+  if(!is.null(avg)){
+    dt_avg <- data.table(x, avg)
+    #TODO ten lapply strasznie wolno dzia³a. Popatrzeæ, czy nie da siê czegoœ
+    #z tym zrobiæ
+    dt_avg <- dt_avg[,lapply(.SD, mean), x][,-1]
+  }
+  
+  dt_wyn <- dt[, .(
+    n_good = sum(weights) - sum(y*weights)
+    ,n_bad = sum(y*weights)
+    ,n_obs = sum(weights)
+  ), x]
+
+  totals <- dt_wyn[,.(good_all=sum(n_good), bad_all=sum(n_bad), obs_all=sum(n_obs))]  
+  
+  dt_wyn<- dt_wyn[,.(
+    nr=NA
+    ,x
+    ,labels=as.character(x)
+    ,n_good
+    ,pct_good = n_good/totals$good_all
+    ,n_bad
+    ,pct_bad = n_bad/totals$bad_all
+    ,n_obs
+    ,pct_obs = n_obs/totals$obs_all
+    ,br = n_bad/n_obs
+    ,logit = log(n_bad/n_obs)
+    ,woe = log(n_bad/n_good)
+    )]
+  
+  if (sort_x==TRUE)
+    setorder(dt_wyn, x)
+  
+  rownames(dt_wyn) <- dt_wyn$labels
+  
+  #wyliczam wiersz z Totalem
+  if (total) {
+    
+    #Dla dodatkowych kolumn
+    if (!is.null(avg)){
+      totals_avg<-as.data.frame(lapply(dt_avg, function(x)sum(x*dt_wyn$n_obs)/sum(dt_wyn$n_obs)))
+      dt_avg<-rbindlist(list(dt_avg, data.table(totals_avg)))
+    }
+    
+    #Dla zwyk³ych kolumn
+    totals <- totals[,.(n_good=good_all, n_bad=bad_all, n_obs=obs_all)][,.(
+      nr=NA
+      ,x=NA
+      ,label='TOTAL'
+      ,n_good
+      ,pct_good = n_good/totals$good_all
+      ,n_bad
+      ,pct_bad = n_bad/totals$bad_all
+      ,n_obs
+      ,pct_obs = n_obs/totals$obs_all
+      ,br = n_bad/n_obs
+      ,logit = log(n_bad/n_obs)
+      ,woe = log(n_bad/n_good)
+    )]
+    
+    dt_wyn<-rbindlist(list(dt_wyn, totals))
+    
+  }
+  
+  dt_wyn$nr=seq(nrow(dt_wyn))
+  
+  #Jeœli by³y dodatkowe kolumy, to je tutaj dodajê
+  if (!is.null(avg))
+    dt_wyn <- cbind(dt_wyn ,dt_avg)
+  
+  attr(dt_wyn,'typeof_x')=typeof(x)
+  attr(dt_wyn,'typeof_x')=class(x)
+  
+  return(dt_wyn)
+}
+
+
 #' Wylicza statystyki dla podanych przedzia³ów
 #'
 #' Dzieli zmienn¹ \code{score} na przedzia³y okreœlone przez \code{breaks}
@@ -217,6 +326,50 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 	return(buckety);
 }
 
+
+bckt_stat2<-function(breaks, score, def, total=FALSE){
+  
+  if (any(is.na(breaks)) || any(is.na(score)) || any(is.na(def)))
+    stop("W argumentach funkcji pojawi³y siê braki danych.");
+  
+  zakres_danych<-range(na.omit(score))
+  zakres_breaks<-range(breaks)
+  if (zakres_danych[1]<zakres_breaks[1] || 
+      zakres_danych[2]>zakres_breaks[2])
+    warning("buckety_stat2: Zmienna 'score' spoza zakresu 'breaks'");
+  
+  breaks<-sort(unique(breaks));
+  
+  #podzial<-cut(score, breaks, include.lowest=TRUE);
+  
+  przedzial_nr<-findInterval(score, breaks, rightmost.closed = TRUE, all.inside = TRUE);
+  
+  nawiasy_koniec<-c(rep(")", length(breaks)-2),"]")
+  
+  od<-breaks[-length(breaks)]
+  do<-breaks[-1]
+  
+  labels<-paste("[",od,", ", do, nawiasy_koniec,sep="")
+  #Wybieram tylko te przedzia³y, w których s¹ jakieœ dane. Mo¿e byæ z tym trochê
+  #kicha. Zobaczymy...
+  finalne_przedzialy<-sort(unique(przedzial_nr))
+  labels<-labels[finalne_przedzialy]
+  
+  podzial<-factor(przedzial_nr, labels=labels, ordered = TRUE)
+  
+  buckety<-buckety_stat(podzial, def, total=total);
+  buckety$od<-od[finalne_przedzialy];
+  buckety$do<-do[finalne_przedzialy];
+  
+  buckety$srodek<-(buckety$od+buckety$do)/2;
+  buckety$median<-tapply(score, podzial,median);
+  buckety$mean<-tapply(score, podzial,mean);
+  
+  rownames(buckety)<-labels;
+  buckety$label<-labels;
+  
+  return(buckety);
+}
 
 
 #' £¹czy ze sob¹ buckety
