@@ -289,10 +289,6 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
     ,woe = log(n_bad/n_good)
     )]
   
-  if (sort_x==TRUE){
-    setorder(dt_wyn, x)
-  }
-  
   rownames(dt_wyn) <- dt_wyn$labels
   
   #wyliczam wiersz z Totalem
@@ -333,6 +329,10 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   
   #attr(dt_wyn,'typeof_x')=typeof(x)
   #attr(dt_wyn,'typeof_x')=class(x)
+  
+  if (sort_x==TRUE){
+    setorder(dt_wyn, x)
+  }
   
   return(dt_wyn)
 }
