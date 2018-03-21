@@ -52,9 +52,6 @@ Aby zapobiec skutkom błedów numerycznych, domyślnie wartości \code{x}, jak i
 		y_fitted<-przypisz(x1, b, interpol=TRUE)
 		plot(x1, y_fitted) 
 }
-\author{
-Michał Danaj
-}
 \seealso{
 \code{\link{przypisz}}
 
@@ -62,4 +59,6 @@ Michał Danaj
 
 \code{\link{przypisz2}}
 }
-
+\author{
+Michał Danaj
+}

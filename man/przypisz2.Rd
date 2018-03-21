@@ -34,12 +34,11 @@ specjalne.
 \code{bucket$od}, \code{bucket$do} zaokrąglone są do 15-tej cyfry znaczącej. Podobnie przy zmiennych
 dyskretnych numerycznych. Więcej szczegółów w \code{\link{przypisz}}.
 }
-\author{
-Michał Danaj
-}
 \seealso{
 \code{\link{przypisz}}
 
 \code{\link{mapuj}}
 }
-
+\author{
+Michał Danaj
+}

@@ -25,4 +25,3 @@ Nie wiem co to robi
 \author{
 Michał Danaj
 }
-

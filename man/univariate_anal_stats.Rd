@@ -2,7 +2,7 @@
 % Please edit documentation in R/univariate.R
 \name{univariate_anal_stats}
 \alias{univariate_anal_stats}
-\title{Dyskretyzuje zmienną i wylicza dla niej statystyki}
+\title{Dyskretyzuje zmienną i wylicza dla niej statystyki.}
 \usage{
 univariate_anal_stats(x, y, czas, proby = rep(TRUE, length(y)),
   interactive = FALSE, min_bucket = floor(0.05 * length(x)),
@@ -48,4 +48,3 @@ Wylicza statystyki i zwraca je w postaci listy.
 \author{
 Michał Danaj
 }
-

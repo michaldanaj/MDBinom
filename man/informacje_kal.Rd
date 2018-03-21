@@ -2,7 +2,7 @@
 % Please edit documentation in R/MDBinom.r
 \name{informacje_kal}
 \alias{informacje_kal}
-\title{Rysuje jakoúÊ kalibracji}
+\title{Rysuje jako≈õƒá kalibracji}
 \usage{
 informacje_kal(score, default, estym, buckets = 20, span = 0.8,
   hist_col = "blue", ylab = c("Frequency", "BR"),
@@ -15,11 +15,11 @@ informacje_kal(score, default, estym, buckets = 20, span = 0.8,
 
 \item{default}{default.}
 
-\item{estym}{wartoúci wyestymowane przez model.}
+\item{estym}{warto≈õci wyestymowane przez model.}
 
-\item{buckets}{Sugerowana liczba bucketÛw.}
+\item{buckets}{Sugerowana liczba bucket√≥w.}
 
-\item{span}{WspÛ≥czynnik wyg≥adzajπcy, wykorzystywany przez funkcjÍ \code{\link[locfit]{locfit}}}
+\item{span}{Wsp√≥≈Çczynnik wyg≈ÇadzajƒÖcy, wykorzystywany przez funkcjƒô \code{\link[locfit]{locfit}}}
 
 \item{hist_col}{Kolor histogramu}
 
@@ -27,11 +27,11 @@ informacje_kal(score, default, estym, buckets = 20, span = 0.8,
 
 \item{xlab}{Label}
 
-\item{legx}{po≥oøenie legendy}
+\item{legx}{po≈Ço≈ºenie legendy}
 
-\item{legy}{po≥oøenie legendy}
+\item{legy}{po≈Ço≈ºenie legendy}
 
-\item{legcex}{po≥oøenie legendy.}
+\item{legcex}{po≈Ço≈ºenie legendy.}
 
 \item{leg.label}{etykiety do legendy.}
 
@@ -40,6 +40,5 @@ informacje_kal(score, default, estym, buckets = 20, span = 0.8,
 \item{...}{dodatkowe parametry do funkcji \code{\link{plot}}.}
 }
 \description{
-Rysuje jakoúÊ kalibracji
+Rysuje jako≈õƒá kalibracji
 }
-

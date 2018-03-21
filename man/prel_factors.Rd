@@ -13,10 +13,9 @@ prel_factors(dane)
 
 }
 \description{
-Wiele z faktorów zaczytanych bezpoœrednio z pliku nie nadaje siê do modelowania. Funkcja umo¿liwia wstêpn¹ 
-analizê faktorów.
+Wiele z faktorów zaczytanych bezpooerednio z pliku nie nadaje sie do modelowania. Funkcja umo?liwia wstepn^1 
+analize faktorów.
 }
 \author{
-Micha³ Danaj
+Micha^3 Danaj
 }
-

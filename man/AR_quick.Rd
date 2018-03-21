@@ -7,16 +7,15 @@
 AR_quick(bad, obs)
 }
 \arguments{
-\item{bad}{liczba badów odpowiadaj¹ca kolejnym wartoœciom score.}
+\item{bad}{liczba badÃ³w odpowiadajÄ…ca kolejnym wartoÅ›ciom score.}
 
-\item{obs}{liczba obserwacji odpowiadaj¹ca kolejnym wartoœciom score.}
+\item{obs}{liczba obserwacji odpowiadajÄ…ca kolejnym wartoÅ›ciom score.}
 }
 \description{
-Funkcja zak³ada, ¿e podane licznoœci badów i wszystich obserwacji
-posortowane s¹ wg rosn¹cych wartoœci score. W przypadku gdy w próbie s¹
+Funkcja zakÅ‚ada, Å¼e podane licznoÅ›ci badÃ³w i wszystich obserwacji
+posortowane sÄ… wg rosnÄ…cych wartoÅ›ci score. W przypadku gdy w prÃ³bie sÄ…
 tylko bady lub tylko goody, funkcja zwraca \code{NaN}.
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

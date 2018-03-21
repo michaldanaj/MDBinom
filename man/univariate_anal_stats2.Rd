@@ -19,4 +19,3 @@ univariate_anal_stats2(x_discr, y, czas, estim)
 Wylicza liczności dla każdego poziomu \code{x_discr} oraz średnią wartość \code{y} oraz \code{esitm}
 w podziale na zadane grupy czasowe \code{czas} (lub podział innego typu).
 }
-

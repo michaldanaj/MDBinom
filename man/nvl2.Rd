@@ -2,24 +2,23 @@
 % Please edit documentation in R/MDBinom.r
 \name{nvl2}
 \alias{nvl2}
-\title{Zwraca jedn¹ z dwóch wartoœci w zale¿noœci czy by³ brak danych}
+\title{Zwraca jednÄ… z dwÃ³ch wartoÅ›ci w zaleÅ¼noÅ›ci czy byÅ‚ brak danych}
 \usage{
 nvl2(x, val_not_null, val_null)
 }
 \arguments{
 \item{x}{objekt zmiennych numerycznych}
 
-\item{val_not_null}{wartoœæ, która ma zostaæ zwrócona w przypadku gdy nie ma braku danych}
+\item{val_not_null}{wartoÅ›Ä‡, ktÃ³ra ma zostaÄ‡ zwrÃ³cona w przypadku gdy nie ma braku danych}
 
-\item{val_null}{wartoœæ, która ma zostaæ zwrócona w przypadku braku danych}
+\item{val_null}{wartoÅ›Ä‡, ktÃ³ra ma zostaÄ‡ zwrÃ³cona w przypadku braku danych}
 }
 \value{
-Zwraca pierwotny obiekt z oryginalnymi wartoœciami zast¹pionymi przez \code{val_not_null} i \code{val_null}
+Zwraca pierwotny obiekt z oryginalnymi wartoÅ›ciami zastÄ…pionymi przez \code{val_not_null} i \code{val_null}
 }
 \description{
-Zwraca jedn¹ z dwóch wartoœci w zale¿noœci czy by³ brak danych
+Zwraca jednÄ… z dwÃ³ch wartoÅ›ci w zaleÅ¼noÅ›ci czy byÅ‚ brak danych
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

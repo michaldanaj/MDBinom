@@ -2,7 +2,7 @@
 % Please edit documentation in R/MDBinom.r
 \name{step_bez_kor}
 \alias{step_bez_kor}
-\title{Wynik funkcji add1, po usuniêciu zmiennych skorelowanych}
+\title{Wynik funkcji add1, po usuniÄ™ciu zmiennych skorelowanych}
 \usage{
 step_bez_kor(data, model, target_var_name = "target", cor_threshold = 0.75)
 }
@@ -13,18 +13,17 @@ step_bez_kor(data, model, target_var_name = "target", cor_threshold = 0.75)
 
 \item{target_var_name}{nazwa zmiennej z targetem}
 
-\item{cor_threshold}{graniczna wartoœæ korelacji, po przekroczeniu której zmienna jest uwuwana z analiz}
+\item{cor_threshold}{graniczna wartoÅ›Ä‡ korelacji, po przekroczeniu ktÃ³rej zmienna jest uwuwana z analiz}
 }
 \value{
 Statystyki
 }
 \description{
-Sprawdza stopieñ korelacji zmiennych z danych \code{data} ze zmiennymi z modelu \code{model}. Jeœli korelacja
-przekracza \code{cor_threshold}, to zmienna usuwana jest z dalszych analiz. Dla pozosta³ych zmiennych 
-stosowana jest funkcja \code{\link{add1}}. W danych nie mo¿e byæ braków danych.
+Sprawdza stopieÅ„ korelacji zmiennych z danych \code{data} ze zmiennymi z modelu \code{model}. JeÅ›li korelacja
+przekracza \code{cor_threshold}, to zmienna usuwana jest z dalszych analiz. Dla pozostaÅ‚ych zmiennych 
+stosowana jest funkcja \code{\link{add1}}. W danych nie moÅ¼e byÄ‡ brakÃ³w danych.
 TODO Funkcja nie przetestowana, jeszcze do dopracowania!!!
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

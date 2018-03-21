@@ -2,7 +2,7 @@
 % Please edit documentation in R/preliminary.R
 \name{prel_logical}
 \alias{prel_logical}
-\title{Wyœwietla wektory logiczne}
+\title{Wyoewietla wektory logiczne}
 \usage{
 prel_logical(dane)
 }
@@ -13,11 +13,10 @@ prel_logical(dane)
 
 }
 \description{
-Po wczytaniu danych z pliku tekstowego nie powinno byæ wektorów logicznych w innych przypadkach ni¿
-pusty wektor (tego nie jestem tak na prawdê teraz pewny). Funkcja wypisuje wszystkie wektory logiczne
-¿eby mo¿na by³o je obejrzeæ.
+Po wczytaniu danych z pliku tekstowego nie powinno byae wektorów logicznych w innych przypadkach ni?
+pusty wektor (tego nie jestem tak na prawde teraz pewny). Funkcja wypisuje wszystkie wektory logiczne
+?eby mo?na by^3o je obejrzeae.
 }
 \author{
-Micha³ Danaj
+Micha^3 Danaj
 }
-

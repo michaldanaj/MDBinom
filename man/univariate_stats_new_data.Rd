@@ -26,4 +26,3 @@ bucketów, sortując je po br może być inna niż oryginalnie, to stosowana jes
 \author{
 Michał Danaj
 }
-

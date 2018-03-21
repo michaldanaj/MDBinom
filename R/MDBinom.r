@@ -85,7 +85,7 @@ nvl2<-function(x, val_not_null, val_null){
 #' system.time(
 #'	sapply(1:nb, function(i){
 #' 			id<-sample(length(score), replace=TRUE);
-#' 			AR(score[id], def[id])[[1]]['AR']
+#' 			AR(score[id], def[id])['AR']
 #' 	})
 #' ) 
 #' # user  system elapsed 
@@ -812,6 +812,93 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	}
 	bucket2
 }
+
+#'  Rysuje lokalnie wyg³adzon¹ funckjê (dev)
+#'  
+#'  Rysuje i zwraca statystyki dla bucketów.  
+#' @param score Wektor zmiennych numerycznych. 
+#' @param default Wektor zmiennej dwumianowej. 
+#' @param buckets Liczba bucketów, na ile nele¿y podzieliæ \code{score}. 
+#' @param pred predykcja modelu.
+#' @param wytnij Ile krañcowych obserwacji wyci¹æ. 
+#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}
+#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}} 
+#' @param plot Czy rysowaæ wykres. 
+#' @param plt_type jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
+#' @param new Czy rysowaæ wykres od nowa. 
+#' @param col_points Kolor punktów. 
+#' @param col_line Kolor lini. 
+#' @param index jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
+#'				W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.
+#' @param glm czy rysowaæ dopasowanie modelu logistycznego do zmiennej.
+#' @param col_glm kolor wykresu z modelu logistycznego.
+#' @param ... dodatkowe parametry.
+#' @author Micha³ Danaj 
+#' @export
+#' @examples
+#'		n<-1000;
+#'		x1<-rnorm(n);
+#'		x2<-x1+rnorm(n);
+#'		y<-(x1+rnorm(n))<0;
+#'		
+#'		reg_nieparam(x1,y, buckets=20)
+#'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
+rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, span = 0.7,
+                        degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
+                        col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
+{
+  
+  dane <- data.frame(score, default)
+  
+  if (wytnij > 0){
+    do_usuniecia<-usun_konce(dane$score, prob = wytnij);
+    if (length(do_usuniecia)>0)
+      dane <- dane[-do_usuniecia,]
+  }
+  
+  bucket <- bckt_br(dane$score, dane$default, buckets, avg=pred, method = "eq_count", total=FALSE)
+  
+  if (length(unique(default)) == 2)
+    l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",
+                        link = "logit", data = dane)
+  else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane)
+  b2 <- predict(l, newdata = bucket$srodek)
+  
+  if (plt_type == "br")
+    bucket2 <- cbind(bucket, fitted = b2)
+  else bucket2 <- cbind(bucket, fitted = log(b2/(1 - b2)))
+  
+  skala <- sqrt(bucket$n_obs/(length(score)/buckets))
+  x <- bucket2$srodek
+  
+  if (index)
+    x <- bucket$nr
+  
+  #model logistyczny
+  if (glm){
+    model<-glm(default~score, family=binomial)
+    pred<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
+  }
+  
+  if (plot) {
+    if (new == TRUE)
+      plot(x, with(bucket2, get(plt_type)), col = col_points,
+           cex = skala, ...)
+    else points(x, with(bucket2, get(plt_type)), cex = skala,
+                col = col_points, ...)
+    lines(x, bucket2$fitted, col = col_line, ...)
+    
+    if (!is.null(pred))
+      points(x, bucket2$avg, col = col_pred, ...)
+    
+    if (glm){
+      lines(x[order(x)], pred[order(x)], col=col_glm)
+      points(x, pred, col=col_glm)
+    }
+  }
+  bucket2
+}
+
 
 #' Usuwa krañcowe wartoœci.
 #'

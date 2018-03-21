@@ -7,32 +7,31 @@
 AR(score, def, plot = FALSE, sort.order = -1, label = "", ...)
 }
 \arguments{
-\item{score}{wektor    wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}.}
+\item{score}{wektor    wartoÅ›ci, wedÅ‚ug ktÃ³ry naleÅ¼y posortowaÄ‡ wartoÅ›ci \code{def}.}
 
-\item{def}{Wektor wartoœci \code{\{0,1\}}.}
+\item{def}{Wektor wartoÅ›ci \code{\{0,1\}}.}
 
-\item{plot}{Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}.}
+\item{plot}{Czy narysowaÄ‡ krzywÄ… CAP. DomyÅ›lnie \code{FALSE}.}
 
-\item{sort.order}{Dla \code{sort.order=1} sortuje rosn¹co, a dla \code{sort.order=-1} malej¹co
+\item{sort.order}{Dla \code{sort.order=1} sortuje rosnÄ…co, a dla \code{sort.order=-1} malejÄ…co
 po \code{score}.}
 
-\item{label}{opis wyœwietlony w legendzie.}
+\item{label}{opis wyÅ›wietlony w legendzie.}
 
 \item{...}{dodatkowe parametry.}
 }
 \value{
-Zwraca wektor ze statystykami jakoœci modelu.
- \item{AUCAP}{Powierzchnia pod krzyw¹ CAP.}
+Zwraca wektor ze statystykami jakoÅ›ci modelu.
+ \item{AUCAP}{Powierzchnia pod krzywÄ… CAP.}
  \item{AR}{Wyliczone Accuracy Ratio (GINI).}
- \item{AUC}{Powierzchnia pod krzyw¹ ROC.}							
- \item{KS}{Statystyka Ko³mogorowa-Smirnowa.}
+ \item{AUC}{Powierzchnia pod krzywÄ… ROC.}							
+ \item{KS}{Statystyka KoÅ‚mogorowa-Smirnowa.}
 }
 \description{
-Wylicza Accuracy Ratio (GINI). Funkcja jest znacznie uproszczona w porównaniu z poprzedni¹ wersj¹ 
-i funkcje nie s¹ ze sob¹ kompatybilne. Najwiêksz¹ zmian¹ jest wykorzystanie biblioteki \code{data.table},
-dziêki czemu nieporównywalnie zwiêkszona zosta³a prêdkoœæ dzia³ania.
+Wylicza Accuracy Ratio (GINI). Funkcja jest znacznie uproszczona w porÃ³wnaniu z poprzedniÄ… wersjÄ… 
+i funkcje nie sÄ… ze sobÄ… kompatybilne. NajwiÄ™kszÄ… zmianÄ… jest wykorzystanie biblioteki \code{data.table},
+dziÄ™ki czemu nieporÃ³wnywalnie zwiÄ™kszona zostaÅ‚a prÄ™dkoÅ›Ä‡ dziaÅ‚ania.
 }
 \author{
-Micha³ Danaj
+MichaÅ‚ Danaj
 }
-

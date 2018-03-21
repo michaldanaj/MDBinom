@@ -2,7 +2,7 @@
 % Please edit documentation in R/preliminary.R
 \name{prel_numeric_sd0}
 \alias{prel_numeric_sd0}
-\title{Wyœwietla zmienne numeryczne z wariancj¹ == 0}
+\title{Wyoewietla zmienne numeryczne z wariancj^1 == 0}
 \usage{
 prel_numeric_sd0(dane)
 }
@@ -13,9 +13,8 @@ prel_numeric_sd0(dane)
 
 }
 \description{
-Wyœwietla zmienne numeryczne z jedn¹ wartoœci¹.
+Wyoewietla zmienne numeryczne z jedn^1 wartooeci^1.
 }
 \author{
-Micha³ Danaj
+Micha^3 Danaj
 }
-

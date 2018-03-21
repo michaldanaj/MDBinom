@@ -19,4 +19,3 @@ zawierającym informacje, czy obserwacja należy do danej próby.}
 \description{
 Wylicza AR po czasie i w podziale na zadane próby
 }
-

@@ -35,10 +35,9 @@ Funkcja grupuje zmienne ciągłe, zgodnie z domyślnymi parametrami. Na grupach 
 wylicza statytystyki i przedstawia je w formie listy, osobno dla każdej ze zmiennych. Wykorzystuje do tego funkcję
 \code{\link{univariate_anal_stats}}.
 }
-\author{
-Michal Danaj
-}
 \seealso{
 \code{\link{univariate_anal_stats}}
 }
-
+\author{
+Michal Danaj
+}

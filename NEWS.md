@@ -1,3 +1,19 @@
+# v.5.1.5 2018-02-25
+
+### Nowe funkcje do bucketów
+Nowe funkcje:
+* bckt_br
+* bckt_stat
+* bckt_stat2
+Odpowiadające funckjom bucket_*, wykorzystujące pakiet data.table, mającą spójną postać zwracanego wyniku, trochę rozszerzone o nowe parametry.
+Nowa funkcja rg_nieparam
+
+# v.5.1.4 2018-02-24
+
+### Drobne zmiany:
+* Poprawa korzystania z wyników funkcji AR
+* Polskie znaki z dokumentacji
+
 # v.5.1.3 2016-11-16
 
 ### Zaokrąglanie wartości w funkcjach przypisz

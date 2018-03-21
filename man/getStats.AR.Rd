@@ -15,4 +15,3 @@ Zwraca statystyki przechowywane w obiekcie \code{\link{AR}}
 \details{
 Zwraca statystyki przechowywane w obiekcie \code{\link{AR}}
 }
-

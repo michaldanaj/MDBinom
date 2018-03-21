@@ -23,4 +23,3 @@ Możliwe jest określenie warunku \code{else} poprzez wpisanie w \code{mapping$w
 \author{
 Michał Danaj
 }
-

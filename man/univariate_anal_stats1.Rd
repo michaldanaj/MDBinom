@@ -58,4 +58,3 @@ wypadku dyskretyzuje zmienną i wylicza statystyki.
 \seealso{
 \code{\link{buckety_stat}}.
 }
-
