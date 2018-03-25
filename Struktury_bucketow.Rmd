@@ -71,7 +71,7 @@ Zdaje się, że jeszcze mapping_war powinna być taka kolumna. Przyjrzeć się t
 
 ```{r}
 	buck5 <- univariate_anal_stats1(df$x, df$y)
-	funckje <- c(funkcje, 'univariate_anal_stats1')
+	funkcje <- c(funkcje, 'univariate_anal_stats1')
 	
 	buck5
 ```
