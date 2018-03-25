@@ -113,25 +113,25 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 					srodek, mean,  n_default, n_obs, br, logit, probit, var=br*(1-br)/n_obs))
 }
 
-#' Dzieli na przedzia?y jedn? z dw?ch metod i wylicza na nich bad rate (dev). 
+#' Dzieli na przedzia³y jedn¹ z dwóch metod i wylicza na nich bad rate (dev). 
 #'
 #' Wersja w developmencie.
-#' Mo?e poza tym, ?e je?li nie ma obserwacji w jakim? bukcecie, to go usuwa.
+#' Mo¿e poza tym, ¿e jeœli nie ma obserwacji w jakimœ bukcecie, to go usuwa.
 #'
-#' @param x  Zmienna, kt?r? b?dziemy dyskretyzowa?.  
+#' @param x  Zmienna, któr¹ bêdzie dyskretyzowana.  
 #' @param y  Zmienna dwumianowa.  
-#' @param n  Liczba wynikowych przedzia??w.  
+#' @param n  Liczba wynikowych przedzia³ów.  
 #' @param weights wektor z wagami.
-#' @param method  Spos?b podzia?u na przedzia?y. Szczeg??y w sekcji Details.  
-#' @param one.value.action Jeszcze nie dzia?a.
-#' @param avg \code{vector}, \code{data.frame}, \code{data.table} z warto?ciami dla kt?rych
-#' zostan? wyliczone ?rednie.
-#' @param total czy do??czy? wiersz z podsumowaniem.
-#' @param sort_x je?li \code{TRUE}, wynikowa tabela zostanie posortowana po warto?ciach 
+#' @param method  Sposób podzia³u na przedzia³y. Szczegó³y w sekcji Details.  
+#' @param one.value.action Jeszcze nie dzia³a.
+#' @param avg \code{vector}, \code{data.frame}, \code{data.table} z wartoœciami dla których
+#' zostan¹ wyliczone œrednie.
+#' @param total czy do³¹czyæ wiersz z podsumowaniem.
+#' @param sort_x jeœli \code{TRUE}, wynikowa tabela zostanie posortowana po wartoœciach 
 #' @return  
-#' Zwraca \code{data.frame}, w kt?rym dla \code{i}-tego wiersza podane s? statystyki
-#' dla \code{i}-tego przedzia?u.
-#' @author Micha? Danaj
+#' Zwraca \code{data.frame}, w którym dla \code{i}-tego wiersza podane s¹ statystyki
+#' dla \code{i}-tego przedzia³u.
+#' @author Micha³ Danaj
 #' @export
 bckt_br<-function(x, y, n, weights=rep(1,length(x)), 
                   method=c("eq_length", "eq_count"), one.value.action=c("none","combine"),
@@ -247,33 +247,39 @@ buckety_stat<-function (bucket, default, total = TRUE)
 bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)), 
                      dt=NULL, avg=NULL ,total = TRUE, sort_x=TRUE)
 {
-
+  
+  #sk³adam dt
   if (!is.null(x))
     dt <- data.table(x, y, weights)
 
+  #sprawdzam braki danych
   if (any(is.na(dt$x)) || any(is.na(dt$y)))
     stop("W argumentach funkcji pojawi?y si? braki danych.")
   
+  #usuwam factora
   if (is.factor(dt$x)){
     dt$x <- factor(dt$x)
   }
   
-  #je?li zosta?y podane kolumny 'avg', liczymy od razu dla nich ?rednie
+  #jeœli zosta³y podane kolumny 'avg', liczymy od razu dla nich œrednie
   if(!is.null(avg)){
     dt_avg <- data.table(x=dt$x, avg)
-    #TODO ten lapply strasznie wolno dzia?a. Popatrze?, czy nie da si? czego?
+    #TODO ten lapply strasznie wolno dzia³a. Popatrze, czy nie da siê czegoœ
     #z tym zrobi?
     dt_avg <- dt_avg[,lapply(.SD, mean), x][,-1]
   }
   
+  #podsawowe statysyki dla wartoœci x
   dt_wyn <- dt[, .(
     n_good = sum(weights) - sum(y*weights)
     ,n_bad = sum(y*weights)
     ,n_obs = sum(weights)
   ), x]
 
+  #podstawowe statystyki dla totala
   totals <- dt_wyn[,.(good_all=sum(n_good), bad_all=sum(n_bad), obs_all=sum(n_obs))]  
   
+  #docelowa struktura tabeli wraz z wyliczeniami
   dt_wyn<- dt_wyn[,.(
     nr=NA
     ,label=as.character(x)
@@ -296,6 +302,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   
   rownames(dt_wyn) <- dt_wyn$labels
   
+  #sortowanie jeœli mia³o byæ
   if (sort_x==TRUE){
     setorder(dt_wyn, discret)
   }
@@ -342,7 +349,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   
   dt_wyn$nr=seq(nrow(dt_wyn))
   
-  #Je?li by?y dodatkowe kolumy, to je tutaj dodaj?
+  #Jeœli by³y dodatkowe kolumy, to je tutaj dodajê
   if (!is.null(avg)){
     dt_wyn <- cbind(dt_wyn ,dt_avg)
   }
@@ -466,8 +473,9 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
 
   #Znajdujê i przypisujê w który przedzia³ wpada wartoœæ x-a
   dt$przedzial_nr<-findInterval(dt$x, breaks, rightmost.closed = TRUE, all.inside = TRUE)
-  #dt$labels_assigned<-labels[dt$przedzial_nr]
   dt[,':='(x_orig=x, x=przedzial_nr)]
+  
+  #Wylicza staystyki na bucketach
   buckety_wyn<-bckt_stat(dt=dt, avg=avg, total = total, sort_x=sort_x);
   
   #doliczam medianê i œredni¹ zmiennej
