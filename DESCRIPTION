@@ -1,7 +1,7 @@
 Package: MDBinom
 Type: Package
 Title: Pakiet robi ró¿ne rzeczy ze zmiennymi dwumianowymi
-Version: 5.1.6
+Version: 5.1.7
 Date: 2018-03-25
 Authors@R: person("Micha³", "Danaj", email = "michal.danaj@gmail.com",
   role = c("aut", "cre"))

@@ -1,4 +1,8 @@
-# v.5.1.5 2018-03-25
+# v.5.1.7 2018-03-25
+
+Detale w classing_make. Przegenerowanie dokumenacji.
+
+# v.5.1.6 2018-03-25
 
 ### Poprawki i zmiany w funkcjach bckt*
 
