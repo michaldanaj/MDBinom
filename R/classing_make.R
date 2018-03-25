@@ -309,7 +309,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
       dt_avg<-rbindlist(list(dt_avg, data.table(totals_avg)))
     }
 
-    #zachowujÄ™ typ zmiennej. MuszÄ™ to uwzglÄ™dniÄ‡ w totalu
+    #zachowujê typ zmiennej. Muszê to uwzglêdniæ w totalu
     if (typeof(x)=='character')
       discr_total=''
     else
@@ -444,7 +444,7 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, avg=NULL,
                      total = TRUE, sort_x=TRUE){
 
-  #SkÅ‚adam dt
+  #Sk³adam dt
   if (!is.null(x))
     dt <- data.table(x, y, weights)
   
@@ -452,25 +452,25 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   if (any(is.na(breaks)) || any(is.na(dt$x)) || any(is.na(dt$y)))
     stop("W argumentach funkcji pojawi?y si? braki danych.");
   
-  #Sprawdzam czy x-y wychodzÄ… poza zakres breaks
+  #Sprawdzam czy x-y wychodz¹ poza zakres breaks
   zakres_danych<-range(na.omit(dt$x))
   zakres_breaks<-range(breaks)
   if (zakres_danych[1]<zakres_breaks[1] || 
       zakres_danych[2]>zakres_breaks[2])
     warning("bckt_stat2: Zmienna 'x' spoza zakresu 'breaks'");
   
-  #porzÄ…dkujÄ™ i definiujÄ™ przedziaÅ‚y
+  #porz¹dkujê i definiujê przedzia³y
   breaks<-sort(unique(breaks));
   bck_od<-breaks[-length(breaks)]
   bck_do<-breaks[-1]
 
-  #ZnajdujÄ™ i przypisujÄ™ w ktÃ³ry przedziaÅ‚ wpada wartoÅ›Ä‡ x-a
+  #Znajdujê i przypisujê w który przedzia³ wpada wartoœæ x-a
   dt$przedzial_nr<-findInterval(dt$x, breaks, rightmost.closed = TRUE, all.inside = TRUE)
   #dt$labels_assigned<-labels[dt$przedzial_nr]
   dt[,':='(x_orig=x, x=przedzial_nr)]
   buckety_wyn<-bckt_stat(dt=dt, avg=avg, total = total, sort_x=sort_x);
   
-  #doliczam medianÄ™ i Å›redniÄ… zmiennej
+  #doliczam medianê i œredni¹ zmiennej
   temp<-dt[,.(median=median(x_orig), mean=mean(x_orig)), przedzial_nr]
   temp_tot<-dt[,.(median=median(x_orig), mean=mean(x_orig))]
   setorder(temp, przedzial_nr)
@@ -479,8 +479,8 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   nawiasy_koniec<-c(rep(")", length(breaks)-2),"]")
   labels<-paste("[",bck_od,", ",bck_do, nawiasy_koniec,sep="")
   
-  #Poprzednia funkcja nie wiedziaÅ‚a, Å¼e mamy przedziaÅ‚y i jak wypeÅ‚niÄ‡ tymi przedziaÅ‚ami waroÅ›ci
-  #RobiÄ™ to tutaj
+  #Poprzednia funkcja nie wiedzia³a, ¿e mamy przedzia³y i jak wype³niæ tymi przedzia³ami waroœci
+  #Robiê to tutaj
   buckety_wyn[,':='(
     label=c(labels,'TOTAL'),
     od=c(bck_od,NA),
