@@ -5,13 +5,13 @@
 
 
 
-#' Rysuje interakcje dwóch zmiennych
+#' Rysuje interakcje dwÃ³ch zmiennych
 #' @param zm1 Pierwsza zmienna.
 #' @param zm2 Druga zmienna.
 #' @param target Zmienna celu. 
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 interakcja<-function(zm1, zm2, target){
 	target<-tapply(target, list(zm1,zm2), mean)
@@ -27,24 +27,24 @@ interakcja<-function(zm1, zm2, target){
 }
 
 
-#' Testuje interakcje miêdzy dwoma zmiennymi
+#' Testuje interakcje miÄ™dzy dwoma zmiennymi
 #' 
-#' Funkcja zak³ada, ¿e \code{var1} oraz \code{var2} s¹ zmiennymi dyskretnymi. Konwertowane s¹ one do
+#' Funkcja zakÅ‚ada, Å¼e \code{var1} oraz \code{var2} sÄ… zmiennymi dyskretnymi. Konwertowane sÄ… one do
 #' typu \code{factor} i sprawdzany jest p-value modelu z interakcjami w stosunku do modelu bez interakcji.
 #' Wykorzystany jest test Chi-kwadrat odchylenia modelu.
 #' 
-#' @param var1 wektor z wartoœciami pierwszej zmiennej.
-#' @param var2 wektor z wartoœciami drugiej zmiennej.
-#' @param target wektor z wartoœciami zmiennej celu.
-#' @return Zwraca listê z szeregiem statystyk:
+#' @param var1 wektor z wartoÅ›ciami pierwszej zmiennej.
+#' @param var2 wektor z wartoÅ›ciami drugiej zmiennej.
+#' @param target wektor z wartoÅ›ciami zmiennej celu.
+#' @return Zwraca listÄ™ z szeregiem statystyk:
 #' \item{"p-value"}{p-value interakcji} 
-#' \item{licznosc}{licznoœci obserwacji na przeciêciach zmiennych}
-#' \item{licznosc_target}{licznoœci targetu na przeciêciach zmiennych}
-#' \item{mean_real}{œrednia wartoœæ targetu  na przeciêciach zmiennych}
-#' \item{mean_pred1}{predykcja z modelu bez interakcji na przeciêciach zmiennych} 
-#' \item{mean_pred2}{precykcja z modelu z interakcjami na przeciêciach zmiennych} 
+#' \item{licznosc}{licznoÅ›ci obserwacji na przeciÄ™ciach zmiennych}
+#' \item{licznosc_target}{licznoÅ›ci targetu na przeciÄ™ciach zmiennych}
+#' \item{mean_real}{Å›rednia wartoÅ›Ä‡ targetu  na przeciÄ™ciach zmiennych}
+#' \item{mean_pred1}{predykcja z modelu bez interakcji na przeciÄ™ciach zmiennych} 
+#' \item{mean_pred2}{precykcja z modelu z interakcjami na przeciÄ™ciach zmiennych} 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 interactionsTest<-function(var1, var2, target){
 	
@@ -61,11 +61,11 @@ interactionsTest<-function(var1, var2, target){
 	
 	pv <- test$`Pr(>Chi)`[4]
 	
-	## licznoœci na przeciêciach wartoœci zmiennych
+	## licznoÅ›ci na przeciÄ™ciach wartoÅ›ci zmiennych
 	licznosc <- table(var1, var2)
 	licznosc_target <- tapply(target, list(var1,var2), sum)
 	
-	## œrednie wartoœci targetu
+	## Å›rednie wartoÅ›ci targetu
 	mean_real <- tapply(target, list(var1, var2), mean)
 	
 	## predykcja modelu bez interakcji
@@ -88,21 +88,21 @@ interactionsTest<-function(var1, var2, target){
 
 
 
-#' Testuje interakcje pomiêdzy wszystkimi zmiennymi
+#' Testuje interakcje pomiÄ™dzy wszystkimi zmiennymi
 #' 
-#'  Na podstawie zmiennych Ÿród³owych oraz definicji
-#' dyskretyzacji z \code{discr_list}, funkcja przypisuje zmiennym ich wartoœci dyskretne oraz
-#' testuje interakcjê ka¿dej pary ze zmiennych okreœlonych w \code{vars_names}. Do testowania korzysta z funkcji \code{\link{interactionsTest}}. 
+#'  Na podstawie zmiennych ÅºrÃ³dÅ‚owych oraz definicji
+#' dyskretyzacji z \code{discr_list}, funkcja przypisuje zmiennym ich wartoÅ›ci dyskretne oraz
+#' testuje interakcjÄ™ kaÅ¼dej pary ze zmiennych okreÅ›lonych w \code{vars_names}. Do testowania korzysta z funkcji \code{\link{interactionsTest}}. 
 #' @param data \code{data.frame} z danymi.
 #' @param discr_list lista z opisem dyskretyzacji.
-#' @param target wektor z wartoœciami zmiennej celu
-#' @param vars_names wektor nazw zmiennych do sprawdzenia interakcji. Domyœlnie wszystkie zmienne z \code{discr_list}. 
-#' @param colname nazwa kolumny z tabeli z definicj¹ dyskretyzacji z której zostan¹ pobrane wartoœci do
+#' @param target wektor z wartoÅ›ciami zmiennej celu
+#' @param vars_names wektor nazw zmiennych do sprawdzenia interakcji. DomyÅ›lnie wszystkie zmienne z \code{discr_list}. 
+#' @param colname nazwa kolumny z tabeli z definicjÄ… dyskretyzacji z ktÃ³rej zostanÄ… pobrane wartoÅ›ci do
 #' 	przypisania dyskretyzacji zmiennej. 
-#' @return Zwrócona zostanie lista z dwoma elementami:
-#' \item{pvalue_table}{Zawiera \code{data.frame} z nazw¹ pierwszej zmiennej, drugiej zmiennej, oraz p-value interakcji.}
-#' \item{details}{Zawiera listê ze statystykami zwróconymi przez \code{\link{interactionsTest}}.} 
-#' @author Micha³ Danaj
+#' @return ZwrÃ³cona zostanie lista z dwoma elementami:
+#' \item{pvalue_table}{Zawiera \code{data.frame} z nazwÄ… pierwszej zmiennej, drugiej zmiennej, oraz p-value interakcji.}
+#' \item{details}{Zawiera listÄ™ ze statystykami zwrÃ³conymi przez \code{\link{interactionsTest}}.} 
+#' @author MichaÅ‚ Danaj
 #' @export
 interactionsTestAll <- function(data, discr_list, target=data$target, vars_names=names(discr_list), colname='label'){
 	

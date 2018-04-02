@@ -1,24 +1,24 @@
 # TODO: Add comment
 # 
-# Author: Micha³ Danaj
+# Author: MichaÅ‚ Danaj
 ###############################################################################
 
 
 
 
-#' Rysuje kalibracjê modelu
+#' Rysuje kalibracjÄ™ modelu
 #' 
-#' Rysuje kalibracjê modelu
+#' Rysuje kalibracjÄ™ modelu
 #' @param score Zmienna na osi OX.
 #' @param response Zmienna celu.
-#' @param estim Wyestymowane wartoœæ przez model(e). Mo¿e byœ wektor lub lista wektorów.
-#' @param plt_type Co ma byæ na osi OY. Czy œrednia z wartoœci \code{response}, czy logit.
+#' @param estim Wyestymowane wartoÅ›Ä‡ przez model(e). MoÅ¼e byÅ› wektor lub lista wektorÃ³w.
+#' @param plt_type Co ma byÄ‡ na osi OY. Czy Å›rednia z wartoÅ›ci \code{response}, czy logit.
 #' @param ylab Opis osi OY.
 #' @param xlab Opis osi OX.
 #' @param ... Parametry graficzne.
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 plotCalibr<-
 		function (score, response, estim, plt_type = c("br", "logit"), ylab=plt_type,
@@ -58,9 +58,9 @@ plotCalibr<-
 
 
 
-#' Generuje tabelê z coarse classing do dokumentacji
+#' Generuje tabelÄ™ z coarse classing do dokumentacji
 #' 
-#' Jeœli Woe lub IV wychoch¹ +-Inf, to wstawia zamiast tego NA
+#' JeÅ›li Woe lub IV wychochÄ… +-Inf, to wstawia zamiast tego NA
 #' @param wyniki lista z wynikami dyskretyzacji
 #' @export 
 makeCoarseClassingTables<-function(wyniki){
@@ -79,7 +79,7 @@ makeCoarseClassingTables<-function(wyniki){
 				
 				x$IV<-(x$pct_good-x$pct_bad)*x$woe;
 				
-				#zamienia nieskoñczonoœci na braki danych
+				#zamienia nieskoÅ„czonoÅ›ci na braki danych
 				x$IV[abs(x$IV)==Inf]<-NA;
 				x$woe[abs(x$woe)==Inf]<-NA;
 				
@@ -102,10 +102,10 @@ makeCoarseClassingTables<-function(wyniki){
 
 #' Przypisuje woe na podstawie br z bucketa.
 #' 
-#' Przypisuje woe na podstawie br z bucketa. Korzysta z funkcji \code{woe}, która 
-#' w razie niewyst¹pienia w buckecie wartoœci z klasy 0 lub 1, przyjmuje wartoœæ 0.5
+#' Przypisuje woe na podstawie br z bucketa. Korzysta z funkcji \code{woe}, ktÃ³ra 
+#' w razie niewystÄ…pienia w buckecie wartoÅ›ci z klasy 0 lub 1, przyjmuje wartoÅ›Ä‡ 0.5
 #' 
-#' @param bucket_list - lista z opisami dyskretyzacji. Nazwy elementów listy powinny byæ zgodne z nazwami zmiennych w \code{data}.
+#' @param bucket_list - lista z opisami dyskretyzacji. Nazwy elementÃ³w listy powinny byÄ‡ zgodne z nazwami zmiennych w \code{data}.
 #' @param data - \code{data.frame} z oryginalnymi zmiennymi.
 #' @param vars - wektor z nazwami zmiennych do ograniczenia.
 #' @param varname_sufix - Sufix wynikowych zmiennych.
@@ -121,17 +121,17 @@ przypisz_woe_z_listy<-function(bucket_list, data, vars=names(bucket_list), varna
 		
 		####   wyliczam   woe    ######
 		
-		#Wyci¹gam element listy
+		#WyciÄ…gam element listy
 		bucket<-bucket_list[[zmienna]]
 		
-		#jeœli badów lub goodów jest 0, to przyjmujê ¿e jest 0.5	
+		#jeÅ›li badÃ³w lub goodÃ³w jest 0, to przyjmujÄ™ Å¼e jest 0.5	
 		
 		pct_good = (pmax(bucket$n_good,0.5))/(max(bucket['TOTAL','n_good'],0.5))
 		pct_bad = (pmax(bucket$n_bad,0.5))/(max(bucket['TOTAL','n_bad'],0.5))
 		woe = log(pct_good/pct_bad)
 		
 		
-		####   przypisujê woe    ######
+		####   przypisujÄ™ woe    ######
 		
 		woe<-przypisz2(data[,zmienna],
 				bucket_list[[zmienna]], 
@@ -153,21 +153,21 @@ przypisz_woe_z_listy<-function(bucket_list, data, vars=names(bucket_list), varna
 }	
 
 
-#' Na podstawie listy z bucketami przypisuje odpowiednie wartoœci
+#' Na podstawie listy z bucketami przypisuje odpowiednie wartoÅ›ci
 #' 
 #' Na podsatwie listy \code{bucket_list} przypisuje zmiennych \code{vars} z tabeli \code{data}
-#' wartoœci znajduj¹ce siê w kolumnie \code{fitted} bucketów. Wartoœci przypisuje do kolumn
-#' o nazwie z po³¹cznia nazw \code{vars} i \code{varname_sufix}.
-#' @param bucket_list Lista bucketów.
+#' wartoÅ›ci znajdujÄ…ce siÄ™ w kolumnie \code{fitted} bucketÃ³w. WartoÅ›ci przypisuje do kolumn
+#' o nazwie z poÅ‚Ä…cznia nazw \code{vars} i \code{varname_sufix}.
+#' @param bucket_list Lista bucketÃ³w.
 #' @param data Dane.
 #' @param vars Zmienne do przypisania.
-#' @param colname Nazwa kolumny z bucketa, na podstawie którego nale¿y dopisaæ wartoœci.
+#' @param colname Nazwa kolumny z bucketa, na podstawie ktÃ³rego naleÅ¼y dopisaÄ‡ wartoÅ›ci.
 #' @param varname_sufix Sufiks do nazw nowych zmiennych.
-#' @param sep_sufix Parametr umo¿liwiaj¹cy zmianê separatora sufiksa. Domyœlnie podkreœlenie - zosta³a ustalona
-#' 		w celu zachowania kompatybilnoœci z wersj¹ funkcji bez tego parametru.
+#' @param sep_sufix Parametr umoÅ¼liwiajÄ…cy zmianÄ™ separatora sufiksa. DomyÅ›lnie podkreÅ›lenie - zostaÅ‚a ustalona
+#' 		w celu zachowania kompatybilnoÅ›ci z wersjÄ… funkcji bez tego parametru.
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='fitted', varname_sufix=colname, sep_sufix="_"){
 	
@@ -179,22 +179,22 @@ przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='
 			next;
 		
 		
-		#Wyci¹gam element listy
+		#WyciÄ…gam element listy
 		bucket<-bucket_list[[zmienna]]
 		#bucket<-bucket[rownames(bucket)!='TOTAL',]
 
-		#Sprawdzam, czy nie jest to komunikat o niespe³nieniu kryteriów dyskretyzacji. Jeœli tak, 
-		#to wypisujê stosowny komunikat.
+		#Sprawdzam, czy nie jest to komunikat o niespeÅ‚nieniu kryteriÃ³w dyskretyzacji. JeÅ›li tak, 
+		#to wypisujÄ™ stosowny komunikat.
 		if (class(bucket)=="character"){
-			warning(paste("Zmienna", zmienna, "nie ma obiektu z dysretyzacj¹. Przyczyna braku dyksretyzacji to:", bucket,". Zmienna ta zostanie pominiêta w liœcie z wynikiem zwróconym przez funkcjê."))
+			warning(paste("Zmienna", zmienna, "nie ma obiektu z dysretyzacjÄ…. Przyczyna braku dyksretyzacji to:", bucket,". Zmienna ta zostanie pominiÄ™ta w liÅ›cie z wynikiem zwrÃ³conym przez funkcjÄ™."))
 			next;
 		}
 			
-		#jeœli badów lub goodów jest 0, to przyjmujê ¿e jest 0.5	
+		#jeÅ›li badÃ³w lub goodÃ³w jest 0, to przyjmujÄ™ Å¼e jest 0.5	
 		
 		fitted = bucket[,colname]
 		
-		####   przypisujê woe    ######
+		####   przypisujÄ™ woe    ######
 		
 		fitted_x<-przypisz2(data[,zmienna],
 				bucket_list[[zmienna]], 
@@ -218,13 +218,13 @@ przypisz_z_listy<-function(bucket_list, data, vars=names(bucket_list), colname='
 
 
 
-#' Wyœwietla w gridzie wartoœci korelacji zmiennych z modelu 
+#' WyÅ›wietla w gridzie wartoÅ›ci korelacji zmiennych z modelu 
 #' 
 #' @param model dopasowany model. 
 #' @param data  dane.
 #' @return 
 #' 
-#' @author Micha³ Dnaaj
+#' @author MichaÅ‚ Dnaaj
 #' @export
 korelacje_zmiennych<-function(model, data){
 	zmienne<-names(coef(model))[-1]

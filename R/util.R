@@ -1,30 +1,30 @@
 # TODO: Add comment
 # 
-# Author: Micha≥ Danaj
+# Author: Micha≈Ç Danaj
 ###############################################################################
 
 
 
 #' Odchylenie modelu
 #' 
-#' @param predicted prawdopodobieÒstwo.
+#' @param predicted prawdopodobie≈Ñstwo.
 #' @param target target.
 #' @return 
 #' 
-#' @author Micha≥ Danaj
+#' @author Micha≈Ç Danaj
 #' @export
 model_dev<-function(predicted, target){
 	-2*sum(target*log(predicted)+(1-target)*log(1-predicted))
 }
 
 
-#' ZastÍpuje braki danych
+#' Zastƒôpuje braki danych
 #' 
 #' @param x x
-#' @param val jakπ wartoúciπ zastπpiÊ brak danych. 
+#' @param val jakƒÖ warto≈õciƒÖ zastƒÖpiƒá brak danych. 
 #' @return 
 #' 
-#' @author Micha≥ Danaj
+#' @author Micha≈Ç Danaj
 #' @export
 na.subst<-function(x, val){
 	x[is.na(x)]<-val;
@@ -34,10 +34,10 @@ na.subst<-function(x, val){
 
 #' Wrzuca dane do schowka, do wklejenia do Excela
 #' @param table \code{data.frame} do przekazania do Excela. 
-#' @param row.names  czy przekazaÊ rÛwnieø wiersze.
+#' @param row.names  czy przekazaƒá r√≥wnie≈º wiersze.
 #' @return 
 #' 
-#' @author Micha≥ Danaj
+#' @author Micha≈Ç Danaj
 #' @export
 to_excel<-function(table, row.names=FALSE){
 	write.table(table, file='clipboard', sep='\t', row.names=row.names, dec=',')
@@ -47,10 +47,10 @@ to_excel<-function(table, row.names=FALSE){
 #do skasowania!!! 
 #' Liczy WoE
 #' 
-#' @param br wartoúÊ prawdopodobieÒstwa.
+#' @param br warto≈õƒá prawdopodobie≈Ñstwa.
 #' @return 
 #' 
-#' @author Micha≥ Danaj
+#' @author Micha≈Ç Danaj
 #' @export
 woe<-function(br){
 	br[br==0]<-0.5/length(br)
@@ -59,27 +59,27 @@ woe<-function(br){
 }
 
 
-#' Zwraca ostatni dzieÒ podanego okresu.
+#' Zwraca ostatni dzie≈Ñ podanego okresu.
 #'
-#' @param dat Obiekt klasy \link{Date}, lub dajπcy siÍ skonwertowaÊ funkcjπ \link{as.Date}.
-#' @param unit Jednostka czasu, ktÛra ma byÊ uwzglÍdniona przy wyznaczaniu ostatniego dnia.
-#'  Moøliwe wartoúci: \code{c("month","quater", "year")}, ktÛre odpowiadajπ ostatniemu dniu miesiπca, kwarta≥u, roku,
-#'  do ktÛrego naleøy data \code{dat}.
+#' @param dat Obiekt klasy \link{Date}, lub dajƒÖcy siƒô skonwertowaƒá funkcjƒÖ \link{as.Date}.
+#' @param unit Jednostka czasu, kt√≥ra ma byƒá uwzglƒôdniona przy wyznaczaniu ostatniego dnia.
+#'  Mo≈ºliwe warto≈õci: \code{c("month","quater", "year")}, kt√≥re odpowiadajƒÖ ostatniemu dniu miesiƒÖca, kwarta≈Çu, roku,
+#'  do kt√≥rego nale≈ºy data \code{dat}.
 #' @param ... Opcje do funkcji \link{as.Date}.
-#' @author Micha≥ Danaj
+#' @author Micha≈Ç Danaj
 #' @export
 lastDay<-function(dat, unit=c("month","quarter", "half_year", "year"),...) {
 	
-	# WstÍpne przygotowania
+	# Wstƒôpne przygotowania
 	unit<-match.arg(unit);
 	
 	dat<-as.Date(dat,...);
 	
-	# Pobieram rok i miesiπc
+	# Pobieram rok i miesiƒÖc
 	rok<-as.numeric(format(dat, '%Y'));
 	mies<-as.numeric(format(dat, '%m'));
 	
-	# Jeúli ostatni dzieÒ kwarta≥u, to wybieram ostatni miesiπc kwarta≥u
+	# Je≈õli ostatni dzie≈Ñ kwarta≈Çu, to wybieram ostatni miesiƒÖc kwarta≈Çu
 	if (unit=="quarter")
 		mies<-((mies-1)%/%3+1)*3
 	
@@ -89,29 +89,29 @@ lastDay<-function(dat, unit=c("month","quarter", "half_year", "year"),...) {
 	if (unit=="year")
 		mies<-12;
 	
-	# W≥aúciwy algorytm
+	# W≈Ça≈õciwy algorytm
 	ostatni<-mies==12;
 	mies[!ostatni]<-mies[!ostatni]+1;
 	mies[ostatni]<-1;
 	rok[ostatni]<-  rok[ostatni]+1;
 	
-	# zamiana na datÍ
+	# zamiana na datƒô
 	new_date<-as.Date(ISOdate(rok, mies, 1));
 	return(new_date-1);
 }
 
 
-#' Na podstawie nazwy zmiennej celu i zmiennych objaúniajπcych, tworzy formu≥Í modelu
+#' Na podstawie nazwy zmiennej celu i zmiennych obja≈õniajƒÖcych, tworzy formu≈Çƒô modelu
 #' 
 #' @param target zmienna celu 
-#' @param vars zmienne objaúniajπce
-#' @return forum≥a do zastosowania w modelu
+#' @param vars zmienne obja≈õniajƒÖce
+#' @return forum≈Ça do zastosowania w modelu
 #' 
-#' @author Micha≥ Danaj
+#' @author Micha≈Ç Danaj
 #' @export
 make_model_formula<-function(target, vars){
 	
-	#jeúli w nazwach zmiennych jest nazwa targetu, to jπ usuwam
+	#je≈õli w nazwach zmiennych jest nazwa targetu, to jƒÖ usuwam
 	czy_jest_target<-target==vars
 	vars<-vars[!czy_jest_target]
 	

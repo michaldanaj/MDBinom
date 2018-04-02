@@ -5,10 +5,10 @@
 
 
 
-#' Podstawowe statystyki faktor體
+#' Podstawowe statystyki faktor贸w
 #' 
-#' Wiele z faktor體 zaczytanych bezpooerednio z pliku nie nadaje sie do modelowania. Funkcja umo?liwia wstepn^1 
-#' analize faktor體. 
+#' Wiele z faktor贸w zaczytanych bezpooerednio z pliku nie nadaje sie do modelowania. Funkcja umo?liwia wstepn^1 
+#' analize faktor贸w. 
 #' @param dane 
 #' @return 
 #' 
@@ -45,8 +45,8 @@ prel_numeric_sd0 <- function(dane){
 
 #' Wyoewietla zmienne z wartooeci^1 o du?ym udziale w rozk^3adzie
 #' 
-#' Wyoewietla nazwy zmiennych, dla kt髍ych istenieje taka wartooeae, ?e jej udzia^3 przekracza \code{rate}
-#' pr骲y. 
+#' Wyoewietla nazwy zmiennych, dla kt贸rych istenieje taka wartooeae, ?e jej udzia^3 przekracza \code{rate}
+#' pr贸by. 
 #' @param dane Dane.
 #' @param rate Graniczny udzia^3 jedenej wartooeci.
 #' @return 
@@ -72,7 +72,7 @@ prel_numeric_one_value <- function(dane, rate=0.98){
 
 #' Wyoewietla wektory logiczne
 #' 
-#' Po wczytaniu danych z pliku tekstowego nie powinno byae wektor體 logicznych w innych przypadkach ni?
+#' Po wczytaniu danych z pliku tekstowego nie powinno byae wektor贸w logicznych w innych przypadkach ni?
 #' pusty wektor (tego nie jestem tak na prawde teraz pewny). Funkcja wypisuje wszystkie wektory logiczne
 #' ?eby mo?na by^3o je obejrzeae. 
 #' @param dane 

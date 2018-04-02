@@ -1,6 +1,6 @@
 # TODO: Add comment
 # 
-# Author: Micha³ Danaj
+# Author: MichaÅ‚ Danaj
 ###############################################################################
 
 
@@ -9,12 +9,12 @@
 #' 
 #' Generuje raport
 #' @param wyniki lista z wynikami dyskretyzacji itp, z funkcji \code{\link{univariate_anal_stats}}
-#' @param dir katalog z raportem, jako pe³na bezwzglêdna œcie¿ka! Katalog musi byæ stworzony. Domyœlnie \code{\link{tempdir()}}. 
-#' @param kolejnosc kolejnoœæ wg której zmienne maj¹ byæ wyœwietlone.
-#' @param show czy na koniec wyœwietliæ raport w przegl¹darce. Domyœlnie \code{TRUE}. 
+#' @param dir katalog z raportem, jako peÅ‚na bezwzglÄ™dna Å›cieÅ¼ka! Katalog musi byÄ‡ stworzony. DomyÅ›lnie \code{\link{tempdir()}}. 
+#' @param kolejnosc kolejnoÅ›Ä‡ wg ktÃ³rej zmienne majÄ… byÄ‡ wyÅ›wietlone.
+#' @param show czy na koniec wyÅ›wietliÄ‡ raport w przeglÄ…darce. DomyÅ›lnie \code{TRUE}. 
 #' @param scale Skala osi OY.   
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 genRaport<-function(wyniki, dir=tempdir(), kolejnosc=1:length(wyniki), show=TRUE, scale=c(0,0.2)){
 	
@@ -48,7 +48,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		cat('</a>', file=plik_main, append=TRUE)
 		#    windows();
 		
-		#jeœli z jakiegoœ powodu zmienna nie zosta³a wygenerowana;
+		#jeÅ›li z jakiegoÅ› powodu zmienna nie zostaÅ‚a wygenerowana;
 		if (typeof(wynik$dyskretyzacja)=="character"){
 			R2HTML::HTML(wynik$dyskretyzacja);
 			next
@@ -92,8 +92,8 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		windows(1400,700);
 		par(mfrow=c(1,2));
 		
-		#nie wiem, czemu by³ tu wymóg rysowania tylko ci¹g³ych wartoœci
-		#zobaczymy, jak to bêdzie po usuniêciu tego.
+		#nie wiem, czemu byÅ‚ tu wymÃ³g rysowania tylko ciÄ…gÅ‚ych wartoÅ›ci
+		#zobaczymy, jak to bÄ™dzie po usuniÄ™ciu tego.
 		#ciagle<-nchar(wynik$dyskretyzacja$discret)==0
 		#drzewo_plot(wynik$dyskretyzacja[ciagle,], xlab=nazwa_zmiennej, ylab="Mean LGD",
 		#		main=paste(nazwa_zmiennej,"discretization"));
@@ -111,7 +111,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 		par(mfrow=c(1,1));
 		R2HTML::HTML(wynik$dyskretyzacja);
 		
-		###   rozk³ady    ###
+		###   rozkÅ‚ady    ###
 		R2HTML::HTML.title("Distribution of buckets", HR=3);
 		if (!is.null(wynik$rozklady$pct_all_tbl)){
 			do_wykresu<-reshape::melt(wynik$rozklady$pct_all_tbl)
@@ -133,7 +133,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 			R2HTML::HTML(wynik$rozklady$obs_all_tbl, caption="Number of observations");
 			R2HTML::HTML(wynik$rozklady$pct_all_tbl, caption="% share at given date");
 			
-			#     œredni target    #
+			#     Å›redni target    #
 			R2HTML::HTML.title("Average target", HR=3);
 			do_wykresu<-reshape::melt(wynik$rozklady$avg_t_tbl)
 			do_wykresu<-do_wykresu[do_wykresu$X1!='TOTAL' & do_wykresu$X2!='TOTAL',];
@@ -156,7 +156,7 @@ genRaportBody<-function(wyniki, kolejnosc, dir, plik_main, scale){
 
 
 
-###########   generujê plik z menu   #################
+###########   generujÄ™ plik z menu   #################
 
 genRaportMenu<-function(wyniki, dir){
 	
