@@ -1,3 +1,7 @@
+# v.5.1.8 2018-04-02
+
+Zmiana kodowania polskich znaków na UTF-8. Zmiana kodowania projektu. Przegenerowanie dokumentacji.
+
 # v.5.1.7 2018-03-25
 
 Detale w classing_make. Przegenerowanie dokumenacji.

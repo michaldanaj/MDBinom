@@ -113,25 +113,25 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 					srodek, mean,  n_default, n_obs, br, logit, probit, var=br*(1-br)/n_obs))
 }
 
-#' Dzieli na przedzia³y jedn¹ z dwóch metod i wylicza na nich bad rate (dev). 
+#' Dzieli na przedziaÅ‚y jednÄ… z dwÃ³ch metod i wylicza na nich bad rate (dev). 
 #'
 #' Wersja w developmencie.
-#' Mo¿e poza tym, ¿e jeœli nie ma obserwacji w jakimœ bukcecie, to go usuwa.
+#' MoÅ¼e poza tym, Å¼e jeÅ›li nie ma obserwacji w jakimÅ› bukcecie, to go usuwa.
 #'
-#' @param x  Zmienna, któr¹ bêdzie dyskretyzowana.  
+#' @param x  Zmienna, ktÃ³rÄ… bÄ™dzie dyskretyzowana.  
 #' @param y  Zmienna dwumianowa.  
-#' @param n  Liczba wynikowych przedzia³ów.  
+#' @param n  Liczba wynikowych przedziaÅ‚Ã³w.  
 #' @param weights wektor z wagami.
-#' @param method  Sposób podzia³u na przedzia³y. Szczegó³y w sekcji Details.  
-#' @param one.value.action Jeszcze nie dzia³a.
-#' @param avg \code{vector}, \code{data.frame}, \code{data.table} z wartoœciami dla których
-#' zostan¹ wyliczone œrednie.
-#' @param total czy do³¹czyæ wiersz z podsumowaniem.
-#' @param sort_x jeœli \code{TRUE}, wynikowa tabela zostanie posortowana po wartoœciach 
+#' @param method  SposÃ³b podziaÅ‚u na przedziaÅ‚y. SzczegÃ³Å‚y w sekcji Details.  
+#' @param one.value.action Jeszcze nie dziaÅ‚a.
+#' @param avg \code{vector}, \code{data.frame}, \code{data.table} z wartoÅ›ciami dla ktÃ³rych
+#' zostanÄ… wyliczone Å›rednie.
+#' @param total czy doÅ‚Ä…czyÄ‡ wiersz z podsumowaniem.
+#' @param sort_x jeÅ›li \code{TRUE}, wynikowa tabela zostanie posortowana po wartoÅ›ciach 
 #' @return  
-#' Zwraca \code{data.frame}, w którym dla \code{i}-tego wiersza podane s¹ statystyki
-#' dla \code{i}-tego przedzia³u.
-#' @author Micha³ Danaj
+#' Zwraca \code{data.frame}, w ktÃ³rym dla \code{i}-tego wiersza podane sÄ… statystyki
+#' dla \code{i}-tego przedziaÅ‚u.
+#' @author MichaÅ‚ Danaj
 #' @export
 bckt_br<-function(x, y, n, weights=rep(1,length(x)), 
                   method=c("eq_length", "eq_count"), one.value.action=c("none","combine"),
@@ -248,7 +248,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
                      dt=NULL, avg=NULL ,total = TRUE, sort_x=TRUE)
 {
   
-  #sk³adam dt
+  #skÅ‚adam dt
   if (!is.null(x))
     dt <- data.table(x, y, weights)
 
@@ -261,15 +261,15 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
     dt$x <- factor(dt$x)
   }
   
-  #jeœli zosta³y podane kolumny 'avg', liczymy od razu dla nich œrednie
+  #jeÅ›li zostaÅ‚y podane kolumny 'avg', liczymy od razu dla nich Å›rednie
   if(!is.null(avg)){
     dt_avg <- data.table(x=dt$x, avg)
-    #TODO ten lapply strasznie wolno dzia³a. Popatrze, czy nie da siê czegoœ
+    #TODO ten lapply strasznie wolno dziaÅ‚a. Popatrze, czy nie da siÄ™ czegoÅ›
     #z tym zrobi?
     dt_avg <- dt_avg[,lapply(.SD, mean), x][,-1]
   }
   
-  #podsawowe statysyki dla wartoœci x
+  #podsawowe statysyki dla wartoÅ›ci x
   dt_wyn <- dt[, .(
     n_good = sum(weights) - sum(y*weights)
     ,n_bad = sum(y*weights)
@@ -302,7 +302,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   
   rownames(dt_wyn) <- dt_wyn$labels
   
-  #sortowanie jeœli mia³o byæ
+  #sortowanie jeÅ›li miaÅ‚o byÄ‡
   if (sort_x==TRUE){
     setorder(dt_wyn, discret)
   }
@@ -316,7 +316,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
       dt_avg<-rbindlist(list(dt_avg, data.table(totals_avg)))
     }
 
-    #zachowujê typ zmiennej. Muszê to uwzglêdniæ w totalu
+    #zachowujÄ™ typ zmiennej. MuszÄ™ to uwzglÄ™dniÄ‡ w totalu
     if (typeof(x)=='character')
       discr_total=''
     else
@@ -349,7 +349,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   
   dt_wyn$nr=seq(nrow(dt_wyn))
   
-  #Jeœli by³y dodatkowe kolumy, to je tutaj dodajê
+  #JeÅ›li byÅ‚y dodatkowe kolumy, to je tutaj dodajÄ™
   if (!is.null(avg)){
     dt_wyn <- cbind(dt_wyn ,dt_avg)
   }
@@ -451,7 +451,7 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, avg=NULL,
                      total = TRUE, sort_x=TRUE){
 
-  #Sk³adam dt
+  #SkÅ‚adam dt
   if (!is.null(x))
     dt <- data.table(x, y, weights)
   
@@ -459,26 +459,26 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   if (any(is.na(breaks)) || any(is.na(dt$x)) || any(is.na(dt$y)))
     stop("W argumentach funkcji pojawi?y si? braki danych.");
   
-  #Sprawdzam czy x-y wychodz¹ poza zakres breaks
+  #Sprawdzam czy x-y wychodzÄ… poza zakres breaks
   zakres_danych<-range(na.omit(dt$x))
   zakres_breaks<-range(breaks)
   if (zakres_danych[1]<zakres_breaks[1] || 
       zakres_danych[2]>zakres_breaks[2])
     warning("bckt_stat2: Zmienna 'x' spoza zakresu 'breaks'");
   
-  #porz¹dkujê i definiujê przedzia³y
+  #porzÄ…dkujÄ™ i definiujÄ™ przedziaÅ‚y
   breaks<-sort(unique(breaks));
   bck_od<-breaks[-length(breaks)]
   bck_do<-breaks[-1]
 
-  #Znajdujê i przypisujê w który przedzia³ wpada wartoœæ x-a
+  #ZnajdujÄ™ i przypisujÄ™ w ktÃ³ry przedziaÅ‚ wpada wartoÅ›Ä‡ x-a
   dt$przedzial_nr<-findInterval(dt$x, breaks, rightmost.closed = TRUE, all.inside = TRUE)
   dt[,':='(x_orig=x, x=przedzial_nr)]
   
   #Wylicza staystyki na bucketach
   buckety_wyn<-bckt_stat(dt=dt, avg=avg, total = total, sort_x=sort_x);
   
-  #doliczam medianê i œredni¹ zmiennej
+  #doliczam medianÄ™ i Å›redniÄ… zmiennej
   temp<-dt[,.(median=median(x_orig), mean=mean(x_orig)), przedzial_nr]
   temp_tot<-dt[,.(median=median(x_orig), mean=mean(x_orig))]
   setorder(temp, przedzial_nr)
@@ -487,8 +487,8 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   nawiasy_koniec<-c(rep(")", length(breaks)-2),"]")
   labels<-paste("[",bck_od,", ",bck_do, nawiasy_koniec,sep="")
   
-  #Poprzednia funkcja nie wiedzia³a, ¿e mamy przedzia³y i jak wype³niæ tymi przedzia³ami waroœci
-  #Robiê to tutaj
+  #Poprzednia funkcja nie wiedziaÅ‚a, Å¼e mamy przedziaÅ‚y i jak wypeÅ‚niÄ‡ tymi przedziaÅ‚ami waroÅ›ci
+  #RobiÄ™ to tutaj
   buckety_wyn[,':='(
     label=c(labels,'TOTAL'),
     od=c(bck_od,NA),

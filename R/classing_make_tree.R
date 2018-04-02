@@ -1,32 +1,32 @@
-# Z pliku "funkcje do analiz.r" przeniesione funkcje zwi¹zane z budow¹ drzewa
+# Z pliku "funkcje do analiz.r" przeniesione funkcje zwiÄ…zane z budowÄ… drzewa
 #
 # Numeri_var_treatment i disretizetion to dwie alternatywne funkcje
-# Author: Micha³ Danaj
+# Author: MichaÅ‚ Danaj
 ###############################################################################
 
 
-#TODO wyci¹gn¹æ parametry drzewa 
-#TODO wyci¹gn¹æ parametry locfit
-#' Dyskretyzuje zmienn¹ ciag³¹ drzewkiem w oparciu o zmienn¹ odpowiedzi
+#TODO wyciÄ…gnÄ…Ä‡ parametry drzewa 
+#TODO wyciÄ…gnÄ…Ä‡ parametry locfit
+#' Dyskretyzuje zmiennÄ… ciagÅ‚Ä… drzewkiem w oparciu o zmiennÄ… odpowiedzi
 #'
-#' W parametrze \code{x} ani \code{y} nie mo¿e byæ NULLi. Mo¿na je jakoœ zakodowaæ.
-#' @param x zmienna ci¹g³a.
+#' W parametrze \code{x} ani \code{y} nie moÅ¼e byÄ‡ NULLi. MoÅ¼na je jakoÅ› zakodowaÄ‡.
+#' @param x zmienna ciÄ…gÅ‚a.
 #' @param y zmienna celu (PD, LGD).
-#' @param NA_substit wartoœæ specjalna wstawiona za brak danych.
-#' @param special_val wartoœci specjalne, które powinny zostaæ uwzglêdnione jako
-#'                   osobne klasy. Wartoœæ tak¹ jest równie¿ \code{NA}, automatycznie
-#'                   uwzglêdniana jako osobna klasa.
-#' @param min_bucket Minimalna wielkoœæ liœcia
-#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
-#' @param interactive TRUE, jeœli zmienna ma byæ dyskretyzowana interaktywnie. W
-#'                   przeciwnym razie, co jest wartoœci¹ domyœln¹, dyskretyzacja
+#' @param NA_substit wartoÅ›Ä‡ specjalna wstawiona za brak danych.
+#' @param special_val wartoÅ›ci specjalne, ktÃ³re powinny zostaÄ‡ uwzglÄ™dnione jako
+#'                   osobne klasy. WartoÅ›Ä‡ takÄ… jest rÃ³wnieÅ¼ \code{NA}, automatycznie
+#'                   uwzglÄ™dniana jako osobna klasa.
+#' @param min_bucket Minimalna wielkoÅ›Ä‡ liÅ›cia
+#' @param max_gleb Maksymalna gÅ‚Ä™bokoÅ›c do ktÃ³rej budujemy drzewo
+#' @param interactive TRUE, jeÅ›li zmienna ma byÄ‡ dyskretyzowana interaktywnie. W
+#'                   przeciwnym razie, co jest wartoÅ›ciÄ… domyÅ›lnÄ…, dyskretyzacja
 #'                   jest automatyczna.
-#' @param locfit Czy z automatu dopasowaæ funkcjê z modelu \code{locfit}.  
-#' @param breaks Zamiast automatycznego dzielenia, mo¿na podaæ wartoœci przedzia³ów (from,to].
-#' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
+#' @param locfit Czy z automatu dopasowaÄ‡ funkcjÄ™ z modelu \code{locfit}.  
+#' @param breaks Zamiast automatycznego dzielenia, moÅ¼na podaÄ‡ wartoÅ›ci przedziaÅ‚Ã³w (from,to].
+#' @param span Parametr wygÅ‚adzajÄ…cy funkcji \code{locit}.
 #' @param ... inne parametry do funkcji \code{\link{drzewo}}.
 #' @seealso \code{drzewo}
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 numeric_var_treatment<-function(x, y, 
 		special_val=numeric_var_treatment.params$special_val,
@@ -39,41 +39,41 @@ numeric_var_treatment<-function(x, y,
 		span=0.9, ...){
 	
 	if (length(x)!=length(y))
-		stop("discretization: parametry 'x' i 'y' maj¹ ró¿ne d³ugoœci!");
+		stop("discretization: parametry 'x' i 'y' majÄ… rÃ³Å¼ne dÅ‚ugoÅ›ci!");
 	
-	#Mimo, ¿e przygotowywya³em funkcjê do obs³ugi null-i, to rezygnujê z tego
-	#ze wzglêdów bezpieczeñstwa.
+	#Mimo, Å¼e przygotowywyaÅ‚em funkcjÄ™ do obsÅ‚ugi null-i, to rezygnujÄ™ z tego
+	#ze wzglÄ™dÃ³w bezpieczeÅ„stwa.
 	if (any(is.na(x)) | any(is.na(y)))
-		stop ("discretization: W 'x' ani 'y' nie mo¿e byæ NA!");
+		stop ("discretization: W 'x' ani 'y' nie moÅ¼e byÄ‡ NA!");
 	
-	# Wartoœci specjalne
+	# WartoÅ›ci specjalne
 	special_val <- unique(c(special_val, NA_substit))
 	special_idx<-is.na(x)|x %in% special_val;
 	special_val<-unique(x[special_idx & !is.na(x)]);
-	#czy s¹ NA
+	#czy sÄ… NA
 	sa_na<-any(is.na(x));
 	
-	## Obs³ugujê wartoœci ci¹g³e
-	#jeœli zosta³y podane zakresy przedzi³ów, to dzielimy wg nich
+	## ObsÅ‚ugujÄ™ wartoÅ›ci ciÄ…gÅ‚e
+	#jeÅ›li zostaÅ‚y podane zakresy przedziÅ‚Ã³w, to dzielimy wg nich
 	if (!is.null(breaks)){
 		bucket_drzewo<-buckety_stat2(breaks, x[!special_idx], y[!special_idx], total=FALSE);
 	} else {
 		if (locfit){
 			bucket_drzewo<-try(reg_nieparam(x[!special_idx],y[!special_idx], span=span, wytnij=0.01), TRUE)
 			
-			#jeœli wyliczy³o siê z b³êdem, to próbujê jeszcze na dwa sposoby...
+			#jeÅ›li wyliczyÅ‚o siÄ™ z bÅ‚Ä™dem, to prÃ³bujÄ™ jeszcze na dwa sposoby...
 			if (class(bucket_drzewo)=="try-error"){
 				bucket_drzewo<-try(reg_nieparam(x[!special_idx],y[!special_idx], span=span, wytnij=0.01, buckets=50), TRUE)
 				if (class(bucket_drzewo)=="try-error"){
 					bucket_drzewo<-try(reg_nieparam(x[!special_idx],y[!special_idx], span=span, wytnij=0.01, buckets=30), TRUE)
 					
-					#jeœli wci¹¿ siê nie powiod³o, to zwracamy wartoœæ b³êdu
+					#jeÅ›li wciÄ…Å¼ siÄ™ nie powiodÅ‚o, to zwracamy wartoÅ›Ä‡ bÅ‚Ä™du
 					if (class(bucket_drzewo)=="try-error")
 						return(bucket_drzewo)
 				}	
 			}
 			
-			#zmieniam nazwê, bo póŸniej j¹ wykorzystujê (historycznie)			
+			#zmieniam nazwÄ™, bo pÃ³Åºniej jÄ… wykorzystujÄ™ (historycznie)			
 			bucket_drzewo$predicted=bucket_drzewo$fitted
 		}
 		else if (!interactive){
@@ -87,12 +87,12 @@ numeric_var_treatment<-function(x, y,
 		}
 	}
 	
-	#przypisujê nr przedzia³ów dla wartoœci ci¹g³ych
+	#przypisujÄ™ nr przedziaÅ‚Ã³w dla wartoÅ›ci ciÄ…gÅ‚ych
 	bucket_drzewo$fitted<-bucket_drzewo$nr;
 	classing<-rep(NA,length(x));
 	classing[!special_idx]<-przypisz(x[!special_idx], bucket_drzewo);
 	
-	#nadajê indeksy wartoœciom specjalnym i je przypisujê
+	#nadajÄ™ indeksy wartoÅ›ciom specjalnym i je przypisujÄ™
 	special_map<- -(length(special_val):1);
 	names(special_map)<-special_val;
 	classing[special_idx]<-special_map[as.character(x[special_idx])];
@@ -100,17 +100,17 @@ numeric_var_treatment<-function(x, y,
 	#i jeszcze NA
 	classing[is.na(x)]<- 0;
 	
-	#liczê statystyki
+	#liczÄ™ statystyki
 	classing_stat<-buckety_stat(classing, y, total=TRUE);
 	
-	#zmieniam nazwy wierszy, ¿eby nie by³y numery a labele klas
+	#zmieniam nazwy wierszy, Å¼eby nie byÅ‚y numery a labele klas
 	#mapping<-c(names(special_map), "<NA>", rownames(bucket_drzewo), 'TOTAL');
 	mapping<-c(names(special_map), "<NA>", rownames(bucket_drzewo), 'TOTAL');
 	names(mapping)<-c(special_map,"0",bucket_drzewo$nr, 'TOTAL');
 	
 	rownames(classing_stat)<-mapping[rownames(classing_stat)];
 	
-	#które wartoœci s¹ specjalne (dyskretne)
+	#ktÃ³re wartoÅ›ci sÄ… specjalne (dyskretne)
 	classing_stat$discret<-rep("",nrow(classing_stat));
 	if (sa_na)
 		classing_stat[c("<NA>", special_val),"discret"]<-rownames(classing_stat[c("<NA>", special_val),])
@@ -122,10 +122,10 @@ numeric_var_treatment<-function(x, y,
 	classing_stat$do<-classing_stat$srodek<-classing_stat$od<-NA;
 	classing_stat[classing_stat$discret=="",c("od","srodek","do")]<-bucket_drzewo[,c("od","srodek","do")];
 	
-	#dodajê predykcjê. W przypadku drzewka by³ to br, w przypadku locfit by³ to wynik regressji
+	#dodajÄ™ predykcjÄ™. W przypadku drzewka byÅ‚ to br, w przypadku locfit byÅ‚ to wynik regressji
 	classing_stat$predicted<-NA
 	classing_stat[classing_stat$discret=="",]$predicted<-bucket_drzewo$predicted
-	#dodajê predykcjê do wartoœci specjalnych. Bêdzie to br
+	#dodajÄ™ predykcjÄ™ do wartoÅ›ci specjalnych. BÄ™dzie to br
 	classing_stat$predicted[classing_stat$discret!="" & classing_stat$discret!="<TOTAL>"]<-classing_stat$br[classing_stat$discret!="" & classing_stat$discret!="<TOTAL>"]
 	
 	classing_stat<-classing_stat[,c('nr','label','discret', 'od','srodek','do','n_good','pct_good','n_bad','pct_bad','n_obs','pct_obs',
@@ -135,21 +135,21 @@ numeric_var_treatment<-function(x, y,
 
 #' Automatyczna dyskretyzacja w oparciu o algorytm drzewa
 #' 
-#' Dyskretyzuje zmienn¹ \code{score}
+#' Dyskretyzuje zmiennÄ… \code{score}
 #' @param score Zmienna do dyskretyzacji
 #' @param def Zmienna celu
-#' @param freq Licznoœæ. Na razie nie obs³ugiwane
-#' @param wytnij Jak¹ czêœæ koñcowych wartoœci usun¹æ funkcj¹ \code{usun_konce} 
-#' @param min_split Minimalna wielkoœæ wêz³a, aby móc dokonaæ podzia³u
-#' @param min_bucket Minimalna wielkoœæ liœcia
-#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
-#' @param n_buckets Chyba nie u¿ywane?
+#' @param freq LicznoÅ›Ä‡. Na razie nie obsÅ‚ugiwane
+#' @param wytnij JakÄ… czÄ™Å›Ä‡ koÅ„cowych wartoÅ›ci usunÄ…Ä‡ funkcjÄ… \code{usun_konce} 
+#' @param min_split Minimalna wielkoÅ›Ä‡ wÄ™zÅ‚a, aby mÃ³c dokonaÄ‡ podziaÅ‚u
+#' @param min_bucket Minimalna wielkoÅ›Ä‡ liÅ›cia
+#' @param max_gleb Maksymalna gÅ‚Ä™bokoÅ›c do ktÃ³rej budujemy drzewo
+#' @param n_buckets Chyba nie uÅ¼ywane?
 #' @param plot Rysuje wynik dyskretyzacji 
-#' @param testy Czy wyœwietlaæ komentarze do testowania
+#' @param testy Czy wyÅ›wietlaÄ‡ komentarze do testowania
 #' @param ... Dodatkowe parametry do rysowania 
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, max_gleb=4, n_buckets=20, plot=TRUE, testy=FALSE,...)
 {
@@ -203,13 +203,13 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 		print(length(score_a))
 	}
 	
-	#Zabezpieczam siê przed zminiejszeniem precyzji liczb w wektorze score podczas konwersji
-	#na zmienn¹ znakow¹, wykonywan¹ podczas wykonania funkcji tapply
+	#Zabezpieczam siÄ™ przed zminiejszeniem precyzji liczb w wektorze score podczas konwersji
+	#na zmiennÄ… znakowÄ…, wykonywanÄ… podczas wykonania funkcji tapply
 	if (length(def_a)!=length(score_a)){
 		score_a<-as.numeric(names(def_a))
-		warning("W funkcji 'drzewo' wykonywana jest konwersja score na ci¹g znaków, która
-						zmniejszy³a precyzjê. Dalsze dzia³anie funkcji przebiega w oparciu o zmniejszon¹
-						precyzjê liczb. Zaleca siê zmniejszenie precyzji danych wejœciowych.")
+		warning("W funkcji 'drzewo' wykonywana jest konwersja score na ciÄ…g znakÃ³w, ktÃ³ra
+						zmniejszyÅ‚a precyzjÄ™. Dalsze dziaÅ‚anie funkcji przebiega w oparciu o zmniejszonÄ…
+						precyzjÄ™ liczb. Zaleca siÄ™ zmniejszenie precyzji danych wejÅ›ciowych.")
 		
 	}
 	
@@ -224,13 +224,13 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 	#i robie dla nich statystyki
 	breaks<-sort(unique(c(w$od, w$do)));
 	
-	# jeœli jest tylko jeden liœæ
+	# jeÅ›li jest tylko jeden liÅ›Ä‡
 	if (length(breaks)==1)
 		bucket<-buckety_stat(score, def, total=FALSE)
 	else
 		bucket<-buckety_stat(cut(score, breaks, include.lowest=TRUE), def, total=FALSE);
 	
-	#uzupe³niam statystyki
+	#uzupeÅ‚niam statystyki
 	bucket$fitted<-bucket$br;
 	
 	bucket$od<-w$od;
@@ -254,26 +254,26 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 
 
 
-#' Rysuje dyskretyzacjê w oparciu o drzewko
+#' Rysuje dyskretyzacjÄ™ w oparciu o drzewko
 #' 
-#' @param liscie_drzewa Cholera wie, co jest i jak mam to tu przekazaæ.
+#' @param liscie_drzewa Cholera wie, co jest i jak mam to tu przekazaÄ‡.
 #' @param ... Dodatkowe parametry graficzne.
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 drzewo_plot<-function(liscie_drzewa,...){
 	#liscie<-liscie_drzewa[liscie_drzewa$discret=="",];
 	liscie<-liscie_drzewa[!is.na(liscie_drzewa$od),];
 	
-	# Jeœli s¹ jakieœ liœcie ci¹g³e
+	# JeÅ›li sÄ… jakieÅ› liÅ›cie ciÄ…gÅ‚e
 	if (nrow(liscie)>1){
-		# Wartoœci nieskoñczone œrodka zamieniam krañcowymi
+		# WartoÅ›ci nieskoÅ„czone Å›rodka zamieniam kraÅ„cowymi
 		liscie$srodek[liscie$srodek==-Inf]<-min(liscie$do)
 		liscie$srodek[liscie$srodek==Inf]<-max(liscie$od)
 		
 		breaks<-sort(unique(c(liscie$od,liscie$do)));
-		#usuwam nieskoñczonoœci
+		#usuwam nieskoÅ„czonoÅ›ci
 		niesk<-which(is.infinite(breaks))
 		if (length(niesk)>0)
 			breaks<-breaks[-niesk]
@@ -289,7 +289,7 @@ drzewo_plot<-function(liscie_drzewa,...){
 		#usuwam totala
 		liscie<-liscie_drzewa[!(is.na(liscie_drzewa$discret) | as.character(liscie_drzewa$discret)=='<TOTAL>'),];
 		
-		#jeœli coœ tam jest
+		#jeÅ›li coÅ› tam jest
 		if(nrow(liscie)>0){
 			
 			skala <- sqrt(liscie$n_obs/(sum(liscie$n_obs)/nrow(liscie)));
@@ -300,17 +300,17 @@ drzewo_plot<-function(liscie_drzewa,...){
 			box();
 		}
 		else{
-			#rysujê pusty wykres
+			#rysujÄ™ pusty wykres
 			plot(0,pch='x');
 		}
 	}
 }
 
 
-#TODO dorobiæ dokumentacjê.
-#' Podzia³ drzewa
+#TODO dorobiÄ‡ dokumentacjÄ™.
+#' PodziaÅ‚ drzewa
 #' 
-#' Podzia³ drzewa.
+#' PodziaÅ‚ drzewa.
 #' @param score score
 #' @param def def
 #' @param nr_wezla nr_wezla 
@@ -324,7 +324,7 @@ drzewo_plot<-function(liscie_drzewa,...){
 #' @param testy  testy
 #' @return 
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 		min_split=200, min_bucket=100, max_gleb=3, testy=FALSE)
 {
@@ -349,7 +349,7 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 	wynik<-wezel;
 	
 	#jesli ilosc obserwacji jest wystarczajaca, aby zrobic podzial w wezle
-	#i jeszcze mo¿emy dorobiæ liœcie
+	#i jeszcze moÅ¼emy dorobiÄ‡ liÅ›cie
 	if (all_obs>min_split)
 	{
 		cum_bad_lewo<-cumsum(def);
@@ -406,30 +406,30 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 
 
 
-#' Interaktywny podzia³ zmiennej ci¹g³ej na buckety
+#' Interaktywny podziaÅ‚ zmiennej ciÄ…gÅ‚ej na buckety
 #'
-#' Interaktywny podzia³ zmiennej ci¹g³ej na buckety. Uwaga! W danych
-#' nie mo¿e byæ wartoœci NULL. Nieopisane zmienne s¹ to zmienne z
+#' Interaktywny podziaÅ‚ zmiennej ciÄ…gÅ‚ej na buckety. Uwaga! W danych
+#' nie moÅ¼e byÄ‡ wartoÅ›ci NULL. Nieopisane zmienne sÄ… to zmienne z
 #' wykorzystywanej funkcji \code{\link{drzewo}} oraz \code{\link{reg_nieparam}}.
-#' Po wykonaniu zmiany wyœwietlane s¹ statystyki po bucketach oraz statystyka AR.
+#' Po wykonaniu zmiany wyÅ›wietlane sÄ… statystyki po bucketach oraz statystyka AR.
 #' @param score zmienna score'owa.
 #' @param def zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.
-#' @param span Parametr wyg³adzaj¹cy funkcji \code{locit}.
-#' @param min_split Minimalna wielkoœæ wêz³a, aby móc dokonaæ podzia³u
-#' @param min_bucket Minimalna wielkoœæ liœcia
-#' @param buckets Chyba nie u¿ywane?
-#' @param max_gleb Maksymalna g³êbokoœc do której budujemy drzewo
+#' @param span Parametr wygÅ‚adzajÄ…cy funkcji \code{locit}.
+#' @param min_split Minimalna wielkoÅ›Ä‡ wÄ™zÅ‚a, aby mÃ³c dokonaÄ‡ podziaÅ‚u
+#' @param min_bucket Minimalna wielkoÅ›Ä‡ liÅ›cia
+#' @param buckets Chyba nie uÅ¼ywane?
+#' @param max_gleb Maksymalna gÅ‚Ä™bokoÅ›c do ktÃ³rej budujemy drzewo
 #' @seealso \code{\link{drzewo}}, \code{\link{AR_quick}},  \code{\link{buckety_stat2}}.
 #' @return \code{data.frame} ze statystykami.
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export 
 interactive_tree<-function(score, def, span=0.80, min_split=200, min_bucket=100,
 		buckets=60, max_gleb=2)
 {
 	
 	if(any(is.na(score)|is.na(def)))
-		stop('interactive_tree: Niedozwolone wartoœci NULL!')
-	#wylicza pozycjê punktów symuluj¹cych menu i je rysuje
+		stop('interactive_tree: Niedozwolone wartoÅ›ci NULL!')
+	#wylicza pozycjÄ™ punktÃ³w symulujÄ…cych menu i je rysuje
 	punkty_menu<-function(){
 		
 		minx<-min(axis(1))
@@ -527,7 +527,7 @@ interactive_tree<-function(score, def, span=0.80, min_split=200, min_bucket=100,
 				#i robie dla nich statystyki
 				breaks<-sort(unique(c(od, do)));
 				
-				# jeœli jest tylko jeden liœæ
+				# jeÅ›li jest tylko jeden liÅ›Ä‡
 				if (length(breaks)==1)
 				{drz<-buckety_stat2(c(od, do), score, def, total=FALSE);
 				}else

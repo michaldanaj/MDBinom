@@ -1,25 +1,25 @@
 # TODO: Add comment
 # 
-# Author: Micha³ Danaj
+# Author: MichaÅ‚ Danaj
 ###############################################################################
 
-#TODO dodaæ do struktur w dyskretyzacj¹, oraz do metadanych, typ danych
-#Na razie robiê to rêcznie. Dlatego potrzebujê zmeinnej \code{dane}
-#aby okreœliæ typy danych
+#TODO dodaÄ‡ do struktur w dyskretyzacjÄ…, oraz do metadanych, typ danych
+#Na razie robiÄ™ to rÄ™cznie. Dlatego potrzebujÄ™ zmeinnej \code{dane}
+#aby okreÅ›liÄ‡ typy danych
 
 #' Na podstawie dyskretyzacji i modelu generuje SQL do implementacji
 #' 
 #' 
 #' @param wyniki wyniki dyskretyzacji.
-#' @param dane dane ze zmiennymi z modelu do okreœlenia typu danych.
+#' @param dane dane ze zmiennymi z modelu do okreÅ›lenia typu danych.
 #' @param model model logistyczny.
 #' @return Zwraca gotowego sql-a oraz kopiuje go do schowka.
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 genSQL<-function(wyniki, dane, model){
 	
-	#nazwy zmiennych wynikowych z case'ów
+	#nazwy zmiennych wynikowych z case'Ã³w
 	varNames<-paste("var", 1:length(wyniki), sep="")
 	sql<-c(
 			genSQLCases(wyniki, dane, varNames),
@@ -38,32 +38,32 @@ genSQL<-function(wyniki, dane, model){
 ##         nazwaZmiennejOut='xyz')
 
 
-#TODO chyba trzeba dodaæ obs³ugê mapowania
+#TODO chyba trzeba dodaÄ‡ obsÅ‚ugÄ™ mapowania
 #' Generuje kod SQL dla dyskretyzacji jednej zmiennej.
 #' 
 #' Generuje kod SQL dla dyskretyzacji jednej zmiennej na podstawie danych w \code{bucket},
-#' przypisuj¹cy woe.
+#' przypisujÄ…cy woe.
 #' @param bucket dyskretyzacja zmiennej.
 #' @param nazwaZmiennej nazwa zmiennej w danych do score'owania.
-#' @param typZmiennej jeœli zmienna jest znakowa, powinna przyj¹æ wartoœæ \code{'character'}.
+#' @param typZmiennej jeÅ›li zmienna jest znakowa, powinna przyjÄ…Ä‡ wartoÅ›Ä‡ \code{'character'}.
 #' @param nazwaZmiennejOut nazwa wynikowej zmiennej.
 #' @return zwraca \code{vector} znakowy z kodem SQL.
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 genSQLCase<-function(bucket, nazwaZmiennej, typZmiennej, nazwaZmiennejOut){
 	
-	#jeœli jest wiersz z podsumowaniem, to go usuwam
+	#jeÅ›li jest wiersz z podsumowaniem, to go usuwam
 	bucket<-bucket[bucket$label != 'TOTAL',] 
 	
-	#robiê zaokr¹glenie
+	#robiÄ™ zaokrÄ…glenie
 	bucket$woe<-round(bucket$woe, 7)
 	
 	kodzik_dyskr<-character()
 	kodzik_ciagle<-character()
 	kodzik_null<-character()
 	
-	#Najpierw obs³ugujê wartoœci dyskretne
+	#Najpierw obsÅ‚ugujÄ™ wartoÅ›ci dyskretne
 	gdzie_dyskretne<-is.na(bucket$srodek)
 	if (any(gdzie_dyskretne)){
 		
@@ -74,16 +74,16 @@ genSQLCase<-function(bucket, nazwaZmiennej, typZmiennej, nazwaZmiennejOut){
 		dyskretne <- bucket[gdzie_dyskretne,]
 		kodzik<-paste("WHEN ", nazwaZmiennej, ' = ', ciapek, dyskretne$discret, ciapek, ' THEN ', dyskretne$woe, sep='')
 		
-		#podmieniam dla wartoœci null
-		#TODO Obs³u¿yæ to lepiej! Najpierw wygenerowaæ woe dla null, w zale¿noœci czy jawne czy nie
-		#a dopiero póŸniej wygenerowaæ kod w zale¿noœci od typu zmiennej
+		#podmieniam dla wartoÅ›ci null
+		#TODO ObsÅ‚uÅ¼yÄ‡ to lepiej! Najpierw wygenerowaÄ‡ woe dla null, w zaleÅ¼noÅ›ci czy jawne czy nie
+		#a dopiero pÃ³Åºniej wygenerowaÄ‡ kod w zaleÅ¼noÅ›ci od typu zmiennej
 		gdzie_null<-dyskretne$discret==numeric_var_treatment.params$NA_substit | dyskretne$discret==''
 		kodzik[gdzie_null]<-paste("WHEN", nazwaZmiennej, 'IS NULL', 'THEN', dyskretne$woe[gdzie_null])
 		kodzik_dyskr<-kodzik
 		
 	}
 	
-	#teraz zmienne ci¹g³e	
+	#teraz zmienne ciÄ…gÅ‚e	
 	gdzie_ciagle<- !is.na(bucket$srodek)
 	
 	if (any(gdzie_ciagle)){
@@ -91,10 +91,10 @@ genSQLCase<-function(bucket, nazwaZmiennej, typZmiennej, nazwaZmiennejOut){
 		ciagle <- bucket[gdzie_ciagle,]
 		kodzik<-paste("WHEN", nazwaZmiennej, '>=', ciagle$od,'AND', nazwaZmiennej, '<', ciagle$do,'THEN', ciagle$woe)
 		
-		#podmieniam pierwszy wiersz, aby by³ od minus nieskoñczonoœci
+		#podmieniam pierwszy wiersz, aby byÅ‚ od minus nieskoÅ„czonoÅ›ci
 		kodzik[1]<-paste("WHEN", nazwaZmiennej, '<', ciagle$do[1],'THEN', ciagle$woe[1])
 		
-		#podmieniam ostatni wiersz, aby by³ od minus nieskoñczonoœci		
+		#podmieniam ostatni wiersz, aby byÅ‚ od minus nieskoÅ„czonoÅ›ci		
 		kodzik[nrow(ciagle)]<-paste("WHEN", nazwaZmiennej, '>=', ciagle$od[nrow(ciagle)],'THEN', ciagle$woe[nrow(ciagle)])
 		
 		kodzik_ciagle<-kodzik
@@ -104,7 +104,7 @@ genSQLCase<-function(bucket, nazwaZmiennej, typZmiennej, nazwaZmiennejOut){
 	#jeszcze else na koniec
 	kodzik_else<-"     ELSE NULL"
 	
-	#generujê ca³y kod, dodaj¹c warunek else
+	#generujÄ™ caÅ‚y kod, dodajÄ…c warunek else
 	kodzik_all<-c('CASE',
 			paste("    ",c(kodzik_dyskr, kodzik_ciagle, kodzik_null)),
 			kodzik_else,
@@ -119,25 +119,25 @@ genSQLCase<-function(bucket, nazwaZmiennej, typZmiennej, nazwaZmiennejOut){
 
 #genSQLCases(wyniki_reczna_dyskr, sample0_int, varNames)
 
-#TODO dodaæ do struktur w dyskretyzacj¹, oraz do metadanych, typ danych
-#Na razie robiê to rêcznie. Dlatego potrzebujê zmeinnej \code{dane}
-#aby okreœliæ typy danych
+#TODO dodaÄ‡ do struktur w dyskretyzacjÄ…, oraz do metadanych, typ danych
+#Na razie robiÄ™ to rÄ™cznie. Dlatego potrzebujÄ™ zmeinnej \code{dane}
+#aby okreÅ›liÄ‡ typy danych
 
-#' Generujê listê kodów SQL z dyskretyzacj¹ wszystkich zmiennych z \code{wynik}..
+#' GenerujÄ™ listÄ™ kodÃ³w SQL z dyskretyzacjÄ… wszystkich zmiennych z \code{wynik}..
 #' 
-#' Generujê listê kodów SQL z dyskretyzacj¹ wszystkich zmiennych z \code{wynik}.
+#' GenerujÄ™ listÄ™ kodÃ³w SQL z dyskretyzacjÄ… wszystkich zmiennych z \code{wynik}.
 #' @param wyniki wyniki dyskretyzacji.
-#' @param dane dane ze zmiennymi z modelu do okreœlenia typu danych.
+#' @param dane dane ze zmiennymi z modelu do okreÅ›lenia typu danych.
 #' @param varNames \code{vector} z nazwami zmiennych wynikowych.
-#' @return zwraca listê z kodami dla poszczególnych zmiennych.
+#' @return zwraca listÄ™ z kodami dla poszczegÃ³lnych zmiennych.
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 genSQLCases<-function(wynik, dane, varNames){
 	
 	cases<-list()
 	
-	#wyznaczam typ danych, póŸniej trzeba by to zast¹piæ metadanymi
+	#wyznaczam typ danych, pÃ³Åºniej trzeba by to zastÄ…piÄ‡ metadanymi
 	for (i in 1:length(wynik)){
 		typ_danych<-typeof(dane[,names(wynik[i])])
 		
@@ -153,38 +153,38 @@ genSQLCases<-function(wynik, dane, varNames){
 			cases2<-c(cases2,",")		
 	}
 	
-	cat("\n\n#########   	Kod z przekszta³ceniami do wklejenia:   		############\n\n")
+	cat("\n\n#########   	Kod z przeksztaÅ‚ceniami do wklejenia:   		############\n\n")
 	cat(cases2)
-	cat("\n\n#########   Koniec kodu z przekszta³ceniami do wklejenia   ############\n\n")
+	cat("\n\n#########   Koniec kodu z przeksztaÅ‚ceniami do wklejenia   ############\n\n")
 	
 	cases2
 }
 
-#TODO dodaæ do struktur w dyskretyzacj¹, oraz do metadanych, typ danych
-#Na razie robiê to rêcznie. Dlatego potrzebujê zmeinnej \code{dane}
-#aby okreœliæ typy danych
-#' Generujê listê kodów SQL z dyskretyzacj¹ wszystkich zmiennych z \code{wynik}..
+#TODO dodaÄ‡ do struktur w dyskretyzacjÄ…, oraz do metadanych, typ danych
+#Na razie robiÄ™ to rÄ™cznie. Dlatego potrzebujÄ™ zmeinnej \code{dane}
+#aby okreÅ›liÄ‡ typy danych
+#' GenerujÄ™ listÄ™ kodÃ³w SQL z dyskretyzacjÄ… wszystkich zmiennych z \code{wynik}..
 #' 
-#' Generujê listê kodów SQL z dyskretyzacj¹ wszystkich zmiennych z \code{wynik}.
+#' GenerujÄ™ listÄ™ kodÃ³w SQL z dyskretyzacjÄ… wszystkich zmiennych z \code{wynik}.
 #' @param wyniki wyniki dyskretyzacji.
-#' @param dane dane ze zmiennymi z modelu do okreœlenia typu danych.
-#' @param mapping mapowanie nazwy Ÿród³owej (przed zastosowniem dyskretyzacji z \code{wynik}
-#' 			na nazwê, która jest póŸniej w modelu. Jeœli jedna i druga nazwa jest taka sama,
-#'			to znaczy ¿e nie by³o robionej dyskretyzacji i case jest dla tej zmeinnej
-#'			pominiêty.
-#' @return zwraca listê z kodami dla poszczególnych zmiennych.
-#' @author Micha³ Danaj
+#' @param dane dane ze zmiennymi z modelu do okreÅ›lenia typu danych.
+#' @param mapping mapowanie nazwy ÅºrÃ³dÅ‚owej (przed zastosowniem dyskretyzacji z \code{wynik}
+#' 			na nazwÄ™, ktÃ³ra jest pÃ³Åºniej w modelu. JeÅ›li jedna i druga nazwa jest taka sama,
+#'			to znaczy Å¼e nie byÅ‚o robionej dyskretyzacji i case jest dla tej zmeinnej
+#'			pominiÄ™ty.
+#' @return zwraca listÄ™ z kodami dla poszczegÃ³lnych zmiennych.
+#' @author MichaÅ‚ Danaj
 #' @export
 genSQLCases2<-function(wynik, dane, mapping){
 	
 	cases<-list()
 	
-	#ograniczam listê wynik tylko do tych zmiennych, które maj¹
-	#zmienion¹ nazwê w mapping
+	#ograniczam listÄ™ wynik tylko do tych zmiennych, ktÃ³re majÄ…
+	#zmienionÄ… nazwÄ™ w mapping
 	rozneNazwy<-mapping$sourceVarName != mapping$modelVarName
 	wynik<-wynik[mapping$sourceVarName[rozneNazwy]]
 	
-	#wyznaczam typ danych, póŸniej trzeba by to zast¹piæ metadanymi
+	#wyznaczam typ danych, pÃ³Åºniej trzeba by to zastÄ…piÄ‡ metadanymi
 	for (i in 1:length(wynik)){
 		typ_danych<-typeof(dane[,names(wynik[i])])
 		
@@ -206,9 +206,9 @@ genSQLCases2<-function(wynik, dane, mapping){
 			cases2<-c(cases2,",")		
 	}
 	
-	cat("\n\n#########   	Kod z przekszta³ceniami do wklejenia:   		############\n\n")
+	cat("\n\n#########   	Kod z przeksztaÅ‚ceniami do wklejenia:   		############\n\n")
 	cat(cases2)
-	cat("\n\n#########   Koniec kodu z przekszta³ceniami do wklejenia   ############\n\n")
+	cat("\n\n#########   Koniec kodu z przeksztaÅ‚ceniami do wklejenia   ############\n\n")
 	
 	cases2
 }
@@ -217,10 +217,10 @@ genSQLCases2<-function(wynik, dane, mapping){
 #' Kod SQL modelu logistycznego.
 #' 
 #' @param model model logistyczny. 
-#' @param varNames alternatywne nazwy zmiennych. Jeœli nie podane, to pobrane z \code{model}.
+#' @param varNames alternatywne nazwy zmiennych. JeÅ›li nie podane, to pobrane z \code{model}.
 #' @return Kod SQL.
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 genSQLModel<-function(model, varNames=NULL){
 	
@@ -229,7 +229,7 @@ genSQLModel<-function(model, varNames=NULL){
 	if (is.null(varNames))
 		varNames=names(coef(model))[-1]
 	
-	#dodajê nazwê NA na pocz¹tek, bo we wspó³czynnikach mam dodatkowo itercept
+	#dodajÄ™ nazwÄ™ NA na poczÄ…tek, bo we wspÃ³Å‚czynnikach mam dodatkowo itercept
 	varNames<-c(NA,varNames)
 	
 	

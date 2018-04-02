@@ -2,76 +2,76 @@
 #' Liczy logit
 #'
 #' Liczy logit
-#' @param p wartoœæ.
-#' @author Micha³ Danaj
+#' @param p wartoÅ›Ä‡.
+#' @author MichaÅ‚ Danaj
 #' @export
 logit<-function(p)
 	return(log(p/(1-p)));
 
-#' Podstawia liczbê za brak danych
+#' Podstawia liczbÄ™ za brak danych
 #' 
 #' @param x objekt zmiennych numerycznych
-#' @param val wartoœæ, któr¹ ma zostaæ zast¹piony brak danych \code{NA}
-#' @author Micha³ Danaj
-#' @return Zwraca pierwotny obiekt z wartoœci¹ \code{val} w miejsce braku danych
+#' @param val wartoÅ›Ä‡, ktÃ³rÄ… ma zostaÄ‡ zastÄ…piony brak danych \code{NA}
+#' @author MichaÅ‚ Danaj
+#' @return Zwraca pierwotny obiekt z wartoÅ›ciÄ… \code{val} w miejsce braku danych
 #' @export
 nvl<-function(x, val){
 	x[is.na(x)]<-val;
 	x
 }
 
-#' Zwraca jedn¹ z dwóch wartoœci w zale¿noœci czy by³ brak danych
+#' Zwraca jednÄ… z dwÃ³ch wartoÅ›ci w zaleÅ¼noÅ›ci czy byÅ‚ brak danych
 #' 
 #' @param x objekt zmiennych numerycznych
-#' @param val_not_null wartoœæ, która ma zostaæ zwrócona w przypadku gdy nie ma braku danych
-#' @param val_null wartoœæ, która ma zostaæ zwrócona w przypadku braku danych
-#' @author Micha³ Danaj
-#' @return Zwraca pierwotny obiekt z oryginalnymi wartoœciami zast¹pionymi przez \code{val_not_null} i \code{val_null} 
+#' @param val_not_null wartoÅ›Ä‡, ktÃ³ra ma zostaÄ‡ zwrÃ³cona w przypadku gdy nie ma braku danych
+#' @param val_null wartoÅ›Ä‡, ktÃ³ra ma zostaÄ‡ zwrÃ³cona w przypadku braku danych
+#' @author MichaÅ‚ Danaj
+#' @return Zwraca pierwotny obiekt z oryginalnymi wartoÅ›ciami zastÄ…pionymi przez \code{val_not_null} i \code{val_null} 
 #' @export
 nvl2<-function(x, val_not_null, val_null){
 	x[!is.na(x)]<-val_not_null;
 	x[is.na(x)]<-val_null;
 	x
 }
-#' Wylicza rozk³ad AR(GINI) metod¹ bootstrap
+#' Wylicza rozkÅ‚ad AR(GINI) metodÄ… bootstrap
 #'
-#' Algorytm dzia³a w nastêpuj¹cy sposób. Na wstêpie agregowane s¹ wartoœci
-#' do poziomu score. Tak przygotowane informacje pos³u¿¹
-#' do wygenerowania losowo liczby badów i goodów dla ka¿dego score, jakie zosta³yby wylosowane
-#' w eksperymencie losowania ze zwracaniem z wyjœciowej próby. 
-#' Jednorazowo losowanych jest tyle prób bootstrap, aby liczba wszystkich wylosowanych 
+#' Algorytm dziaÅ‚a w nastÄ™pujÄ…cy sposÃ³b. Na wstÄ™pie agregowane sÄ… wartoÅ›ci
+#' do poziomu score. Tak przygotowane informacje posÅ‚uÅ¼Ä…
+#' do wygenerowania losowo liczby badÃ³w i goodÃ³w dla kaÅ¼dego score, jakie zostaÅ‚yby wylosowane
+#' w eksperymencie losowania ze zwracaniem z wyjÅ›ciowej prÃ³by. 
+#' Jednorazowo losowanych jest tyle prÃ³b bootstrap, aby liczba wszystkich wylosowanych 
 #' obserwacji
-#' nie przekroczy³a \code{n_once}. Ma to zapobiec przekroczeniu dostêpnej wielkoœci pamiêci.
-#' Z wylosowanych obserwacji tworzone s¹ macierze
+#' nie przekroczyÅ‚a \code{n_once}. Ma to zapobiec przekroczeniu dostÄ™pnej wielkoÅ›ci pamiÄ™ci.
+#' Z wylosowanych obserwacji tworzone sÄ… macierze
 #' do funkcji \code{\link{AR_quick}}, gdzie jedna kolumna odpowiada jedemu eksperymentowi. 
-#' Jeœli liczba kolumn w macierzy jest mniejsza ni¿ \code{n_boot}, co mo¿e byæ
+#' JeÅ›li liczba kolumn w macierzy jest mniejsza niÅ¼ \code{n_boot}, co moÅ¼e byÄ‡
 #' spowodowane ograniczeniem przez \code{n_once}, wykonywana jest
-#' kolejna pêtla. Algorytm zosta³ zoptymalizowany pod k¹tem prób, w których
-#' wystêpuje ma³a liczba unikalnych wartoœci \code{score}, w stosunku do liczby obserwacji w próbie.
+#' kolejna pÄ™tla. Algorytm zostaÅ‚ zoptymalizowany pod kÄ…tem prÃ³b, w ktÃ³rych
+#' wystÄ™puje maÅ‚a liczba unikalnych wartoÅ›ci \code{score}, w stosunku do liczby obserwacji w prÃ³bie.
 #'
-#' Dane wejœciowe mog¹ byæ ju¿ w jakiœ sposób zagregowane (np.do poziomu score), lub nie.
+#' Dane wejÅ›ciowe mogÄ… byÄ‡ juÅ¼ w jakiÅ› sposÃ³b zagregowane (np.do poziomu score), lub nie.
 #'  
-#' @param score wektor z wartoœciami score.
-#' @param def wektor z liczb¹ defaultów dla danego rekordu danych.
-#' @param n_boot liczba prób bootstrap do wygenerowania.
-#' @param obs wektor z liczb¹ obserwacji dla danego rekordu danych.
-#' @param n_once ile jednorazowo maksymalnie mo¿e byæ wylosowanych obserwacji. Parametr dodany jedynie, 
-#' 		  aby nie przekroczyæ dostêpnej pamiêci. Nie ma wp³ywu na koñcowy wynik.
+#' @param score wektor z wartoÅ›ciami score.
+#' @param def wektor z liczbÄ… defaultÃ³w dla danego rekordu danych.
+#' @param n_boot liczba prÃ³b bootstrap do wygenerowania.
+#' @param obs wektor z liczbÄ… obserwacji dla danego rekordu danych.
+#' @param n_once ile jednorazowo maksymalnie moÅ¼e byÄ‡ wylosowanych obserwacji. Parametr dodany jedynie, 
+#' 		  aby nie przekroczyÄ‡ dostÄ™pnej pamiÄ™ci. Nie ma wpÅ‚ywu na koÅ„cowy wynik.
 #' @param seed ziarno. 
-#' @return Zwraca wektor d³ugoœci \code{b_boot+1}. Pierwszy element wektora
-#'				 zawiera wyliczony AR na ca³ej próbie, w dalszej kolejnoœci znajduj¹
-#'				 siê wartoœci wyliczone w oparciu o próby bootstrap.
-#' @author Micha³ Danaj
+#' @return Zwraca wektor dÅ‚ugoÅ›ci \code{b_boot+1}. Pierwszy element wektora
+#'				 zawiera wyliczony AR na caÅ‚ej prÃ³bie, w dalszej kolejnoÅ›ci znajdujÄ…
+#'				 siÄ™ wartoÅ›ci wyliczone w oparciu o prÃ³by bootstrap.
+#' @author MichaÅ‚ Danaj
 #' @export
 #' @examples
-#' ## dane do przyk³adu
-#' n<-100000; #liczba obserwacji w próbie
-#' nb<-100; #liczba prób bootstrap
+#' ## dane do przykÅ‚adu
+#' n<-100000; #liczba obserwacji w prÃ³bie
+#' nb<-100; #liczba prÃ³b bootstrap
 #' score<-rnorm(n); #generowanie score
-#' def<-as.numeric(score+rnorm(n)<0) #generowanie defaultów
-#' score<-floor(200*score) #dyskretyzacja wartoœci score
+#' def<-as.numeric(score+rnorm(n)<0) #generowanie defaultÃ³w
+#' score<-floor(200*score) #dyskretyzacja wartoÅ›ci score
 #' 
-#' #liczba unikalnych wartoœci score
+#' #liczba unikalnych wartoÅ›ci score
 #' length(unique(score))
 #' #[1] 1362
 #' 
@@ -80,7 +80,7 @@ nvl2<-function(x, val_not_null, val_null){
 #' #user  system elapsed 
 #' # .41    0.00    1.53 
 #' 
-#' #porównanie z czasem wykonania w przypadku pêtli i stadradowej funkcji 
+#' #porÃ³wnanie z czasem wykonania w przypadku pÄ™tli i stadradowej funkcji 
 #' #do wyliczania GINI
 #' system.time(
 #'	sapply(1:nb, function(i){
@@ -93,18 +93,18 @@ nvl2<-function(x, val_not_null, val_null){
 AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 50000000, seed=NULL) 
 {
 	if (is.null(score)) 
-		stop("AR_boot: Zmienna 'score' musi byæ ró¿na od NULL!")
+		stop("AR_boot: Zmienna 'score' musi byÄ‡ rÃ³Å¼na od NULL!")
 	if (is.null(def)) 
-		stop("AR_boot: Zmienna 'def' musi byæ ró¿na od NULL!")
+		stop("AR_boot: Zmienna 'def' musi byÄ‡ rÃ³Å¼na od NULL!")
 	if ((min(def) < 0 || max(def) > 1) & max(obs)==1) 
-		stop("AR_boot: Zmienna 'def' musi byæ z zakresu [0,1].")
+		stop("AR_boot: Zmienna 'def' musi byÄ‡ z zakresu [0,1].")
 	if (is.null(n_boot))
-		stop("AR_boot: Zmienna 'n_boot' musi byæ ró¿na od NULL!")
+		stop("AR_boot: Zmienna 'n_boot' musi byÄ‡ rÃ³Å¼na od NULL!")
 	bad <- tapply(def, score, sum)
 	obs <- tapply(obs, score, sum)
 	good <- obs - bad
 	if (length(obs) > n_once) 
-		stop("AR_boot: Liczba jednorazowo wylosowanych elementów n_once musi byæ wiêksza, ni¿ \n\t\t\t\t\tliczba unikalnych wartoœci score!")
+		stop("AR_boot: Liczba jednorazowo wylosowanych elementÃ³w n_once musi byÄ‡ wiÄ™ksza, niÅ¼ \n\t\t\t\t\tliczba unikalnych wartoÅ›ci score!")
 	prob <- c(bad, good)/length(score)
 	ile_kolumn <- floor(n_once/length(obs))
 	N <- Hmisc::ceil(n_boot/ile_kolumn)
@@ -112,10 +112,10 @@ AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 500000
 	
 	
 	
-	#jeœli u¿ytkownik chce ustawiæ see;
+	#jeÅ›li uÅ¼ytkownik chce ustawiÄ‡ see;
 	if (!is.null(seed))
 	{
-		#zapisujê aktualnie u¿ywany seed;
+		#zapisujÄ™ aktualnie uÅ¼ywany seed;
 		old.seed<-.Random.seed;
 		set.seed(seed);
 	}
@@ -136,12 +136,12 @@ AR_boot<-function (score, def, n_boot, obs=rep(1,length(score)), n_once = 500000
 
 #' Liczy AR(GINI) dla specyficznie przygotowanych danych
 #'
-#' Funkcja zak³ada, ¿e podane licznoœci badów i wszystich obserwacji
-#' posortowane s¹ wg rosn¹cych wartoœci score. W przypadku gdy w próbie s¹
+#' Funkcja zakÅ‚ada, Å¼e podane licznoÅ›ci badÃ³w i wszystich obserwacji
+#' posortowane sÄ… wg rosnÄ…cych wartoÅ›ci score. W przypadku gdy w prÃ³bie sÄ…
 #' tylko bady lub tylko goody, funkcja zwraca \code{NaN}.
-#' @param bad liczba badów odpowiadaj¹ca kolejnym wartoœciom score.
-#' @param obs liczba obserwacji odpowiadaj¹ca kolejnym wartoœciom score.
-#' @author Micha³ Danaj
+#' @param bad liczba badÃ³w odpowiadajÄ…ca kolejnym wartoÅ›ciom score.
+#' @param obs liczba obserwacji odpowiadajÄ…ca kolejnym wartoÅ›ciom score.
+#' @author MichaÅ‚ Danaj
 #' @export
 AR_quick<-function(bad, obs)
 {
@@ -152,7 +152,7 @@ AR_quick<-function(bad, obs)
 	}
 	
 	if (any(dim(bad)!=dim(obs)))
-		stop('Ró¿ne wymiary parametrów wejœciowych!');
+		stop('RÃ³Å¼ne wymiary parametrÃ³w wejÅ›ciowych!');
 		
 	def_all<-colSums(bad);
 	obs_all<-colSums(obs);
@@ -170,7 +170,7 @@ AR_quick<-function(bad, obs)
 	cum_pct_bad<-apply(pct_bad, 2, cumsum);
 	cum_pct_good<-apply(pct_good, 2, cumsum);
 										 
-	#biorê poprzedni element  
+	#biorÄ™ poprzedni element  
 	cum_pct_bad_prev<-apply(cum_pct_bad, 2, FUN=function(x)c(0,x[2:length(x)-1]));
 	cum_pct_obs_prev<-apply(cum_pct_obs, 2, FUN=function(x)c(0,x[2:length(x)-1]));
 
@@ -183,41 +183,41 @@ AR_quick<-function(bad, obs)
 	#uwzgledniam bad rate w probce
 	return ( (2*AUC-1)/(1-def_all/obs_all)) ;
 }	
-#TODO zaktualizowaæ dokkumentacjê!
+#TODO zaktualizowaÄ‡ dokkumentacjÄ™!
 #' Liczy Accuracy Ratio (GINI)
 #'
-#' Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowuj¹cy
-#' informacje pozwalaj¹ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
-#' jest wartoœæ AR.
+#' Wylicza Accuracy Ratio (GINI). Wynikiem jest \code{data.frame} przechowujÄ…cy
+#' informacje pozwalajÄ…ce na wyrysowanie krzywej CAP. W ostatniej kolumnie zapiasna
+#' jest wartoÅ›Ä‡ AR.
 #'
-#' @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}
-#' @param def Wektor wartoœci \code{\{0,1\}} 
-#' @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
-#' @param return.table czy zwracaæ tabelê z agregatami na poziomie pojedynczej 
-#'         wartoœci score
-#' @param sort.order dla wartoœci równej "br", zamiast po \code{score}, 
-#'				 sortuje po wartoœci \code{br}. Mo¿e to byæ przydatne przy zmiennych dyskretnych.
-#' @param label opis wyœwietlony w legendzie.
+#' @param score wektor	wartoÅ›ci, wedÅ‚ug ktÃ³ry naleÅ¼y posortowaÄ‡ wartoÅ›ci \code{def}
+#' @param def Wektor wartoÅ›ci \code{\{0,1\}} 
+#' @param plot Czy narysowaÄ‡ krzywÄ… CAP. DomyÅ›lnie \code{FALSE}. 
+#' @param return.table czy zwracaÄ‡ tabelÄ™ z agregatami na poziomie pojedynczej 
+#'         wartoÅ›ci score
+#' @param sort.order dla wartoÅ›ci rÃ³wnej "br", zamiast po \code{score}, 
+#'				 sortuje po wartoÅ›ci \code{br}. MoÅ¼e to byÄ‡ przydatne przy zmiennych dyskretnych.
+#' @param label opis wyÅ›wietlony w legendzie.
 #' @param lgd_adjusted W przypadku modeli LGD pole pod krzywymi CAP i ROC dla modelu idealnego jest
-#' 			mniejsze ni¿ dla modelu PD i nie da siê go wyliczyæ analogicznym wzorem. Dlatego
-#' dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona u¿yta jako mianownik do
+#' 			mniejsze niÅ¼ dla modelu PD i nie da siÄ™ go wyliczyÄ‡ analogicznym wzorem. Dlatego
+#' dla LGD wyliczana jest osobno powierzchnia dla modelu idealnego i jest ona uÅ¼yta jako mianownik do
 #' wyliczenia AR. 
 #' @param ... dodatkowe parametry.
-#'@return Zwraca listê obiektów \code{data.frame}. Elementy tej listy odpowiadaj¹ kolejnym
-#'kolumnom ze \code{score_wiele} i maj¹ takie same nazwy, jak kolumny ze \code{score_wiele}.
-#'Ka¿dy element listy ma postaæ:
-#'  \item{do }{Górna granica przedzia³u, dla którego podane s¹ statystyki.}
-#'  \item{bad}{Liczba bad-ów w przedziale.}
+#'@return Zwraca listÄ™ obiektÃ³w \code{data.frame}. Elementy tej listy odpowiadajÄ… kolejnym
+#'kolumnom ze \code{score_wiele} i majÄ… takie same nazwy, jak kolumny ze \code{score_wiele}.
+#'KaÅ¼dy element listy ma postaÄ‡:
+#'  \item{do }{GÃ³rna granica przedziaÅ‚u, dla ktÃ³rego podane sÄ… statystyki.}
+#'  \item{bad}{Liczba bad-Ã³w w przedziale.}
 #'  \item{obs}{Liczba obserwacji w przedziale.}
-#'  \item{pct_all}{Procentowy udzia³ obserwacji w danym przedziale.}
-#'  \item{pct_bad}{Procentowy udzia³ bad-ów w danym przedziale w stosunku do 
-#'									wszystkich bad-ów.}
-#'  \item{pct_good}{Procentowy udzia³ good-ów w danym przedziale w stosunku do 
-#'									wszystkich good-ów.}
-#'  \item{br}{Stosunek bad-ów do good-ów w danym przedziale (bad rate).}
+#'  \item{pct_all}{Procentowy udziaÅ‚ obserwacji w danym przedziale.}
+#'  \item{pct_bad}{Procentowy udziaÅ‚ bad-Ã³w w danym przedziale w stosunku do 
+#'									wszystkich bad-Ã³w.}
+#'  \item{pct_good}{Procentowy udziaÅ‚ good-Ã³w w danym przedziale w stosunku do 
+#'									wszystkich good-Ã³w.}
+#'  \item{br}{Stosunek bad-Ã³w do good-Ã³w w danym przedziale (bad rate).}
 #'  \item{AR}{Wyliczone Accuracy Ratio.}							
 #'
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 #' @examples
 #'	n<-1000;
@@ -229,13 +229,13 @@ AR_old<-function(score, def, plot=FALSE, return.table=FALSE,
 {
 	
 	if (is.null(score))
-		stop("Zmienna 'score' musi byæ ró¿na od NULL!");
+		stop("Zmienna 'score' musi byÄ‡ rÃ³Å¼na od NULL!");
 	if (is.null(def))
-		stop("Zmienna 'def' musi byæ ró¿na od NULL!");
+		stop("Zmienna 'def' musi byÄ‡ rÃ³Å¼na od NULL!");
 
 	#sprawdzam, czy def jest z zakresu [0,1]
 	if (min(def)<0 || max(def)>1) 
-		stop("Zmienna 'def' musi byæ z zakresu [0,1].");
+		stop("Zmienna 'def' musi byÄ‡ z zakresu [0,1].");
 		
 	sort.order<-match.arg(sort.order);
 
@@ -275,7 +275,7 @@ AR_old<-function(score, def, plot=FALSE, return.table=FALSE,
 		cum_pct_bad<-cumsum(pct_bad);
 		cum_pct_good<-cumsum(pct_good);
 										 
-		#biorê poprzedni element
+		#biorÄ™ poprzedni element
 		cum_pct_bad_prev<-c(0,cum_pct_bad[2:length(cum_pct_bad)-1])
 		cum_pct_obs_prev<-c(0,cum_pct_obs[2:length(cum_pct_obs)-1])
 		
@@ -299,7 +299,7 @@ AR_old<-function(score, def, plot=FALSE, return.table=FALSE,
 			cum_pct_obs_lgd<-cumsum(pct_all_lgd);
 			cum_pct_bad_lgd<-cumsum(pct_bad_lgd);
 			
-			#biorê poprzedni element
+			#biorÄ™ poprzedni element
 			cum_pct_bad_prev_lgd<-c(0,cum_pct_bad_lgd[2:length(cum_pct_bad_lgd)-1])
 			cum_pct_obs_prev_lgd<-c(0,cum_pct_obs_lgd[2:length(cum_pct_obs_lgd)-1])
 
@@ -353,46 +353,46 @@ AR_old<-function(score, def, plot=FALSE, return.table=FALSE,
 	return(wynik);
 }
 
-# TODO Dorobiæ wyliczenia dla LGD
+# TODO DorobiÄ‡ wyliczenia dla LGD
 #' Liczy Accuracy Ratio (GINI)
 #'
-#' Wylicza Accuracy Ratio (GINI). Funkcja jest znacznie uproszczona w porównaniu z poprzedni¹ wersj¹ 
-#' i funkcje nie s¹ ze sob¹ kompatybilne. Najwiêksz¹ zmian¹ jest wykorzystanie biblioteki \code{data.table},
-#' dziêki czemu nieporównywalnie zwiêkszona zosta³a prêdkoœæ dzia³ania. 
+#' Wylicza Accuracy Ratio (GINI). Funkcja jest znacznie uproszczona w porÃ³wnaniu z poprzedniÄ… wersjÄ… 
+#' i funkcje nie sÄ… ze sobÄ… kompatybilne. NajwiÄ™kszÄ… zmianÄ… jest wykorzystanie biblioteki \code{data.table},
+#' dziÄ™ki czemu nieporÃ³wnywalnie zwiÄ™kszona zostaÅ‚a prÄ™dkoÅ›Ä‡ dziaÅ‚ania. 
 #'
-#' @param score wektor	wartoœci, wed³ug który nale¿y posortowaæ wartoœci \code{def}.
-#' @param def Wektor wartoœci \code{\{0,1\}}.
-#' @param plot Czy narysowaæ krzyw¹ CAP. Domyœlnie \code{FALSE}. 
-#' @param sort.order Dla \code{sort.order=1} sortuje rosn¹co, a dla \code{sort.order=-1} malej¹co
+#' @param score wektor	wartoÅ›ci, wedÅ‚ug ktÃ³ry naleÅ¼y posortowaÄ‡ wartoÅ›ci \code{def}.
+#' @param def Wektor wartoÅ›ci \code{\{0,1\}}.
+#' @param plot Czy narysowaÄ‡ krzywÄ… CAP. DomyÅ›lnie \code{FALSE}. 
+#' @param sort.order Dla \code{sort.order=1} sortuje rosnÄ…co, a dla \code{sort.order=-1} malejÄ…co
 #' po \code{score}.
-#' @param label opis wyœwietlony w legendzie.
+#' @param label opis wyÅ›wietlony w legendzie.
 #' @param ... dodatkowe parametry.
-#'@return Zwraca wektor ze statystykami jakoœci modelu.
-#'  \item{AUCAP}{Powierzchnia pod krzyw¹ CAP.}
+#'@return Zwraca wektor ze statystykami jakoÅ›ci modelu.
+#'  \item{AUCAP}{Powierzchnia pod krzywÄ… CAP.}
 #'  \item{AR}{Wyliczone Accuracy Ratio (GINI).}
-#'  \item{AUC}{Powierzchnia pod krzyw¹ ROC.}							
-#'  \item{KS}{Statystyka Ko³mogorowa-Smirnowa.}							
+#'  \item{AUC}{Powierzchnia pod krzywÄ… ROC.}							
+#'  \item{KS}{Statystyka KoÅ‚mogorowa-Smirnowa.}							
 #'
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 AR<-function(score, def, plot=FALSE,  
 		sort.order=-1, label='', ...)
 {
 	
 	if (is.null(score))
-		stop("Zmienna 'score' musi byæ ró¿na od NULL!");
+		stop("Zmienna 'score' musi byÄ‡ rÃ³Å¼na od NULL!");
 	if (is.null(def))
-		stop("Zmienna 'def' musi byæ ró¿na od NULL!");
+		stop("Zmienna 'def' musi byÄ‡ rÃ³Å¼na od NULL!");
 	
 	#sprawdzam, czy def jest z zakresu [0,1]
 	if (min(def)<0 || max(def)>1) 
-		stop("Zmienna 'def' musi byæ z zakresu [0,1].");
+		stop("Zmienna 'def' musi byÄ‡ z zakresu [0,1].");
 	
-	# tworzê data.table
+	# tworzÄ™ data.table
 	DT <- data.table(score, def)
 	setorderv(DT, "score", sort.order)
 	
-	# statystyki globalne próby
+	# statystyki globalne prÃ³by
 	total <- DT[,.(
 					def_all=sum(def),
 					obs_all=length(def)
@@ -400,7 +400,7 @@ AR<-function(score, def, plot=FALSE,
 	][,good_all:=obs_all-def_all]
 	
 	
-	# Agregujê na score
+	# AgregujÄ™ na score
 	DT2 <- DT[,.(
 					bad=sum(def),
 					obs=.N),
@@ -428,7 +428,7 @@ AR<-function(score, def, plot=FALSE,
 	#licze kawalki powierzchni
 	DT3 <- DT3[,AUC_part := (cum_pct_obs-cum_pct_obs_prev)*(cum_pct_bad+cum_pct_bad_prev)/2];
 	
-	# zaczynam sk³adaæ wyniki
+	# zaczynam skÅ‚adaÄ‡ wyniki
 	#wynik<-c(bad=total$def_all, good=total$good_all, obs=total$obs_all, br=total$def_all/total$obs_all)
 	
 	#sumuje cala powierzchnie
@@ -460,9 +460,9 @@ AR<-function(score, def, plot=FALSE,
 }
 
 
-#' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
+#' WyÅ›wietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' 
-#' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
+#' WyÅ›wietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
 #' @export
 print.AR<-function(x){
@@ -472,9 +472,9 @@ print.AR<-function(x){
 		print(x$table);
 }
 
-#' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
+#' WyÅ›wietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' 
-#' Wyœwietla statystyki przechowywane w obiekcie \code{\link{AR}}
+#' WyÅ›wietla statystyki przechowywane w obiekcie \code{\link{AR}}
 #' @param x obiekt klasy \code{AR}.
 HTML.AR<-function(x){
 	R2HTML::HTML(x$label);
@@ -496,11 +496,11 @@ getStats.AR<-function(x){
 
 
 
-#' Przekszta³ca obiekt na \code{\link{data.frame}}
+#' PrzeksztaÅ‚ca obiekt na \code{\link{data.frame}}
 #' 
-#' Przekszta³ca obiekt na \code{\link{data.frame}}
+#' PrzeksztaÅ‚ca obiekt na \code{\link{data.frame}}
 #' @param x obiekt klasy \code{AR}.
-#' @title Przekszta³ca obiekt na data.frame 
+#' @title PrzeksztaÅ‚ca obiekt na data.frame 
 #' @export   
 as.data.frame.AR<-function(x){
  s<-t(as.data.frame(x$stats))
@@ -512,19 +512,19 @@ as.data.frame.AR<-function(x){
 
 #' Rysuje informacje o danych
 #'
-#'  Rysuje histogram zmiennej \code{score}, dla ka¿dego przedzia³u histogramu
-#'  rysuje bad rate, oraz rysujê krzyw¹ regresji dla \code{default~score}. Pod
-#'  wykresem wyœwietla informacje o Accuracy Ratios i bad rate.
-#' @param score Wektor ze zmienn¹ numeryczn¹. 
-#' @param default Wektor ze zmienn¹ dwumianow¹. 
-#' @param buckets Sugerowana liczba bucketów. 
-#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}
-#' @param main Tytu³ wykresu. 
+#'  Rysuje histogram zmiennej \code{score}, dla kaÅ¼dego przedziaÅ‚u histogramu
+#'  rysuje bad rate, oraz rysujÄ™ krzywÄ… regresji dla \code{default~score}. Pod
+#'  wykresem wyÅ›wietla informacje o Accuracy Ratios i bad rate.
+#' @param score Wektor ze zmiennÄ… numerycznÄ…. 
+#' @param default Wektor ze zmiennÄ… dwumianowÄ…. 
+#' @param buckets Sugerowana liczba bucketÃ³w. 
+#' @param span WspÃ³Å‚czynnik wygÅ‚adzajÄ…cy, wykorzystywany przez funkcjÄ™ \code{\link[locfit]{locfit}}
+#' @param main TytuÅ‚ wykresu. 
 #' @param hist_col Kolor histogramu  
 #' @param ylab Label
 #' @param xlab Label
 #' @param ... dodatkowe parametry.
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 #' @examples
 #' x<-rnorm(100);
@@ -592,27 +592,27 @@ informacje<-function(score, default, buckets=20, span=0.8, main="", hist_col="bl
   	mtext( xlab , 1, line=3);	
 	#mtext( paste("AR = ", round(AR_value*100,2), "%;   BR = ",round(mean(default)*100,digits=2),"%" ), 1, 5, col="darkgreen");
 
-	#wracam do wejœciowych ustawieñ parametrów, ale pozostawiam koordynaty,
-	#¿eby mo¿na by³o ³atwo dodawaæ coœ do wykresu.s
+	#wracam do wejÅ›ciowych ustawieÅ„ parametrÃ³w, ale pozostawiam koordynaty,
+	#Å¼eby moÅ¼na byÅ‚o Å‚atwo dodawaÄ‡ coÅ› do wykresu.s
 	user<-par(no.readonly=TRUE)$usr;
 	par(def_par);
 	par(usr=user);
 }
 
-#' Rysuje jakoœæ kalibracji
+#' Rysuje jakoÅ›Ä‡ kalibracji
 #'
-#' Rysuje jakoœæ kalibracji
+#' Rysuje jakoÅ›Ä‡ kalibracji
 #' @param score score.
 #' @param default default.
-#' @param estym wartoœci wyestymowane przez model.
-#' @param buckets Sugerowana liczba bucketów. 
-#' @param span Wspó³czynnik wyg³adzaj¹cy, wykorzystywany przez funkcjê \code{\link[locfit]{locfit}}
+#' @param estym wartoÅ›ci wyestymowane przez model.
+#' @param buckets Sugerowana liczba bucketÃ³w. 
+#' @param span WspÃ³Å‚czynnik wygÅ‚adzajÄ…cy, wykorzystywany przez funkcjÄ™ \code{\link[locfit]{locfit}}
 #' @param hist_col Kolor histogramu 
 #' @param ylab Label
 #' @param xlab Label
-#' @param legx po³o¿enie legendy
-#' @param legy po³o¿enie legendy
-#' @param legcex po³o¿enie legendy.
+#' @param legx poÅ‚oÅ¼enie legendy
+#' @param legy poÅ‚oÅ¼enie legendy
+#' @param legcex poÅ‚oÅ¼enie legendy.
 #' @param leg.label etykiety do legendy.
 #' @param ylim2 ograniczenie y-ka.
 #' @param ... dodatkowe parametry do funkcji \code{\link{plot}}.
@@ -677,15 +677,15 @@ informacje_kal<-function (score, default, estym, buckets = 20, span = 0.8, hist_
 }
 
 
-#' Dla obiektu zwróconego przez funkcjê \code{\link{AR}} rysuje krzyw¹ ROC lub CAP.
+#' Dla obiektu zwrÃ³conego przez funkcjÄ™ \code{\link{AR}} rysuje krzywÄ… ROC lub CAP.
 #'
-#' Dla obiektu zwróconego przez funkcjê \code{\link{AR}} rysuje krzyw¹ ROC lub CAP.
+#' Dla obiektu zwrÃ³conego przez funkcjÄ™ \code{\link{AR}} rysuje krzywÄ… ROC lub CAP.
 #' @title Rysuje krzywe ROC i CAP 
 #' @param ar Obiekt klasy XYZ. 
 #' @param plot_type Typ wykresu. 
-#' @param adjusted_AR zmienna logiczna. TRUE, gdy trzeba osobno wyliczyæ pole pod
+#' @param adjusted_AR zmienna logiczna. TRUE, gdy trzeba osobno wyliczyÄ‡ pole pod
 #' 		  modelem idealnym (np. w przypadku LGD).
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export 
 plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 {
@@ -727,29 +727,29 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 	
 }
 
-# TODO Dodaæ opcjê subset.
-# TODO Co z b³edem out of vertex space?
+# TODO DodaÄ‡ opcjÄ™ subset.
+# TODO Co z bÅ‚edem out of vertex space?
 
-#'  Rysuje lokalnie wyg³adzon¹ funckjê.
+#'  Rysuje lokalnie wygÅ‚adzonÄ… funckjÄ™.
 #'  
-#'  Rysuje i zwraca statystyki dla bucketów.  
+#'  Rysuje i zwraca statystyki dla bucketÃ³w.  
 #' @param score Wektor zmiennych numerycznych. 
 #' @param default Wektor zmiennej dwumianowej. 
-#' @param buckets Liczba bucketów, na ile nele¿y podzieliæ \code{score}. 
-#' @param wytnij Ile krañcowych obserwacji wyci¹æ. 
-#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}
-#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}} 
-#' @param plot Czy rysowaæ wykres. 
-#' @param plt_type jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
-#' @param new Czy rysowaæ wykres od nowa. 
-#' @param col_points Kolor punktów. 
+#' @param buckets Liczba bucketÃ³w, na ile neleÅ¼y podzieliÄ‡ \code{score}. 
+#' @param wytnij Ile kraÅ„cowych obserwacji wyciÄ…Ä‡. 
+#' @param span WspÃ³Å‚czynnik wygÅ‚adzania. SzegÃ³Å‚y w funkcji \code{\link[locfit]{locfit}}
+#' @param degree StopieÅ„ wielomianu do lokalnego wygÅ‚adzania. SzegÃ³Å‚y w funkcji \code{\link[locfit]{locfit}} 
+#' @param plot Czy rysowaÄ‡ wykres. 
+#' @param plt_type jeÅ›li \code{br}, to na osi OY bÄ™dzie BR. W przeciwnym razie bÄ™dzie logit(BR)
+#' @param new Czy rysowaÄ‡ wykres od nowa. 
+#' @param col_points Kolor punktÃ³w. 
 #' @param col_line Kolor lini. 
-#' @param index jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
-#'				W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.
-#' @param glm czy rysowaæ dopasowanie modelu logistycznego do zmiennej.
+#' @param index jeÅ›li \code{TRUE}, na osi OX bÄ™dÄ… numery kolejnych bucketÃ³w.
+#'				W przeciwnym razie na osi OX bÄ™dÄ… wartoÅ›ci \code{score}.
+#' @param glm czy rysowaÄ‡ dopasowanie modelu logistycznego do zmiennej.
 #' @param col_glm kolor wykresu z modelu logistycznego.
 #' @param ... dodatkowe parametry.
-#' @author Micha³ Danaj 
+#' @author MichaÅ‚ Danaj 
 #' @export
 #' @examples
 #'		n<-1000;
@@ -813,27 +813,27 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	bucket2
 }
 
-#'  Rysuje lokalnie wyg³adzon¹ funckjê (dev)
+#'  Rysuje lokalnie wygÅ‚adzonÄ… funckjÄ™ (dev)
 #'  
-#'  Rysuje i zwraca statystyki dla bucketów.  
+#'  Rysuje i zwraca statystyki dla bucketÃ³w.  
 #' @param score Wektor zmiennych numerycznych. 
 #' @param default Wektor zmiennej dwumianowej. 
-#' @param buckets Liczba bucketów, na ile nele¿y podzieliæ \code{score}. 
+#' @param buckets Liczba bucketÃ³w, na ile neleÅ¼y podzieliÄ‡ \code{score}. 
 #' @param pred predykcja modelu.
-#' @param wytnij Ile krañcowych obserwacji wyci¹æ. 
-#' @param span Wspó³czynnik wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}}
-#' @param degree Stopieñ wielomianu do lokalnego wyg³adzania. Szegó³y w funkcji \code{\link[locfit]{locfit}} 
-#' @param plot Czy rysowaæ wykres. 
-#' @param plt_type jeœli \code{br}, to na osi OY bêdzie BR. W przeciwnym razie bêdzie logit(BR)
-#' @param new Czy rysowaæ wykres od nowa. 
-#' @param col_points Kolor punktów. 
+#' @param wytnij Ile kraÅ„cowych obserwacji wyciÄ…Ä‡. 
+#' @param span WspÃ³Å‚czynnik wygÅ‚adzania. SzegÃ³Å‚y w funkcji \code{\link[locfit]{locfit}}
+#' @param degree StopieÅ„ wielomianu do lokalnego wygÅ‚adzania. SzegÃ³Å‚y w funkcji \code{\link[locfit]{locfit}} 
+#' @param plot Czy rysowaÄ‡ wykres. 
+#' @param plt_type jeÅ›li \code{br}, to na osi OY bÄ™dzie BR. W przeciwnym razie bÄ™dzie logit(BR)
+#' @param new Czy rysowaÄ‡ wykres od nowa. 
+#' @param col_points Kolor punktÃ³w. 
 #' @param col_line Kolor lini. 
-#' @param index jeœli \code{TRUE}, na osi OX bêd¹ numery kolejnych bucketów.
-#'				W przeciwnym razie na osi OX bêd¹ wartoœci \code{score}.
-#' @param glm czy rysowaæ dopasowanie modelu logistycznego do zmiennej.
+#' @param index jeÅ›li \code{TRUE}, na osi OX bÄ™dÄ… numery kolejnych bucketÃ³w.
+#'				W przeciwnym razie na osi OX bÄ™dÄ… wartoÅ›ci \code{score}.
+#' @param glm czy rysowaÄ‡ dopasowanie modelu logistycznego do zmiennej.
 #' @param col_glm kolor wykresu z modelu logistycznego.
 #' @param ... dodatkowe parametry.
-#' @author Micha³ Danaj 
+#' @author MichaÅ‚ Danaj 
 #' @export
 #' @examples
 #'		n<-1000;
@@ -900,17 +900,17 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
 }
 
 
-#' Usuwa krañcowe wartoœci.
+#' Usuwa kraÅ„cowe wartoÅ›ci.
 #'
-#' Zwraca indeksy \code{prob} najmniejszych i \code{prob} najwiêkszych wartoœci. Jeœli
-#' jednak nie jest mo¿liwe ustalenie co najwy¿ej \code{prob} obserwacji, nie 
-#' zostaje wybrana ¿adna. Ma to zapobiec sytuacji, gdy np. najmniejsz¹ wartoœci¹ jest 0
-#' i w próbie znajduje siê 10\% takich obserwacji, a my chcemy usun¹æ tylko 1\%.
-#' @param score Wektor wartoœci numerycznych. 
-#' @param prob Jak¹ czêœæ obserwacj nale¿y usun¹æ z jednego krañca. 
+#' Zwraca indeksy \code{prob} najmniejszych i \code{prob} najwiÄ™kszych wartoÅ›ci. JeÅ›li
+#' jednak nie jest moÅ¼liwe ustalenie co najwyÅ¼ej \code{prob} obserwacji, nie 
+#' zostaje wybrana Å¼adna. Ma to zapobiec sytuacji, gdy np. najmniejszÄ… wartoÅ›ciÄ… jest 0
+#' i w prÃ³bie znajduje siÄ™ 10\% takich obserwacji, a my chcemy usunÄ…Ä‡ tylko 1\%.
+#' @param score Wektor wartoÅ›ci numerycznych. 
+#' @param prob JakÄ… czÄ™Å›Ä‡ obserwacj naleÅ¼y usunÄ…Ä‡ z jednego kraÅ„ca. 
 #' @param weights Wagi.
-#' @return Zwraca wektor z indeksami elementów, które powinny zostaæ usuniête.
-#' @author Micha³ Danaj
+#' @return Zwraca wektor z indeksami elementÃ³w, ktÃ³re powinny zostaÄ‡ usuniÄ™te.
+#' @author MichaÅ‚ Danaj
 #' @export
 #' @examples
 #' x<-sort(rnorm(10));
@@ -918,7 +918,7 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
 #' usun<-usun_konce(x, prob=0.01);
 #' x[-usun]
 #'
-#' #usuwa tylko obserwacjê z prawego krañca
+#' #usuwa tylko obserwacjÄ™ z prawego kraÅ„ca
 #' x2<-c(rep(min(x),5),x[5:10])
 #' x2
 #' usun<-usun_konce(x2, prob=0.01);
@@ -938,7 +938,7 @@ usun_konce<-function (score, prob = 0.01, weights=NULL)
 	if (length(new_min) == 0)
 		new_min <- -.Machine$double.xmax
 	
-	#od którego elementu powinienm wycinaæ wartoœci przekraczaj¹ce 1-prob
+	#od ktÃ³rego elementu powinienm wycinaÄ‡ wartoÅ›ci przekraczajÄ…ce 1-prob
 	temp<-which(s >= 1 - prob)[1]+1;
 	if (is.na(temp))
 		new_max <-  .Machine$double.xmax
@@ -949,16 +949,16 @@ usun_konce<-function (score, prob = 0.01, weights=NULL)
 }
 
 
-#' Sprawdzenie, czy estymacja modelu dobrze t³umaczy zale¿noœæ targetu od zmiennej
+#' Sprawdzenie, czy estymacja modelu dobrze tÅ‚umaczy zaleÅ¼noÅ›Ä‡ targetu od zmiennej
 #' 
-#' @param x wektror z wartoœciami zmiennej
-#' @param y wektor z predykcj¹ modelu 
+#' @param x wektror z wartoÅ›ciami zmiennej
+#' @param y wektor z predykcjÄ… modelu 
 #' @param bucket grupowanie zmiennej
-#' @param subset podzbiór 
+#' @param subset podzbiÃ³r 
 #' @param ... dodatkowe parametry graficzne 
-#' @return bucket z dodanymi wyestymowanymi wartoœciami
+#' @return bucket z dodanymi wyestymowanymi wartoÅ›ciami
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
 	if (!is.null(subset)){
@@ -983,25 +983,25 @@ dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
 
 
 
-#liczê korelacje zmiennych z modelu ze zmiennymi do dodania
-#' Wynik funkcji add1, po usuniêciu zmiennych skorelowanych
+#liczÄ™ korelacje zmiennych z modelu ze zmiennymi do dodania
+#' Wynik funkcji add1, po usuniÄ™ciu zmiennych skorelowanych
 #' 
-#' Sprawdza stopieñ korelacji zmiennych z danych \code{data} ze zmiennymi z modelu \code{model}. Jeœli korelacja
-#' przekracza \code{cor_threshold}, to zmienna usuwana jest z dalszych analiz. Dla pozosta³ych zmiennych 
-#' stosowana jest funkcja \code{\link{add1}}. W danych nie mo¿e byæ braków danych.
+#' Sprawdza stopieÅ„ korelacji zmiennych z danych \code{data} ze zmiennymi z modelu \code{model}. JeÅ›li korelacja
+#' przekracza \code{cor_threshold}, to zmienna usuwana jest z dalszych analiz. Dla pozostaÅ‚ych zmiennych 
+#' stosowana jest funkcja \code{\link{add1}}. W danych nie moÅ¼e byÄ‡ brakÃ³w danych.
 #' TODO Funkcja nie przetestowana, jeszcze do dopracowania!!!
 #' @param data \code{data.frame} ze zmiennymi do dodania do modelu
 #' @param model model do rozszerzenia
 #' @param target_var_name nazwa zmiennej z targetem
-#' @param cor_threshold graniczna wartoœæ korelacji, po przekroczeniu której zmienna jest uwuwana z analiz
+#' @param cor_threshold graniczna wartoÅ›Ä‡ korelacji, po przekroczeniu ktÃ³rej zmienna jest uwuwana z analiz
 #' @return Statystyki
 #' 
-#' @author Micha³ Danaj
+#' @author MichaÅ‚ Danaj
 #' @export
 step_bez_kor<-function(data, model, target_var_name='target', cor_threshold=0.75){
 	
 	if (any(is.na(data)))
-		stop("W danych nie mo¿e byæ braków danych!")
+		stop("W danych nie moÅ¼e byÄ‡ brakÃ³w danych!")
 	
 	#zmienne w modelu
 	zmienne_model<-names(coef(model)[-1])
@@ -1010,7 +1010,7 @@ step_bez_kor<-function(data, model, target_var_name='target', cor_threshold=0.75
 	#zmienne_budowa<-nazwy_zmiennych
 	zmienne_budowa<-names(data)
 	
-	#korelacja miêczy nimi
+	#korelacja miÄ™czy nimi
 	korel<-as.data.frame(cor(data[,zmienne_budowa]))
 	korel_zm_model<-korel[zmienne_model,]
 	
@@ -1019,13 +1019,13 @@ step_bez_kor<-function(data, model, target_var_name='target', cor_threshold=0.75
 	czy_przekracza<-as.data.frame(abs(korel_zm_model)>cor_threshold)
 	czy_przekracza<-sapply(czy_przekracza, any)
 	
-	#TODO usun¹æ równie¿ kolumny
+	#TODO usunÄ…Ä‡ rÃ³wnieÅ¼ kolumny
 	zmienne<-names(czy_przekracza[czy_przekracza==FALSE & !is.na(czy_przekracza)])
 	
 	#usuwam target
 	zmienne<-zmienne[zmienne!=target_var_name]
 	
-	#robiê stepa
+	#robiÄ™ stepa
 	#form<-make_model_formula('target',zmienne_budowa)
 	form<-make_model_formula(target_var_name, c(".",zmienne))
 	dodana_zmienne<-add1(model, scope= form, test='Chisq')	

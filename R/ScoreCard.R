@@ -1,6 +1,6 @@
 # TODO: Add comment
 # 
-# Author: Micha³ Danaj
+# Author: MichaÅ‚ Danaj
 ###############################################################################
 
 
@@ -9,22 +9,22 @@
 #' 
 #' @param scoreCard defini`cja karty scoringowej. Patrz \code{\link{getScoreCard}}.
 #' @param x \code{data.frame} z kolumnami o nazwach takich, jak w definicji karty
-#' @param sufix ci¹g znaków dodany do nazw wynikowych kolumn.
+#' @param sufix ciÄ…g znakÃ³w dodany do nazw wynikowych kolumn.
 #' @seealso \code{\link{getScoreCard}}.
 #' @export 
 assignScore<-function(scoreCard, x, sufix='_points'){
 	if (!is.data.frame(x))
-		stop('"x" powinno byæ typu data.frame.');
+		stop('"x" powinno byÄ‡ typu data.frame.');
 	
 	czy_ok<-c('variable','value','coeff', 'points')%in%names(scoreCard);
 	if(all(czy_ok)==FALSE)
 		stop(paste("W scoreCard brak kolumn(y)", c('variable','value','coeff', 'points')[!czy_ok]));
 	
 	#if (class(scoreCard)!='scoreCard')
-	#	stop('"scoreCard" powinno byæ klasy scoreCard (patrz getScores).')
+	#	stop('"scoreCard" powinno byÄ‡ klasy scoreCard (patrz getScores).')
 	wynik<-data.frame();
 	nazwy<-unique(scoreCard$variable);
-	nazwy2<-character(); #nazwy, które s¹ i w x i w scoreCard
+	nazwy2<-character(); #nazwy, ktÃ³re sÄ… i w x i w scoreCard
 	for (i in 1:length(nazwy)){
 		nazwa<-nazwy[i];
 		czesc<-scoreCard[scoreCard$variable==nazwa,];
@@ -41,7 +41,7 @@ assignScore<-function(scoreCard, x, sufix='_points'){
 	}	
 	
 	if(any(is.na(wynik))){
-		warning('W x wyst¹pi³y wartoœci nie zdefiniowane w karcie scoringowej! W te miejsca przypisano NA.')
+		warning('W x wystÄ…piÅ‚y wartoÅ›ci nie zdefiniowane w karcie scoringowej! W te miejsca przypisano NA.')
 	}
 	names(wynik)<-paste(nazwy2,sufix, sep='');
 	wynik[,'score']=rowSums(wynik);	
@@ -50,12 +50,12 @@ assignScore<-function(scoreCard, x, sufix='_points'){
 
 
 
-#' Wylicza punkty score'owe na podstawie parametrów modelu
+#' Wylicza punkty score'owe na podstawie parametrÃ³w modelu
 #' 
-#' @param model model, którego parametry zostan¹ przekszta³cone na punkty score'owe.
-#' @param from od jakiej wartoœci maj¹ siê rozpoczynaæ punkty score'owe.
-#' @param to do jakiej wielkoœci maj¹ byæ wartoœci punktów socre'owych.
-#' @param test jeœli TRUE, zwraca testy istotnoœci atrybutów.
+#' @param model model, ktÃ³rego parametry zostanÄ… przeksztaÅ‚cone na punkty score'owe.
+#' @param from od jakiej wartoÅ›ci majÄ… siÄ™ rozpoczynaÄ‡ punkty score'owe.
+#' @param to do jakiej wielkoÅ›ci majÄ… byÄ‡ wartoÅ›ci punktÃ³w socre'owych.
+#' @param test jeÅ›li TRUE, zwraca testy istotnoÅ›ci atrybutÃ³w.
 #' @export 
 getScoreCard<-function(model, from, to, test=FALSE){
 	wynik<-reshape::melt(model$xlevels);
@@ -81,13 +81,13 @@ getScoreCard<-function(model, from, to, test=FALSE){
 	return(wynik);
 }
 
-#' Wylicza punkty score'owe na podstawie parametrów modelu
+#' Wylicza punkty score'owe na podstawie parametrÃ³w modelu
 #'
-#' Wylicza punkty score'owe na podstawie parametrów modelu 
-#' @param model model, którego parametry zostan¹ przekszta³cone na punkty score'owe.
-#' @param from od jakiej wartoœci maj¹ siê rozpoczynaæ punkty score'owe.
-#' @param to do jakiej wielkoœci maj¹ byæ wartoœci punktów socre'owych.
-#' @param test jeœli TRUE, zwraca testy istotnoœci atrybutów.
+#' Wylicza punkty score'owe na podstawie parametrÃ³w modelu 
+#' @param model model, ktÃ³rego parametry zostanÄ… przeksztaÅ‚cone na punkty score'owe.
+#' @param from od jakiej wartoÅ›ci majÄ… siÄ™ rozpoczynaÄ‡ punkty score'owe.
+#' @param to do jakiej wielkoÅ›ci majÄ… byÄ‡ wartoÅ›ci punktÃ³w socre'owych.
+#' @param test jeÅ›li TRUE, zwraca testy istotnoÅ›ci atrybutÃ³w.
 #' @export
 getScoreCard2<-function(model, from, to, test=FALSE){
 	wynik<-reshape::melt(model$xlevels);
