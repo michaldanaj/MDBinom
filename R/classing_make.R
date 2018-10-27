@@ -117,6 +117,8 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 #'
 #' Wersja w developmencie.
 #' Może poza tym, że jeśli nie ma obserwacji w jakimś bukcecie, to go usuwa.
+#' Aby ustrzec się przed problemami numerycznymi, wartości \code{x} zaokrąglane są do \code{digits}
+#' miejsc po przecinku.
 #'
 #' @param x  Zmienna, którą będzie dyskretyzowana.  
 #' @param y  Zmienna dwumianowa.  
@@ -128,6 +130,7 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 #' zostaną wyliczone średnie.
 #' @param total czy dołączyć wiersz z podsumowaniem.
 #' @param sort_x jeśli \code{TRUE}, wynikowa tabela zostanie posortowana po wartościach 
+  #' @param digits liczba miejsc po przecinku do których zostanie zaokrąglona wartość \code{x}.
 #' @return  
 #' Zwraca \code{data.frame}, w którym dla \code{i}-tego wiersza podane są statystyki
 #' dla \code{i}-tego przedziału.
@@ -135,7 +138,7 @@ buckety_br<-function(x, y, n, method=c("eq_length", "eq_count"), one.value.actio
 #' @export
 bckt_br<-function(x, y, n, weights=rep(1,length(x)), 
                   method=c("eq_length", "eq_count"), one.value.action=c("none","combine"),
-                  avg=NULL ,total = TRUE, sort_x=TRUE)
+                  avg=NULL ,total = TRUE, sort_x=TRUE, digits=13)
 {                                         
   #	TODO - domy?lna warto?? method
   method<-match.arg(method);
@@ -144,6 +147,8 @@ bckt_br<-function(x, y, n, weights=rep(1,length(x)),
   od=c(1:n);
   #gorny kranieb bucketa (wartosc x)
   do=c(1:n);
+  
+  x <- round(x, digits=digits)
   
   if (method=="eq_length"){
     granice<-seq(min(x),max(x),length.out=n+1)

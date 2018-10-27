@@ -252,6 +252,122 @@ drzewo<-function(score, def, freq=NULL, wytnij=0, min_split=30, min_bucket=10, m
 	bucket
 }
 
+drzewox<-function(score, def, weights=rep(1,length(score)), wytnij=0, min_split=30, min_bucket=10, max_gleb=4, n_buckets=20, plot=TRUE, testy=FALSE,...)
+{
+  
+  #musze teraz wywolac buckety_br, bo pozniej agreguje wektory
+  #do jednego scoru i wykorzystuje freq, a buckety_br musi miec
+  #jeden rekord=jedna obserwacja
+  #if (plot)
+  #	b<-buckety_br(score , def, n_buckets, method="eq_lengt");
+  if (testy==TRUE){
+    print('=================   funkcja drzewo  ======================')
+    print(length(score))
+    print(length(def))
+  }
+  
+    #tworzê dt
+  dt = data.table(score, def, weights)
+  
+  
+  #k<-order(score);
+  #score<-score[k];
+  #def<-def[k];
+  
+  # if (is.null(freq))
+  #   freq<-rep(1,length(score))
+  # else
+  # {
+  #   stop("poki co nie obslugiwane freq inne od NULL");
+  #   freq<-freq[k];
+  # }
+  
+  # usniêcie wartoœci krañcowych
+  if (wytnij>0)
+  {
+    usun<-usun_konce(dt$score, prob=wytnij, weights = dt$weights);
+    #TODO dokoñczyœ usuwanie
+    if (length(usun)>0){
+      score<-score[-usun];
+      def<-def[-usun];
+      freq<-freq[-usun];
+    }
+  }
+  
+  # podstawowe satystyki zagregowane na socre
+  dt_x_stats <- dt[, .(
+    n_good = sum(weights) - sum(def*weights)
+    ,n_bad = sum(def*weights)
+    ,n_obs = sum(weights)
+  ), score]
+  setorder(dt_x_stats, score)
+  
+  #def_a<-tapply(def,score,sum);
+  #freq_a<-tapply(freq, score, sum);
+  #score_a<-unique(score);
+  
+  #if (testy==TRUE){
+  #  print('---')
+  #  
+  #  print(length(def_a))
+  #  print(length(freq_a))
+  #  print(length(score_a))
+  #}
+  
+  #teraz poni¿sze chyba nie bêdzie potrzebne
+  
+  #Zabezpieczam siê przed zminiejszeniem precyzji liczb w wektorze score podczas konwersji
+  #na zmienn¹ znakow¹, wykonywan¹ podczas wykonania funkcji tapply
+  # if (length(def_a)!=length(score_a)){
+  #   score_a<-as.numeric(names(def_a))
+  #   warning("W funkcji 'drzewo' wykonywana jest konwersja score na ci¹g znaków, która
+  #           zmniejszy³a precyzjê. Dalsze dzia³anie funkcji przebiega w oparciu o zmniejszon¹
+  #           precyzjê liczb. Zaleca siê zmniejszenie precyzji danych wejœciowych.")
+  #   
+  # }
+  # 
+  
+  #vec_stats(score_a);
+  #TODO zrobiæ pdzia³. Mo¿e najlepiej od razu na data frame-ach i na wa¿onych wartoœciach?
+  # nie ma sensu powtarzaæ tych samych operacji przy ka¿dym podziale
+  w<-drzewo_podzialX(dt_x_stats, 1, min(score), max(score), 0, min_split, min_bucket, max_gleb);
+  
+  #wybieram liscie
+  w<-w[is.na(w$poprawa),];
+  w<-w[order(w$od),];
+  
+  #i robie dla nich statystyki
+  breaks<-sort(unique(c(w$od, w$do)));
+  
+  # jeœli jest tylko jeden liœæ
+  if (length(breaks)==1)
+    bucket<-bckt_stat(score, def, total=FALSE)
+  else
+    bucket<-bckt_stat(cut(score, breaks, include.lowest=TRUE), def, total=FALSE);
+  bucket[,discret:='']
+  
+  #uzupe³niam statystyki
+  bucket$fitted<-bucket$br;
+  
+  bucket$od<-w$od;
+  bucket$do<-w$do;
+  bucket$srodek<-(w$od+w$do)/2;
+  
+  #	----- rysowanie -----
+  if (plot)
+  {
+    
+    plot(bucket$srodek, bucket$br, xlab="", ylab="", xlim=c(range(breaks)),...);
+    for (i in 1:length(w$od))
+      lines(c(bucket$od[i], bucket$do[i]), c(bucket$fitted[i],bucket$fitted[i]), col="blue");
+  }
+  
+  if (testy==TRUE){
+    print('+++++++++++++++++++   koniec funkcja drzewo  +++++++++++++++++++++')
+  }
+  
+  bucket
+}
 
 
 #' Rysuje dyskretyzacjÄ™ w oparciu o drzewko
@@ -404,6 +520,104 @@ drzewo_podzial<-function(score, def, nr_wezla, od, do, freq, glebokosc,
 	wynik
 }
 
+#wartoœci w score powinny byæ unikalne i posortowane
+drzewo_podzialX<-function(dt, nr_wezla, od, do,  glebokosc,
+                         min_split=200, min_bucket=100, max_gleb=3, testy=FALSE)
+{
+  if (testy==TRUE){
+    print("===============   funkcja drzewo_podzial   ====================");
+    print(nr_wezla);
+    print(length(score))
+    print(length(def))
+  }
+  
+  ### Wyliczam statystyki wêz³a ###
+  
+  dt_stats = dt[,.(
+    all_obs=sum(n_obs),
+    all_bad=sum(n_bad)
+    )]
+  dt_stats[,br_akt:=all_bad/all_obs]
+  dt_stats[,gini_akt:=br_akt*(1-br_akt)*all_obs]
+  
+  #struktura z informacjami o wêŸle.
+  #Jeœli wêze³ da siê podzieliæ, zostan¹ póŸniej wype³nione pola poprawa i podzial
+  wezel<-data.frame(nr_wezla
+                    , rodzic=floor(nr_wezla/2)
+                    , od
+                    , do
+                    , n_obs=dt_stats$all_obs
+                    , n_bad=dt_stats$all_bad
+                    , br=dt_stats$br_akt
+                    , poprawa=NA
+                    , podzial=NA)
+  
+  wynik<-wezel
+  
+  #jesli liczba obserwacji w wêŸle jest wystarczajaca, aby zrobic podzial w wezle
+  #i jeszcze mo¿emy dorobiæ liœcie, i nie doszliœmy do maksymalnej g³êbokoœci
+  if (dt_stats$all_obs>min_split  & glebokosc<max_gleb)
+  {
+    
+    ### dla ka¿dego mo¿liwego punktu podzia³u wylicza dla niego gini ###
+    dt_new = copy(dt)
+    dt_new[,":="(
+        cum_bad_lewo  =  cumsum(n_bad),
+        cum_obs_lewo  =  cumsum(n_obs))][,":="(    
+        cum_bad_prawo =  (dt_stats$all_bad-cum_bad_lewo),
+        cum_obs_prawo =  (dt_stats$all_obs-cum_obs_lewo)
+      )][,":="(    
+        br_lewo       =  cum_bad_lewo/cum_obs_lewo,
+        br_prawo      =  cum_bad_prawo/cum_obs_prawo
+      )][,":="(
+        gini_lewo     =  br_lewo*(1-br_lewo)*cum_obs_lewo,
+        gini_prawo    =  br_prawo*(1-br_prawo)*cum_obs_prawo
+      )][,":="(
+        gini_roz      =  dt_stats$gini_akt-(gini_prawo+gini_lewo)
+    )]
+
+    ### zostatwia podzia³y spe³niaj¹ce warunki ###
+    
+    #zostawiam podzialy, dla ktorych spelnione sa wymogi na liczbê obserwacji w wynikowych lisciach
+    dt_new[,zostaw:=(cum_obs_lewo>min_bucket)&(cum_obs_prawo>min_bucket)]
+    dt_new[zostaw == FALSE,gini_roz:=NA]
+    
+    
+    ### Jeœli zosta³y jakieœ punkty w których mo¿na dokonaæ podzia³u, zrób podzia³ ###
+    if (any(dt_new$zostaw))
+    {
+      
+      # Indeks którego punktu podzia³u maksymalizuje gini
+      nr<-which.max(dt_new$gini_roz);
+      
+      # Uzupe³miam statystyki wêz³a
+      wezel$poprawa<-dt_new$gini_roz[nr];
+      wezel$podzial<-(dt_new$score[nr]+dt_new$score[nr+1])/2;
+      
+      #pomocniczo
+      l<-nrow(dt_new)
+      
+      # rekurencyjnie dzielê lewy i prawy przedzia³ z podzia³u
+      
+      wl<-drzewo_podzialX(dt_new[1:nr, .(score, n_bad, n_obs)], nr_wezla*2, od, wezel$podzial, glebokosc+1,
+                         min_split, min_bucket, max_gleb, testy)
+      
+      wr<-drzewo_podzialX(dt_new[(nr+1):l, .(score, n_bad, n_obs)], nr_wezla*2+1, wezel$podzial, do, glebokosc+1,
+                         min_split, min_bucket, max_gleb, testy)
+      
+      # sk³adam statystyki wêz³óW
+      wynik<-rbind(wezel,wl,wr);
+    }
+  }
+  
+  
+  ### zwrócenie wartoœci  ###
+  
+  if (testy==TRUE){
+    print("===============   koniec funkcja drzewo_podzial   ====================");
+  }
+  wynik
+}
 
 
 #' Interaktywny podziaÅ‚ zmiennej ciÄ…gÅ‚ej na buckety

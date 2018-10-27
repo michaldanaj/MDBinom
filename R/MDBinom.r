@@ -848,7 +848,7 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
                         col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
 {
   
-  dane <- data.frame(score, default)
+  dane <- data.frame(score, default, pred)
   
   if (wytnij > 0){
     do_usuniecia<-usun_konce(dane$score, prob = wytnij);
@@ -856,7 +856,7 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
       dane <- dane[-do_usuniecia,]
   }
   
-  bucket <- bckt_br(dane$score, dane$default, buckets, avg=pred, method = "eq_count", total=FALSE)
+  bucket <- bckt_br(dane$score, dane$default, buckets, avg=dane$pred, method = "eq_count", total=FALSE)
   
   if (length(unique(default)) == 2)
     l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",
@@ -877,7 +877,7 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
   #model logistyczny
   if (glm){
     model<-glm(default~score, family=binomial)
-    pred<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
+    pred_glm<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
   }
   
   if (plot) {
@@ -892,8 +892,8 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
       points(x, bucket2$avg, col = col_pred, ...)
     
     if (glm){
-      lines(x[order(x)], pred[order(x)], col=col_glm)
-      points(x, pred, col=col_glm)
+      lines(x[order(x)], pred_glm[order(x)], col=col_glm)
+      points(x, pred_glm, col=col_glm)
     }
   }
   bucket2
