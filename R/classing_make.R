@@ -485,7 +485,8 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   
   #doliczam medianę i średnią zmiennej
   temp<-dt[,.(median=median(x_orig), mean=mean(x_orig)), przedzial_nr]
-  temp_tot<-dt[,.(median=median(x_orig), mean=mean(x_orig))]
+  if (total)
+    temp_tot<-dt[,.(median=median(x_orig), mean=mean(x_orig))]
   setorder(temp, przedzial_nr)
 
   #doliczam labele
@@ -494,15 +495,26 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   
   #Poprzednia funkcja nie wiedziała, że mamy przedziały i jak wypełnić tymi przedziałami warości
   #Robię to tutaj
-  buckety_wyn[,':='(
-    label=c(labels,'TOTAL'),
-    od=c(bck_od,NA),
-    srodek=c((bck_od+bck_do)/2, NA),
-    do=c(bck_do,NA),
-    discret=NA,
-    mean=c(temp$mean, temp_tot$mean),
-    median=c(temp$median, temp_tot$median)
+  if (total)
+    buckety_wyn[,':='(
+      label=c(labels,'TOTAL'),
+      od=c(bck_od,NA),
+      srodek=c((bck_od+bck_do)/2, NA),
+      do=c(bck_do,NA),
+      discret=NA,
+      mean=c(temp$mean, temp_tot$mean),
+      median=c(temp$median, temp_tot$median)
     )]
+  else
+    buckety_wyn[,':='(
+      label=c(labels),
+      od=c(bck_od),
+      srodek=c((bck_od+bck_do)/2),
+      do=c(bck_do),
+      discret=NA,
+      mean=c(temp$mean),
+      median=c(temp$median)
+    )]      
   
   return(buckety_wyn)
 }
