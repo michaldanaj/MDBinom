@@ -322,6 +322,7 @@ univariate_anal_stats1<-function(x,y,
 	## jeśli jest to zmienna ciągła
 	else{
 		discret<-numeric_var_treatment(x,y, special_val=special_val, NA_substit = NA_substit,
+		    discrete_threshold=discrete_threshold,
 				max_gleb=max_gleb,min_bucket=min_bucket,breaks=breaks,
 				interactive=interactive, locfit=locfit, span=span, ...);
 	}

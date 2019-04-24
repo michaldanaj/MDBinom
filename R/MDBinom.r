@@ -843,12 +843,15 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 #'		
 #'		reg_nieparam(x1,y, buckets=20)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
-rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, span = 0.7,
+rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,length(score)), wytnij = 0, span = 0.7,
                         degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
                         col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
 {
   
-  dane <- data.frame(score, default, pred)
+  if (!is.null(pred))
+    dane <- data.frame(score, default, pred, weights)
+  else
+    dane <- data.frame(score, default, weights)
   
   if (wytnij > 0){
     do_usuniecia<-usun_konce(dane$score, prob = wytnij);
@@ -856,7 +859,14 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, wytnij = 0, spa
       dane <- dane[-do_usuniecia,]
   }
   
-  bucket <- bckt_br(dane$score, dane$default, buckets, avg=dane$pred, method = "eq_count", total=FALSE)
+  if (!is.null(pred))
+    bucket <- bckt_br(dane$score, dane$default, buckets, avg=dane$pred, weights=dane$weights,
+                      method = "eq_count", total=FALSE)
+  else
+    bucket <- bckt_br(dane$score, dane$default, buckets, weights=dane$weights,
+                      method = "eq_count", total=FALSE)
+  
+  
   
   if (length(unique(default)) == 2)
     l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",

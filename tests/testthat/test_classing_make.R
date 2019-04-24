@@ -25,7 +25,7 @@ buckety_br(x,y,10)
 
 x <- c(1,1,1,1,1)
 y <- c(0,0,0,0,0) 
-bckt <- bckt_stat(x,y,1)
+bckt <- MDBinom::bckt_stat(x,y,1)
 
 test_that("bckt_stat czy Total jest ostatnim wierszem", {
   expect_equal(bckt$label[2], 'TOTAL')
