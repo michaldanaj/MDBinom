@@ -28,7 +28,7 @@ x
 usun<-usun_konce(x, prob=0.01);
 x[-usun]
 
-#usuwa tylko obserwację z prawego krańca
+#usuwa tylko obserwacjÄ™ z prawego kraĹ„ca
 x2<-c(rep(min(x),5),x[5:10])
 x2
 usun<-usun_konce(x2, prob=0.01);

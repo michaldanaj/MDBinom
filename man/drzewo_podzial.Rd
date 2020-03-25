@@ -2,10 +2,21 @@
 % Please edit documentation in R/classing_make_tree.R
 \name{drzewo_podzial}
 \alias{drzewo_podzial}
-\title{Podział drzewa}
+\title{PodziaĹ‚ drzewa}
 \usage{
-drzewo_podzial(score, def, nr_wezla, od, do, freq, glebokosc, min_split = 200,
-  min_bucket = 100, max_gleb = 3, testy = FALSE)
+drzewo_podzial(
+  score,
+  def,
+  nr_wezla,
+  od,
+  do,
+  freq,
+  glebokosc,
+  min_split = 200,
+  min_bucket = 100,
+  max_gleb = 3,
+  testy = FALSE
+)
 }
 \arguments{
 \item{score}{score}
@@ -34,8 +45,8 @@ drzewo_podzial(score, def, nr_wezla, od, do, freq, glebokosc, min_split = 200,
 
 }
 \description{
-Podział drzewa.
+PodziaĹ‚ drzewa.
 }
 \author{
-Michał Danaj
+MichaĹ‚ Danaj
 }

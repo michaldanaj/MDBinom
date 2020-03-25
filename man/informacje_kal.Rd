@@ -4,11 +4,23 @@
 \alias{informacje_kal}
 \title{Rysuje jakość kalibracji}
 \usage{
-informacje_kal(score, default, estym, buckets = 20, span = 0.8,
-  hist_col = "blue", ylab = c("Frequency", "BR"),
-  xlab = "Calibrated score", legx = 0, legy = 0, legcex = 1,
-  leg.label = quote(c("Observations frequency", "Average LGD",
-  "Smoothed average LGD", "Expected LGD")), ylim2 = NULL, ...)
+informacje_kal(
+  score,
+  default,
+  estym,
+  buckets = 20,
+  span = 0.8,
+  hist_col = "blue",
+  ylab = c("Frequency", "BR"),
+  xlab = "Calibrated score",
+  legx = 0,
+  legy = 0,
+  legcex = 1,
+  leg.label = quote(c("Observations frequency", "Average LGD", "Smoothed average LGD",
+    "Expected LGD")),
+  ylim2 = NULL,
+  ...
+)
 }
 \arguments{
 \item{score}{score.}

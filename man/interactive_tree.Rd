@@ -2,38 +2,45 @@
 % Please edit documentation in R/classing_make_tree.R
 \name{interactive_tree}
 \alias{interactive_tree}
-\title{Interaktywny podział zmiennej ciągłej na buckety}
+\title{Interaktywny podziaĹ‚ zmiennej ciÄ…gĹ‚ej na buckety}
 \usage{
-interactive_tree(score, def, span = 0.8, min_split = 200,
-  min_bucket = 100, buckets = 60, max_gleb = 2)
+interactive_tree(
+  score,
+  def,
+  span = 0.8,
+  min_split = 200,
+  min_bucket = 100,
+  buckets = 60,
+  max_gleb = 2
+)
 }
 \arguments{
 \item{score}{zmienna score'owa.}
 
 \item{def}{zmienna odpowiedzi z zakresu [0,1]. Np. default, LGD.}
 
-\item{span}{Parametr wygładzający funkcji \code{locit}.}
+\item{span}{Parametr wygĹ‚adzajÄ…cy funkcji \code{locit}.}
 
-\item{min_split}{Minimalna wielkość węzła, aby móc dokonać podziału}
+\item{min_split}{Minimalna wielkoĹ›Ä‡ wÄ™zĹ‚a, aby mĂłc dokonaÄ‡ podziaĹ‚u}
 
-\item{min_bucket}{Minimalna wielkość liścia}
+\item{min_bucket}{Minimalna wielkoĹ›Ä‡ liĹ›cia}
 
-\item{buckets}{Chyba nie używane?}
+\item{buckets}{Chyba nie uĹźywane?}
 
-\item{max_gleb}{Maksymalna głębokośc do której budujemy drzewo}
+\item{max_gleb}{Maksymalna gĹ‚Ä™bokoĹ›c do ktĂłrej budujemy drzewo}
 }
 \value{
 \code{data.frame} ze statystykami.
 }
 \description{
-Interaktywny podział zmiennej ciągłej na buckety. Uwaga! W danych
-nie może być wartości NULL. Nieopisane zmienne są to zmienne z
+Interaktywny podziaĹ‚ zmiennej ciÄ…gĹ‚ej na buckety. Uwaga! W danych
+nie moĹźe byÄ‡ wartoĹ›ci NULL. Nieopisane zmienne sÄ… to zmienne z
 wykorzystywanej funkcji \code{\link{drzewo}} oraz \code{\link{reg_nieparam}}.
-Po wykonaniu zmiany wyświetlane są statystyki po bucketach oraz statystyka AR.
+Po wykonaniu zmiany wyĹ›wietlane sÄ… statystyki po bucketach oraz statystyka AR.
 }
 \seealso{
 \code{\link{drzewo}}, \code{\link{AR_quick}},  \code{\link{buckety_stat2}}.
 }
 \author{
-Michał Danaj
+MichaĹ‚ Danaj
 }

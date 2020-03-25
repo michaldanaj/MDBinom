@@ -4,8 +4,15 @@
 \alias{bckt_stat}
 \title{Wylicza statystyki zmiennej \code{y} dla podanych grup \code{x} (dev)}
 \usage{
-bckt_stat(x = NULL, y = NULL, weights = rep(1, length(x)), dt = NULL,
-  avg = NULL, total = TRUE, sort_x = TRUE)
+bckt_stat(
+  x = NULL,
+  y = NULL,
+  weights = rep(1, length(x)),
+  dt = NULL,
+  avg = NULL,
+  total = TRUE,
+  sort_x = TRUE
+)
 }
 \arguments{
 \item{x}{wektor z identyfikatorami bucket?w.Nie mo?e by? brak?w danych.}

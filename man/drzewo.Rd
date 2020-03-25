@@ -4,30 +4,40 @@
 \alias{drzewo}
 \title{Automatyczna dyskretyzacja w oparciu o algorytm drzewa}
 \usage{
-drzewo(score, def, freq = NULL, wytnij = 0, min_split = 30,
-  min_bucket = 10, max_gleb = 4, n_buckets = 20, plot = TRUE,
-  testy = FALSE, ...)
+drzewo(
+  score,
+  def,
+  freq = NULL,
+  wytnij = 0,
+  min_split = 30,
+  min_bucket = 10,
+  max_gleb = 4,
+  n_buckets = 20,
+  plot = TRUE,
+  testy = FALSE,
+  ...
+)
 }
 \arguments{
 \item{score}{Zmienna do dyskretyzacji}
 
 \item{def}{Zmienna celu}
 
-\item{freq}{Liczność. Na razie nie obsługiwane}
+\item{freq}{LicznoĹ›Ä‡. Na razie nie obsĹ‚ugiwane}
 
-\item{wytnij}{Jaką część końcowych wartości usunąć funkcją \code{usun_konce}}
+\item{wytnij}{JakÄ… czÄ™Ĺ›Ä‡ koĹ„cowych wartoĹ›ci usunÄ…Ä‡ funkcjÄ… \code{usun_konce}}
 
-\item{min_split}{Minimalna wielkość węzła, aby móc dokonać podziału}
+\item{min_split}{Minimalna wielkoĹ›Ä‡ wÄ™zĹ‚a, aby mĂłc dokonaÄ‡ podziaĹ‚u}
 
-\item{min_bucket}{Minimalna wielkość liścia}
+\item{min_bucket}{Minimalna wielkoĹ›Ä‡ liĹ›cia}
 
-\item{max_gleb}{Maksymalna głębokośc do której budujemy drzewo}
+\item{max_gleb}{Maksymalna gĹ‚Ä™bokoĹ›c do ktĂłrej budujemy drzewo}
 
-\item{n_buckets}{Chyba nie używane?}
+\item{n_buckets}{Chyba nie uĹźywane?}
 
 \item{plot}{Rysuje wynik dyskretyzacji}
 
-\item{testy}{Czy wyświetlać komentarze do testowania}
+\item{testy}{Czy wyĹ›wietlaÄ‡ komentarze do testowania}
 
 \item{...}{Dodatkowe parametry do rysowania}
 }
@@ -35,8 +45,8 @@ drzewo(score, def, freq = NULL, wytnij = 0, min_split = 30,
 
 }
 \description{
-Dyskretyzuje zmienną \code{score}
+Dyskretyzuje zmiennÄ… \code{score}
 }
 \author{
-Michał Danaj
+MichaĹ‚ Danaj
 }

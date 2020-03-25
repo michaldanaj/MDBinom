@@ -4,8 +4,14 @@
 \alias{buckety_br}
 \title{Dzieli na przedzia?y jedn? z dw?ch metod i wylicza na nich bad rate.}
 \usage{
-buckety_br(x, y, n, method = c("eq_length", "eq_count"),
-  one.value.action = c("none", "combine"), weights = NULL)
+buckety_br(
+  x,
+  y,
+  n,
+  method = c("eq_length", "eq_count"),
+  one.value.action = c("none", "combine"),
+  weights = NULL
+)
 }
 \arguments{
 \item{x}{Zmienna, kt?r? b?dziemy dyskretyzowa?.}

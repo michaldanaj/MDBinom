@@ -6,10 +6,26 @@
  
  Rysuje i zwraca statystyki dla bucketów.}
 \usage{
-rg_nieparam(score, default, buckets = 100, pred = NULL, wytnij = 0,
-  span = 0.7, degree = 2, plot = TRUE, plt_type = "br", new = TRUE,
-  col_points = "black", col_line = "darkblue", col_pred = "green",
-  index = FALSE, glm = FALSE, col_glm = "green", ...)
+rg_nieparam(
+  score,
+  default,
+  buckets = 100,
+  pred = NULL,
+  weights = rep(1, length(score)),
+  wytnij = 0,
+  span = 0.7,
+  degree = 2,
+  plot = TRUE,
+  plt_type = "br",
+  new = TRUE,
+  col_points = "black",
+  col_line = "darkblue",
+  col_pred = "green",
+  index = FALSE,
+  glm = FALSE,
+  col_glm = "green",
+  ...
+)
 }
 \arguments{
 \item{score}{Wektor zmiennych numerycznych.}

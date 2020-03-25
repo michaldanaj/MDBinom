@@ -4,8 +4,14 @@
 \alias{AR_boot}
 \title{Wylicza rozkład AR(GINI) metodą bootstrap}
 \usage{
-AR_boot(score, def, n_boot, obs = rep(1, length(score)), n_once = 5e+07,
-  seed = NULL)
+AR_boot(
+  score,
+  def,
+  n_boot,
+  obs = rep(1, length(score)),
+  n_once = 5e+07,
+  seed = NULL
+)
 }
 \arguments{
 \item{score}{wektor z wartościami score.}
@@ -45,14 +51,14 @@ występuje mała liczba unikalnych wartości \code{score}, w stosunku do liczby 
 Dane wejściowe mogą być już w jakiś sposób zagregowane (np.do poziomu score), lub nie.
 }
 \examples{
-## dane do przykładu
-n<-100000; #liczba obserwacji w próbie
-nb<-100; #liczba prób bootstrap
+## dane do przykĹ‚adu
+n<-100000; #liczba obserwacji w prĂłbie
+nb<-100; #liczba prĂłb bootstrap
 score<-rnorm(n); #generowanie score
-def<-as.numeric(score+rnorm(n)<0) #generowanie defaultów
-score<-floor(200*score) #dyskretyzacja wartości score
+def<-as.numeric(score+rnorm(n)<0) #generowanie defaultĂłw
+score<-floor(200*score) #dyskretyzacja wartoĹ›ci score
 
-#liczba unikalnych wartości score
+#liczba unikalnych wartoĹ›ci score
 length(unique(score))
 #[1] 1362
 
@@ -61,7 +67,7 @@ system.time(AR_boot(score, def, nb))
 #user  system elapsed 
 # .41    0.00    1.53 
 
-#porównanie z czasem wykonania w przypadku pętli i stadradowej funkcji 
+#porĂłwnanie z czasem wykonania w przypadku pÄ™tli i stadradowej funkcji 
 #do wyliczania GINI
 system.time(
 sapply(1:nb, function(i){

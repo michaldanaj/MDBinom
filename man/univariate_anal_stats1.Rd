@@ -4,13 +4,23 @@
 \alias{univariate_anal_stats1}
 \title{Dyskretyzuje zmienną i wylicza na niej statystyki}
 \usage{
-univariate_anal_stats1(x, y, locfit = FALSE,
+univariate_anal_stats1(
+  x,
+  y,
+  locfit = FALSE,
   discrete_threshold = numeric_var_treatment.params$discrete_threshold,
   NA_substit = numeric_var_treatment.params$NA_substit,
   special_val = numeric_var_treatment.params$special_val,
   no_stats_threshold = numeric_var_treatment.params$no_stats_threshold,
-  max_gleb = 3, min_bucket = 200, interactive = FALSE, breaks = NULL,
-  mapping = NULL, forceContinous = FALSE, span = 0.9, ...)
+  max_gleb = 3,
+  min_bucket = 200,
+  interactive = FALSE,
+  breaks = NULL,
+  mapping = NULL,
+  forceContinous = FALSE,
+  span = 0.9,
+  ...
+)
 }
 \arguments{
 \item{x}{zmienna, po której procedura będzie sortować.}

@@ -33,7 +33,7 @@ przypisuje wartość z \code{bucket_fitted}. Ewentualnie wykonuje interpolację.
 \details{
 Jeśli \code{interpor=TRUE}, wykonuje interpolację, której węzłami są 
 środki przedziałów, pomiędzy którymi leży \code{x}, a wartościami
-\code{bucket$fitted} odpowiadające tym środkom.
+\code{bucket$fitted} odpowiadające tym środkom.  
 
 Aby zapobiec skutkom błedów numerycznych, domyślnie wartości \code{x}, jak i \code{bucket$srodek},
 \code{bucket$od}, \code{bucket$do} zaokrąglone są do 15-tej cyfry znaczącej.

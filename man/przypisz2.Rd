@@ -4,8 +4,15 @@
 \alias{przypisz2}
 \title{Przypisuje dyskretyzację}
 \usage{
-przypisz2(x, bucket, interpol = FALSE, fitted = NULL,
-  NA_substit = -2147483647, round = TRUE, digits = 15)
+przypisz2(
+  x,
+  bucket,
+  interpol = FALSE,
+  fitted = NULL,
+  NA_substit = -2147483647,
+  round = TRUE,
+  digits = 15
+)
 }
 \arguments{
 \item{x}{Wektor zmiennych numerycznych.}

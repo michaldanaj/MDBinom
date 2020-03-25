@@ -4,9 +4,16 @@
 \alias{univariate_loop}
 \title{Grupuje zmienne i generuje dla nich listę statystyk}
 \usage{
-univariate_loop(x_df, y, vsub_bool = rep(TRUE, ncol(x_df)),
-  vsub_list = NULL, vsub_rola = NULL, proby = rep(TRUE, length(y)),
-  czas = rep(1, length(y)), ...)
+univariate_loop(
+  x_df,
+  y,
+  vsub_bool = rep(TRUE, ncol(x_df)),
+  vsub_list = NULL,
+  vsub_rola = NULL,
+  proby = rep(TRUE, length(y)),
+  czas = rep(1, length(y)),
+  ...
+)
 }
 \arguments{
 \item{x_df}{\code{data.frame} ze zmiennymi do anliz.}

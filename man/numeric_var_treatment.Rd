@@ -2,48 +2,55 @@
 % Please edit documentation in R/classing_make_tree.R
 \name{numeric_var_treatment}
 \alias{numeric_var_treatment}
-\title{Dyskretyzuje zmienną ciagłą drzewkiem w oparciu o zmienną odpowiedzi}
+\title{Dyskretyzuje zmiennÄ… ciagĹ‚Ä… drzewkiem w oparciu o zmiennÄ… odpowiedzi}
 \usage{
-numeric_var_treatment(x, y,
+numeric_var_treatment(
+  x,
+  y,
   special_val = numeric_var_treatment.params$special_val,
   NA_substit = numeric_var_treatment.params$NA_substit,
   min_bucket = numeric_var_treatment.params$min_bucket,
-  max_gleb = numeric_var_treatment.params$max_gleb, interactive = FALSE,
-  locfit = FALSE, breaks = NULL, span = 0.9, ...)
+  max_gleb = numeric_var_treatment.params$max_gleb,
+  interactive = FALSE,
+  locfit = FALSE,
+  breaks = NULL,
+  span = 0.9,
+  ...
+)
 }
 \arguments{
-\item{x}{zmienna ciągła.}
+\item{x}{zmienna ciÄ…gĹ‚a.}
 
 \item{y}{zmienna celu (PD, LGD).}
 
-\item{special_val}{wartości specjalne, które powinny zostać uwzględnione jako
-osobne klasy. Wartość taką jest również \code{NA}, automatycznie
-uwzględniana jako osobna klasa.}
+\item{special_val}{wartoĹ›ci specjalne, ktĂłre powinny zostaÄ‡ uwzglÄ™dnione jako
+osobne klasy. WartoĹ›Ä‡ takÄ… jest rĂłwnieĹź \code{NA}, automatycznie
+uwzglÄ™dniana jako osobna klasa.}
 
-\item{NA_substit}{wartość specjalna wstawiona za brak danych.}
+\item{NA_substit}{wartoĹ›Ä‡ specjalna wstawiona za brak danych.}
 
-\item{min_bucket}{Minimalna wielkość liścia}
+\item{min_bucket}{Minimalna wielkoĹ›Ä‡ liĹ›cia}
 
-\item{max_gleb}{Maksymalna głębokośc do której budujemy drzewo}
+\item{max_gleb}{Maksymalna gĹ‚Ä™bokoĹ›c do ktĂłrej budujemy drzewo}
 
-\item{interactive}{TRUE, jeśli zmienna ma być dyskretyzowana interaktywnie. W
-przeciwnym razie, co jest wartością domyślną, dyskretyzacja
+\item{interactive}{TRUE, jeĹ›li zmienna ma byÄ‡ dyskretyzowana interaktywnie. W
+przeciwnym razie, co jest wartoĹ›ciÄ… domyĹ›lnÄ…, dyskretyzacja
 jest automatyczna.}
 
-\item{locfit}{Czy z automatu dopasować funkcję z modelu \code{locfit}.}
+\item{locfit}{Czy z automatu dopasowaÄ‡ funkcjÄ™ z modelu \code{locfit}.}
 
-\item{breaks}{Zamiast automatycznego dzielenia, można podać wartości przedziałów (from,to].}
+\item{breaks}{Zamiast automatycznego dzielenia, moĹźna podaÄ‡ wartoĹ›ci przedziaĹ‚Ăłw (from,to].}
 
-\item{span}{Parametr wygładzający funkcji \code{locit}.}
+\item{span}{Parametr wygĹ‚adzajÄ…cy funkcji \code{locit}.}
 
 \item{...}{inne parametry do funkcji \code{\link{drzewo}}.}
 }
 \description{
-W parametrze \code{x} ani \code{y} nie może być NULLi. Można je jakoś zakodować.
+W parametrze \code{x} ani \code{y} nie moĹźe byÄ‡ NULLi. MoĹźna je jakoĹ› zakodowaÄ‡.
 }
 \seealso{
 \code{drzewo}
 }
 \author{
-Michał Danaj
+MichaĹ‚ Danaj
 }

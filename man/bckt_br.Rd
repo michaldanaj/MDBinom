@@ -4,9 +4,18 @@
 \alias{bckt_br}
 \title{Dzieli na przedziały jedną z dwóch metod i wylicza na nich bad rate (dev).}
 \usage{
-bckt_br(x, y, n, weights = rep(1, length(x)), method = c("eq_length",
-  "eq_count"), one.value.action = c("none", "combine"), avg = NULL,
-  total = TRUE, sort_x = TRUE)
+bckt_br(
+  x,
+  y,
+  n,
+  weights = rep(1, length(x)),
+  method = c("eq_length", "eq_count"),
+  one.value.action = c("none", "combine"),
+  avg = NULL,
+  total = TRUE,
+  sort_x = TRUE,
+  digits = 13
+)
 }
 \arguments{
 \item{x}{Zmienna, którą będzie dyskretyzowana.}
@@ -27,6 +36,8 @@ zostaną wyliczone średnie.}
 \item{total}{czy dołączyć wiersz z podsumowaniem.}
 
 \item{sort_x}{jeśli \code{TRUE}, wynikowa tabela zostanie posortowana po wartościach}
+
+\item{digits}{liczba miejsc po przecinku do których zostanie zaokrąglona wartość \code{x}.}
 }
 \value{
 Zwraca \code{data.frame}, w którym dla \code{i}-tego wiersza podane są statystyki
@@ -35,6 +46,8 @@ dla \code{i}-tego przedziału.
 \description{
 Wersja w developmencie.
 Może poza tym, że jeśli nie ma obserwacji w jakimś bukcecie, to go usuwa.
+Aby ustrzec się przed problemami numerycznymi, wartości \code{x} zaokrąglane są do \code{digits}
+miejsc po przecinku.
 }
 \author{
 Michał Danaj

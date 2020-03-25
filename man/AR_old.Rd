@@ -4,8 +4,16 @@
 \alias{AR_old}
 \title{Liczy Accuracy Ratio (GINI)}
 \usage{
-AR_old(score, def, plot = FALSE, return.table = FALSE, sort.order = NULL,
-  label = "", lgd_adjusted = FALSE, ...)
+AR_old(
+  score,
+  def,
+  plot = FALSE,
+  return.table = FALSE,
+  sort.order = NULL,
+  label = "",
+  lgd_adjusted = FALSE,
+  ...
+)
 }
 \arguments{
 \item{score}{wektor    wartości, według który należy posortować wartości \code{def}}

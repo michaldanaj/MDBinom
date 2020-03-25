@@ -4,8 +4,12 @@
 \alias{univariate_anal_stats4}
 \title{Nie wiem co to robi}
 \usage{
-univariate_anal_stats4(dane, mapowanie, czas = lastDay(dane$reportingdate,
-  unit = "quater"), ...)
+univariate_anal_stats4(
+  dane,
+  mapowanie,
+  czas = lastDay(dane$reportingdate, unit = "quater"),
+  ...
+)
 }
 \arguments{
 \item{dane}{dane}

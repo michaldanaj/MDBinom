@@ -2,12 +2,12 @@
 % Please edit documentation in R/classing_make_tree.R
 \name{drzewo_plot}
 \alias{drzewo_plot}
-\title{Rysuje dyskretyzację w oparciu o drzewko}
+\title{Rysuje dyskretyzacjÄ™ w oparciu o drzewko}
 \usage{
 drzewo_plot(liscie_drzewa, ...)
 }
 \arguments{
-\item{liscie_drzewa}{Cholera wie, co jest i jak mam to tu przekazać.}
+\item{liscie_drzewa}{Cholera wie, co jest i jak mam to tu przekazaÄ‡.}
 
 \item{...}{Dodatkowe parametry graficzne.}
 }
@@ -15,8 +15,8 @@ drzewo_plot(liscie_drzewa, ...)
 
 }
 \description{
-Rysuje dyskretyzację w oparciu o drzewko
+Rysuje dyskretyzacjÄ™ w oparciu o drzewko
 }
 \author{
-Michał Danaj
+MichaĹ‚ Danaj
 }

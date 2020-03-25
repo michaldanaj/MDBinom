@@ -4,11 +4,20 @@
 \alias{univariate_anal_stats}
 \title{Dyskretyzuje zmienną i wylicza dla niej statystyki.}
 \usage{
-univariate_anal_stats(x, y, czas, proby = rep(TRUE, length(y)),
-  interactive = FALSE, min_bucket = floor(0.05 * length(x)),
-  breaks = NULL, mapping = NULL, forceContinous = FALSE,
+univariate_anal_stats(
+  x,
+  y,
+  czas,
+  proby = rep(TRUE, length(y)),
+  interactive = FALSE,
+  min_bucket = floor(0.05 * length(x)),
+  breaks = NULL,
+  mapping = NULL,
+  forceContinous = FALSE,
   special_val = numeric_var_treatment.params$special_val,
-  NA_subst = numeric_var_treatment.params$NA_substit, span = 0.9)
+  NA_subst = numeric_var_treatment.params$NA_substit,
+  span = 0.9
+)
 }
 \arguments{
 \item{x}{zmienna, po której procedura będzie sortować.}

@@ -4,8 +4,16 @@
 \alias{bckt_stat2}
 \title{Wylicza statystyki dla podanych przedzia??w (dev)}
 \usage{
-bckt_stat2(breaks, x = NULL, y = NULL, weights = rep(1, length(x)),
-  dt = NULL, avg = NULL, total = TRUE, sort_x = TRUE)
+bckt_stat2(
+  breaks,
+  x = NULL,
+  y = NULL,
+  weights = rep(1, length(x)),
+  dt = NULL,
+  avg = NULL,
+  total = TRUE,
+  sort_x = TRUE
+)
 }
 \arguments{
 \item{breaks}{punkty podzia?u}

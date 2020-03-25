@@ -4,9 +4,17 @@
 \alias{informacje}
 \title{Rysuje informacje o danych}
 \usage{
-informacje(score, default, buckets = 20, span = 0.8, main = "",
-  hist_col = "blue", ylab = c("Frequency", "BR"),
-  xlab = "Calibrated score", ...)
+informacje(
+  score,
+  default,
+  buckets = 20,
+  span = 0.8,
+  main = "",
+  hist_col = "blue",
+  ylab = c("Frequency", "BR"),
+  xlab = "Calibrated score",
+  ...
+)
 }
 \arguments{
 \item{score}{Wektor ze zmienną numeryczną.}
