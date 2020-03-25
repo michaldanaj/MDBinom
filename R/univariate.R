@@ -382,6 +382,7 @@ univariate_anal_stats4<-function(dane, mapowanie, czas=lastDay(dane$reportingdat
 #' 	ustawiona jest na \code{'explanatory'}. 
 #' @param proby \code{data.frame} z wektorami logicznymi, określającymi podpróby na których należy przeanalizować podpróby.
 #' @param czas \code{vector} ze zmienną czasową, po której zostaną podzielone analizy.
+#' @param min_bucket minimalna liczba obserwacji w buckecie, przy dzieleniu drzewem.
 #' @param ... dodatkowe parametry do funkcji \code{\link{univariate_anal_stats}}. 
 #' @return lista ze statstykami dla każdej ze zmiennych określonych przez któryś z wektorów vsub\*. Nazwy elementów listy
 #' 	są nazwami zmiennych.
@@ -396,6 +397,7 @@ univariate_loop<-function(x_df
 		, vsub_rola = NULL
 		, proby = rep(TRUE, length(y))
 		, czas = rep(1, length(y))
+		, min_bucket=floor(0.05*length(y))
 		, ...){
 	
 	zmienne_names <- names(x_df)
@@ -428,6 +430,7 @@ univariate_loop<-function(x_df
 		wyniki[[zmienna]]<-univariate_anal_stats(x, y,
 				proby=proby,
 				czas=czas,
+				min_bucket=min_bucket,
 				...
 		)
 		
