@@ -31,7 +31,7 @@ test_that("bckt_stat czy Total jest ostatnim wierszem", {
   expect_equal(bckt$label[2], 'TOTAL')
 })
 
-bckt <- bckt_stat2(c(0,1),x,y,1)
+bckt <- bckt_stat2(breaks = c(0,1), x = x, y = y, weights = 1)
 test_that("bckt_stat2 czy Total jest ostatnim wierszem", {
   expect_equal(bckt$label[nrow(bckt)], 'TOTAL')
 })
@@ -42,22 +42,19 @@ test_that("bckt_stat test typu kolumny discrete", {
 })
 
 
-
-
 #bckt_br z powyższym
 
 set.seed(1)
 
 x <- c(rep(1,100),1:100)
 y <- rbinom(200, 1, 0.1)
-weights <- abs(rnorm(200))
+w <- abs(rnorm(200))
 breaks=c(1,50,100)
 
-bckt <- bckt_stat2(breaks,x, y,w)
+bckt <- bckt_stat2(breaks,x, y, weights = w)
 test_that("bckt_stat2 czy Total jest ostatnim wierszem", {
   expect_equal(bckt$label[nrow(bckt)], 'TOTAL')
 })
-
 
 bckt <- bckt_br(x,y,4,w)
 test_that("bckt_br czy Total jest ostatnim wierszem", {

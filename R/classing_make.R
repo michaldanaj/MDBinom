@@ -261,10 +261,15 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   if (any(is.na(dt$x)) || any(is.na(dt$y)))
     stop("W argumentach funkcji pojawi?y si? braki danych.")
   
+  #sprawdzam, czy są ujemne wartości wag
+  if (any(dt$weights<0))
+    warning("UWAGA! Ujemne wartości wag w funkcji bckt_stat.")
+  
   #usuwam factora
   if (is.factor(dt$x)){
     dt$x <- factor(dt$x)
   }
+  
   
   #jeśli zostały podane kolumny 'avg', liczymy od razu dla nich średnie
   if(!is.null(avg)){
@@ -301,7 +306,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
     ,n_obs
     ,pct_obs = n_obs/totals$obs_all
     ,br = n_bad/n_obs
-    ,logit = log(n_bad/n_obs)
+    ,logit = fifelse(n_obs==0 | n_bad==0, NaN, log(n_bad/n_obs))
     ,woe = log(n_bad/n_good)
     )]
   
@@ -312,8 +317,10 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
     setorder(dt_wyn, discret)
   }
   
+  
   #wyliczam wiersz z Totalem
   if (total) {
+    
     
     #Dla dodatkowych kolumn
     if (!is.null(avg)){
@@ -344,7 +351,7 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
       ,n_obs
       ,pct_obs = n_obs/totals$obs_all
       ,br = n_bad/n_obs
-      ,logit = log(n_bad/n_obs)
+      ,logit = fifelse(n_obs==0 | n_bad==0, NaN, log(n_bad/n_obs))
       ,woe = log(n_bad/n_good)
     )]
     
@@ -460,7 +467,7 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   if (!is.null(x))
     dt <- data.table(x, y, weights)
   
-  #Sprawdzam braki danyh
+  #Sprawdzam braki danych
   if (any(is.na(breaks)) || any(is.na(dt$x)) || any(is.na(dt$y)))
     stop("W argumentach funkcji pojawi?y si? braki danych.");
   
