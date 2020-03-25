@@ -961,8 +961,8 @@ usun_konce<-function (score, prob = 0.01, weights=NULL)
 
 #' Sprawdzenie, czy estymacja modelu dobrze tłumaczy zależność targetu od zmiennej
 #' 
-#' @param x wektror z wartościami zmiennej
-#' @param y wektor z predykcją modelu 
+#' @param x wektor z wartościami zmiennej
+#' @param y_pred wektor z predykcją modelu 
 #' @param bucket grupowanie zmiennej
 #' @param subset podzbiór 
 #' @param ... dodatkowe parametry graficzne 
@@ -970,22 +970,26 @@ usun_konce<-function (score, prob = 0.01, weights=NULL)
 #' 
 #' @author Michał Danaj
 #' @export
-dopasowanie_do_zmiennej<-function(x, y, bucket, subset=NULL,...){
+dopasowanie_do_zmiennej<-function(x, y_pred, bucket, subset=NULL,...){
+  
 	if (!is.null(subset)){
 		x<-x[subset]
-		y<-y[subset]
+		y_pred<-y_pred[subset]
 	}
-	if (any(is.na(y))){
-		ile_na<-sum(is.na(y))
+  
+	if (any(is.na(y_pred))){
+		ile_na<-sum(is.na(y_pred))
 		warning(sprintf("W 'y' bylo %s brakow danych. Zostaly usuniete.", ile_na))
-		x<-x[!is.na(y)]
-		y<-y[!is.na(y)]
+		x<-x[!is.na(y_pred)]
+		y_pred<-y_pred[!is.na(y_pred)]
 	}
+  
 	bucket_new<-bucket
 	bucket$fitted<-rownames(bucket)
 	pred<-przypisz2(x, bucket)
-	y_bucket<-tapply(y, pred, mean)
+	y_bucket <- tapply(y_pred, pred, mean)
 	bucket_new$model<-y_bucket[rownames(bucket_new)]
+	bucket_new$model[nrow(bucket_new)] <- mean(y_pred)
 	plot(bucket_new$nr[-nrow(bucket_new)], bucket_new$br[-nrow(bucket_new)],...)
 	points(bucket_new$nr, bucket_new$model, col="blue", pch=4)
 	bucket_new
