@@ -4,12 +4,12 @@
 \alias{dopasowanie_do_zmiennej}
 \title{Sprawdzenie, czy estymacja modelu dobrze tłumaczy zależność targetu od zmiennej}
 \usage{
-dopasowanie_do_zmiennej(x, y, bucket, subset = NULL, ...)
+dopasowanie_do_zmiennej(x, y_pred, bucket, subset = NULL, ...)
 }
 \arguments{
-\item{x}{wektror z wartościami zmiennej}
+\item{x}{wektor z wartościami zmiennej}
 
-\item{y}{wektor z predykcją modelu}
+\item{y_pred}{wektor z predykcją modelu}
 
 \item{bucket}{grupowanie zmiennej}
 

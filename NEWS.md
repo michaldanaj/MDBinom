@@ -1,3 +1,7 @@
+# v.5.1.9 2020-03-26
+
+Potencjalnie sporo zmian.
+
 # v.5.1.8 2018-04-02
 
 Zmiana kodowania polskich znaków na UTF-8. Zmiana kodowania projektu. Przegenerowanie dokumentacji.
