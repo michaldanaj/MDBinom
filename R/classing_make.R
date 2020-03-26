@@ -500,6 +500,12 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   nawiasy_koniec<-c(rep(")", length(breaks)-2),"]")
   labels<-paste("[",bck_od,", ",bck_do, nawiasy_koniec,sep="")
   
+  #niektóre buckety mogły być puste i zostały usunięte w bckt_stat. 
+  #Muszę je usunąć z wektorów dołączanych do tabeli wynikowej
+  labels <- labels[buckety_wyn$nr]
+  bck_od=bck_od[buckety_wyn$nr]
+  bck_do=bck_do[buckety_wyn$nr]
+
   #Poprzednia funkcja nie wiedziała, że mamy przedziały i jak wypełnić tymi przedziałami warości
   #Robię to tutaj
   if (total)
