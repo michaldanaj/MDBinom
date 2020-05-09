@@ -813,6 +813,8 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	bucket2
 }
 
+#TODO w przypadku plt_Type innego niż 'br', regresja logistyczna chyba
+# źle się narysuje
 #'  Rysuje lokalnie wygładzoną funckję (dev)
 #'  
 #'  Rysuje i zwraca statystyki dla bucketów.  
@@ -848,6 +850,7 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,l
                         col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
 {
   
+  print("reg nieparam! v2")
   if (!is.null(pred))
     dane <- data.frame(score, default, pred, weights)
   else
@@ -866,28 +869,28 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,l
     bucket <- bckt_br(dane$score, dane$default, buckets, weights=dane$weights,
                       method = "eq_count", total=FALSE)
   
-  
-  
   if (length(unique(default)) == 2)
     l <- locfit::locfit(default ~ locfit::lp(score, nn = span), family = "binomial",
-                        link = "logit", data = dane)
-  else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane)
-  b2 <- predict(l, newdata = bucket$srodek)
+                        link = "logit", data = dane, weights = dane$weights)
+  else l <- locfit::locfit(default ~ locfit::lp(score, nn = span), data = dane,
+                           weights = dane$weights)
+  
+  x <- bucket$median
+  if (index)
+    x <- bucket$nr
+  
+  b2 <- predict(l, newdata = bucket$median)
   
   if (plt_type == "br")
     bucket2 <- cbind(bucket, fitted = b2)
   else bucket2 <- cbind(bucket, fitted = log(b2/(1 - b2)))
   
   skala <- sqrt(bucket$n_obs/(length(score)/buckets))
-  x <- bucket2$srodek
-  
-  if (index)
-    x <- bucket$nr
   
   #model logistyczny
   if (glm){
-    model<-glm(default~score, family=binomial)
-    pred_glm<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
+    model<-glm(default~score, family=binomial, weights = dane$weights)
+    pred_glm<-predict(model, type='response', newdata=data.frame(score=bucket2$median))
   }
   
   if (plot) {
