@@ -1,3 +1,7 @@
+# v.5.1.10 2020-03-26
+* Poprawki w funkcji rg_nieparam. Uwzględnienie wag, rysowanie punktóW w medianie
+  wartości x w buckecie
+
 # v.5.1.9 2020-03-26
 
 Potencjalnie sporo zmian.
