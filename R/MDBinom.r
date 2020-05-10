@@ -850,7 +850,6 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,l
                         col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
 {
   
-  print("reg nieparam! v2")
   if (!is.null(pred))
     dane <- data.frame(score, default, pred, weights)
   else
