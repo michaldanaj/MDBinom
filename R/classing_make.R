@@ -488,12 +488,12 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   dt[,':='(x_orig=x, x=przedzial_nr)]
   
   #Wylicza staystyki na bucketach
-  buckety_wyn<-bckt_stat(dt=dt, avg=avg, total = total, sort_x=sort_x);
+  buckety_wyn <- bckt_stat(dt=dt, avg=avg, total = total, sort_x=sort_x);
   
   #doliczam medianę i średnią zmiennej
-  temp<-dt[,.(median=median(x_orig), mean=mean(x_orig)), przedzial_nr]
+  temp <- dt[,.(median=median(x_orig), mean=mean(x_orig)), przedzial_nr]
   if (total)
-    temp_tot<-dt[,.(median=median(x_orig), mean=mean(x_orig))]
+    temp_tot <- dt[,.(median=median(x_orig), mean=mean(x_orig))]
   setorder(temp, przedzial_nr)
 
   #doliczam labele
@@ -502,18 +502,21 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   
   #niektóre buckety mogły być puste i zostały usunięte w bckt_stat. 
   #Muszę je usunąć z wektorów dołączanych do tabeli wynikowej
-  labels <- labels[buckety_wyn$nr]
-  bck_od=bck_od[buckety_wyn$nr]
-  bck_do=bck_do[buckety_wyn$nr]
+  labels <- labels[buckety_wyn$discret]
+  if (total)
+    labels[length(labels)] <- 'TOTAL'
+  rownames(buckety_wyn) <- labels
+  bck_od=bck_od[buckety_wyn$discret]
+  bck_do=bck_do[buckety_wyn$discret]
 
   #Poprzednia funkcja nie wiedziała, że mamy przedziały i jak wypełnić tymi przedziałami warości
   #Robię to tutaj
   if (total)
     buckety_wyn[,':='(
-      label=c(labels,'TOTAL'),
-      od=c(bck_od,NA),
-      srodek=c((bck_od+bck_do)/2, NA),
-      do=c(bck_do,NA),
+      label=labels,
+      od=bck_od,
+      srodek=(bck_od+bck_do)/2,
+      do=bck_do,
       discret=NA,
       mean=c(temp$mean, temp_tot$mean),
       median=c(temp$median, temp_tot$median)

@@ -65,4 +65,16 @@ test_that("bckt_br czy poprawnie liczona średnia br na Totalu", {
   expect_equal(bckt$br[nrow(bckt)], sum(y*w)/sum(w))
 })
 
+breaks=c(1,1.1,1.2, 1.3,50,100)
+bckt <- bckt_stat2(breaks,x, y)
+bucket <- buckety_stat2(breaks,x, y)
+bckt_bez_total <- bckt_stat2(breaks,x, y, total=FALSE)
+test_that("bckt_stat2 czy puste zakresy przedziałów nie wywalą błędu", {
+  expect_equal(nrow(bckt), 4)
+  expect_equal(nrow(bckt_bez_total), 3)
+  expect_equal(bckt$br[-nrow(bckt)], bucket$br)
+  expect_equivalent(as.data.frame(bckt_bez_total[,c('br','label')]), bucket[,c('br','label')])
+})
+
+
 

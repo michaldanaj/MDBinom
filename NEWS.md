@@ -1,3 +1,6 @@
+# v.5.1.11 2020-05-18
+Poprawka bckt_stat2 w przypadku, gdy zakresy przedziałów nie zawierały żadnej obserwacji.
+
 # v.5.1.10 2020-03-26
 * Poprawki w funkcji rg_nieparam. Uwzględnienie wag, rysowanie punktóW w medianie
   wartości x w buckecie
