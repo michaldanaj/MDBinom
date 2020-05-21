@@ -761,8 +761,8 @@ plot_AR<-function(ar, plot_type=c("ROC", "CAP"), adjusted_AR=FALSE,...)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
 
 reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
-		degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
-		col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="green", ...)
+	        degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
+	        col_line = "darkblue", index = FALSE, glm=FALSE, col_glm="green", ...)
 {
 	
 	dane <- data.frame(score, default)
@@ -795,6 +795,9 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 	if (glm){
 		model<-glm(default~score, family=binomial)
 		pred<-predict(model, type='response', newdata=data.frame(score=bucket2$srodek))
+		
+		if (plt_type != "br")
+		  pred <- log(pred/(1-pred_glm))
 	}
 	
 	if (plot) {
@@ -846,8 +849,8 @@ reg_nieparam<-function (score, default, buckets = 100, wytnij = 0, span = 0.7,
 #'		reg_nieparam(x1,y, buckets=20)
 #'		reg_nieparam(x2,y, buckets=20, new=FALSE, col_line="green",col_points="green")
 rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,length(score)), wytnij = 0, span = 0.7,
-                        degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
-                        col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
+                       degree = 2, plot = TRUE, plt_type = "br", new = TRUE, col_points = "black",
+                       col_line = "darkblue", col_pred='green', index = FALSE, glm=FALSE, col_glm="green", ...)
 {
   
   if (!is.null(pred))
@@ -889,7 +892,10 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,l
   #model logistyczny
   if (glm){
     model<-glm(default~score, family=binomial, weights = dane$weights)
-    pred_glm<-predict(model, type='response', newdata=data.frame(score=bucket2$median))
+    pred_glm<-predict(model, type='response', weights = dane$weights, 
+                      newdata=data.frame(score=bucket2$median))
+    if (plt_type != "br")
+      pred_glm <- log(pred_glm/(1-pred_glm))
   }
   
   if (plot) {
