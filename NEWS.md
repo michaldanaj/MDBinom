@@ -1,3 +1,6 @@
+# 5.1.12 2020-05-21
+Poprawki rysowania w funkcjach rg_nieparam i reg_nieparam
+
 # v.5.1.11 2020-05-18
 Poprawka bckt_stat2 w przypadku, gdy zakresy przedziałów nie zawierały żadnej obserwacji.
 
