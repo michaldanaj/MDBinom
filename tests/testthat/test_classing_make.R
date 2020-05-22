@@ -77,4 +77,64 @@ test_that("bckt_stat2 czy puste zakresy przedziałów nie wywalą błędu", {
 })
 
 
+### Testy avg
+
+
+
+n <- 10000
+#x <- rnorm(n)
+x <- 6*(1:n/n-0.5)
+x <- sample(x,n)
+x_range <- round(x)
+y_exp <- 1/(1+exp(-x))
+y <- rbinom(length(x), 1, prob = y_exp)
+#rg_nieparam(x,y)
+weights <- rep(1, n)
+weights[y==0] <- 4
+  
+#TODO : dokończyć pisać testy
+
+# 1. bckt_stat nie sortuje poprawnie wartości wymienionych w avg
+model <- glm(y~ x, family='binomial')
+pred <- predict(model, type='response')
+bckt <- bckt_stat(x=x_range,y=y, avg=pred)
+bckt[,c('pred','br')]
+
+# 2. bckt_stat nie uwzględnia wag gdy są dodatkowe kolumny avg
+model <- glm(y~ x, family='binomial', weights = weights)
+pred <- predict(model, type='response')
+bckt <- bckt_stat(x=x_range,y=y, avg=pred, weights=weights)
+#bckt[,c('discret', 'pred','br', 'n_obs', 'n_bad')]
+
+zostaw <- x_range == -3
+avg_y <- sum(y[zostaw]*weights[zostaw])/sum(weights[zostaw])
+avg_pre <- sum(pred[zostaw]*weights[zostaw])/sum(weights[zostaw])
+
+test_that("bckt_stat czy poprawnie liczy z wagami dla kolumn avg", {
+  expect_equal(bckt$br[1], avg_y)
+  expect_equal(bckt$pred[1], avg_pre)
+})
+
+
+# n. dwie kolumny w avg
+
+bckt <- bckt_stat(x=x_range,y=y, avg=data.frame(avg1=pred, avg2=y), weights=weights)
+
+test_that("bckt_stat czy poprawnie liczy gdy w avg jest data.frame z dwoma kolumnami", {
+  expect_equal(bckt$avg2, bckt$br)
+  expect_equal(length(bckt$avg1), 8)
+})
+
+
+#TODO: wprowadzić popwarność liczenia rg_nieparam z pred na jakimś deterministycznym
+#przykładzie
+#model <- glm(y~ x, family='binomial', weights = weights)
+#pred <- predict(model, type='response')
+#rg_nieparam(score=x, default = y, weights = weights, pred=pred, buckets=10)
+# 3. bckt_stat z dodatkowymi dwoma kolumnami w avg
+
+
+
+
+
 

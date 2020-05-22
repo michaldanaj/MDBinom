@@ -156,7 +156,8 @@ bckt_br<-function(x, y, n, weights=rep(1,length(x)),
     #w przypadku, gdy jedna warto?? jest dla wielu kwantyli, zdarzaj? si? problemy numeryczne
     #?e warto?? teoretycznie jest taka sama, ale r??ni si? na 15-tym miejscu po przecinku.
     #tak na szybko, brute force obej?cie: sortuj?
-    granice<-sort(as.vector(unique(Hmisc::wtd.quantile(x, prob=0:n/n, type='quantile', weights=weights))));
+    granice<-sort(as.vector(unique(Hmisc::wtd.quantile(x, prob=0:n/n, 
+                                                       type='quantile', weights=weights))));
   }
   
   dt<-data.table(x,y,weights)
@@ -270,16 +271,48 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
     dt$x <- factor(dt$x)
   }
   
-  
+  # jeśli podane 'avg' i to wektor to go przekształcam
+  if(!is.null(avg) && is.vector(avg)){
+    par_name <- deparse(substitute(avg))
+    avg <- data.table(avg)
+    setnames(avg, par_name)
+    #TODO: przypisać nazwę z wywołania
+    #parse, substitue
+  }
+    
   #jeśli zostały podane kolumny 'avg', liczymy od razu dla nich średnie
   if(!is.null(avg)){
-    dt_avg <- data.table(x=dt$x, avg)
-    #TODO ten lapply strasznie wolno działa. Popatrze, czy nie da się czegoś
-    #z tym zrobi?
-    dt_avg <- dt_avg[,lapply(.SD, mean), x][,-1]
+    
+    dt_avg <- data.table(dt[,.(x, weights)], avg)
+
+    #TODO: jest to zrobione na piechotę, żeby było. Do poprawki!
+    dt_avg_aggr <- NULL
+    dt_avg_total <- NULL
+    for (avg_name in names(avg)) {
+        temp_names <- c("x", "weights", avg_name)
+        dt_temp <- dt_avg[, ..temp_names ]
+        setnames(dt_temp, c("x", "weights", "y"))
+        dt_temp_aggr <- dt_temp[,.(sum(y*weights)/sum(weights)),x]
+        
+        if (total){
+          aggr <- dt_temp[,.(sum(y*weights)/sum(weights))]
+          setnames(aggr, avg_name)
+          if (is.null(dt_avg_total))
+            dt_avg_total <- aggr 
+          else                             
+            dt_avg_total <- cbind(dt_avg_total, aggr)
+        }
+        
+        setnames(dt_temp_aggr, c("discret", avg_name))
+        
+        if (is.null(dt_avg_aggr))
+          dt_avg_aggr <- dt_temp_aggr
+        else
+          dt_avg_aggr <- cbind(dt_avg_aggr, dt_temp_aggr[,..avg_name])
+    }
   }
   
-  #podsawowe statysyki dla wartości x
+  #podsawowe statysyki dla wartości y pogrupowane po x
   dt_wyn <- dt[, .(
     n_good = sum(weights) - sum(y*weights)
     ,n_bad = sum(y*weights)
@@ -315,17 +348,25 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   #sortowanie jeśli miało być
   if (sort_x==TRUE){
     setorder(dt_wyn, discret)
+    
+    if(!is.null(avg))
+      setorder(dt_avg_aggr, discret)
   }
   
   
   #wyliczam wiersz z Totalem
   if (total) {
     
-    
     #Dla dodatkowych kolumn
     if (!is.null(avg)){
-      totals_avg<-as.data.frame(lapply(dt_avg, function(x)sum(x*dt_wyn$n_obs)/sum(dt_wyn$n_obs)))
-      dt_avg<-rbindlist(list(dt_avg, data.table(totals_avg)))
+      #totals_avg<-as.data.frame(lapply(dt_avg[,2:ncol(dt_avg)], 
+       #                                function(z)sum(z*dt_wyn$n_obs)/sum(dt_wyn$n_obs)))
+      
+      #TODO: tymczasowo ustawiam braki, żeby dalej pójść z tematem
+      #totals_avg <- rep(NA, length(dt_avg)-1)
+      totals_avg <- data.table(discret=NA, dt_avg_total)
+      #names(totals_avg) <- names(dt_avg)
+      dt_avg_aggr<-rbindlist(list(dt_avg_aggr, totals_avg))
     }
 
     #zachowuję typ zmiennej. Muszę to uwzględnić w totalu
@@ -363,12 +404,11 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   
   #Jeśli były dodatkowe kolumy, to je tutaj dodaję
   if (!is.null(avg)){
-    dt_wyn <- cbind(dt_wyn ,dt_avg)
+    dt_wyn <- cbind(dt_wyn ,dt_avg_aggr)
   }
   
   #attr(dt_wyn,'typeof_x')=typeof(x)
   #attr(dt_wyn,'typeof_x')=class(x)
-  
   
   return(dt_wyn)
 }
