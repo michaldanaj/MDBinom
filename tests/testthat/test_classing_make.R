@@ -77,6 +77,28 @@ test_that("bckt_stat2 czy puste zakresy przedziałów nie wywalą błędu", {
 })
 
 
+### Porównanie wyników starej i nowej funkcji
+
+bck_old <- buckety_stat(x,y)
+bck_new <- as.data.frame(bckt_stat(x,y))
+
+names_old <- names(bck_old)
+names_new <- names(bck_new)
+names_com <- intersect(names_old, names_new)
+
+bck_old2 <- bck_old[, names_com]
+bck_new2 <- bck_new[, names_com]
+
+rownames(bck_old2)<-NULL
+rownames(bck_new2)<-NULL
+
+test_that("bckt_stat Porównanie starych i nowych wyliczeń", {
+  expect_equal(bck_old2[,-c(9, 10)], bck_new2[,-c(9, 10)])
+  expect_equal(-bck_old2[-nrow(bck_old), 9], bck_new2[-nrow(bck_new), 9])
+  expect_equal(bck_old2[-nrow(bck_old), 10], bck_new2[-nrow(bck_new), 10])
+})
+
+
 ### Testy avg
 
 
@@ -128,9 +150,9 @@ test_that("bckt_stat czy poprawnie liczy gdy w avg jest data.frame z dwoma kolum
 
 #TODO: wprowadzić popwarność liczenia rg_nieparam z pred na jakimś deterministycznym
 #przykładzie
-#model <- glm(y~ x, family='binomial', weights = weights)
-#pred <- predict(model, type='response')
-#rg_nieparam(score=x, default = y, weights = weights, pred=pred, buckets=10)
+model <- glm(y~ x, family='binomial', weights = weights)
+pred <- predict(model, type='response')
+rg_nieparam(score=x, default = y, weights = weights, pred=pred, buckets=10)
 # 3. bckt_stat z dodatkowymi dwoma kolumnami w avg
 
 

@@ -1,4 +1,6 @@
 
+library(MDBinom)
+library(testthat)
 
 context("Testy funkcji rg_nieparam")
 
@@ -22,7 +24,6 @@ test_that("rg_nieparam czy średnia z bucketów daje średnią w Totalu, bez wag
 })
 
 
-
 bckt <- rg_nieparam(score=x, default=y, plot=FALSE, buckets = 3, weights = weights)
 
 test_that("rg_nieparam czy liczba obserwacji z bucketów daje liczbę w Totalu, przy wykorzystaniu wag", {
@@ -33,6 +34,8 @@ test_that("rg_nieparam czy średnia z bucketów daje średnią w Totalu, przy wy
   expect_equal(sum(bckt$br * bckt$n_obs) / sum(bckt$n_obs), sum(y * weights) / sum(weights))
 })
 
+
+### Uwzględnianie wag w regresji nieparametrycznej ###
 
 grid <- -50:50/10
 grid <- -5:5
@@ -65,3 +68,12 @@ test_that("rg_nieparam czy uwzględnione są wagi w regresji nieparametrycznej",
 
 
 
+model <- glm(y~x, family=binomial)
+pred <- predict(model, type='response')
+  
+rg_nieparam(score = x, default = y, pred = pred, col_pred = 'red')
+  
+  ("Czy poprawnie rysuje logit dla pred")
+
+rg_nieparam(score = x, default = y, pred = pred, col_pred = 'red',
+            plt_type = 'logit')

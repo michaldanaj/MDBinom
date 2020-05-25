@@ -339,11 +339,10 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
     ,n_obs
     ,pct_obs = n_obs/totals$obs_all
     ,br = n_bad/n_obs
-    ,logit = ifelse(n_obs==0 | n_bad==0, NaN, log(n_bad/n_obs))
-    ,woe = log(n_bad/n_good)
+    #,logit = ifelse(n_obs==0 | n_bad==0, NaN, log(n_bad/n_good))
+    ,logit = log(n_bad/n_good)
+    ,woe = log((n_bad/totals$bad_all)/(n_good/totals$good_all))
     )]
-  
-  rownames(dt_wyn) <- dt_wyn$labels
   
   #sortowanie jeśli miało być
   if (sort_x==TRUE){
@@ -410,6 +409,8 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
   #attr(dt_wyn,'typeof_x')=typeof(x)
   #attr(dt_wyn,'typeof_x')=class(x)
   
+  rownames(dt_wyn) <- dt_wyn$label
+
   return(dt_wyn)
 }
 
