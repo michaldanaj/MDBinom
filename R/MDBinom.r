@@ -906,8 +906,12 @@ rg_nieparam<-function (score, default, buckets = 100, pred=NULL, weights=rep(1,l
                 col = col_points, ...)
     lines(x, bucket2$fitted, col = col_line, ...)
     
-    if (!is.null(pred))
-      points(x, bucket2$avg, col = col_pred, ...)
+    if (!is.null(pred)){
+      if (plt_type == "br")
+        points(x, bucket2$avg, col = col_pred, ...)
+      else
+        points(x, logit(bucket2$avg), col = col_pred, ...)
+    }
     
     if (glm){
       lines(x[order(x)], pred_glm[order(x)], col=col_glm)
@@ -1022,8 +1026,13 @@ dopasowanie_do_zmiennej<-function(x, y_pred, bucket, subset=NULL,...){
 #' @export
 step_bez_kor<-function(data, model, target_var_name='target', cor_threshold=0.75){
 	
-	if (any(is.na(data)))
+	if (any(is.na(data))){
+	  for (i in 1:length(data))
+	    if (any(is.na(data[[i]])))
+	      stop(paste("Niedozwolone braki danych w kolumnie", names(data)[i]))
+	    
 		stop("W danych nie może być braków danych!")
+	  }
 	
 	#zmienne w modelu
 	zmienne_model<-names(coef(model)[-1])
