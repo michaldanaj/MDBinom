@@ -1,3 +1,6 @@
+# 5.1.13 2020-06-11
+Sporo poprawek do podstawowych funkcji, jak bckt_stat, rg_nieparam.
+
 # 5.1.12 2020-05-21
 Poprawki rysowania w funkcjach rg_nieparam i reg_nieparam
 
