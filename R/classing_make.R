@@ -391,8 +391,9 @@ bckt_stat<-function (x=NULL, y=NULL, weights=rep(1, length(x)),
       ,n_obs
       ,pct_obs = n_obs/totals$obs_all
       ,br = n_bad/n_obs
-      ,logit = ifelse(n_obs==0 | n_bad==0, NaN, log(n_bad/n_obs))
-      ,woe = log(n_bad/n_good)
+      #,logit = ifelse(n_obs==0 | n_bad==0, NaN, log(n_bad/n_obs))
+      ,logit = log(n_bad/n_good)
+      ,woe = log((n_bad/totals$bad_all)/(n_good/totals$good_all))
     )]
     
     dt_wyn<-rbindlist(list(dt_wyn, totals))
@@ -501,8 +502,8 @@ buckety_stat2<-function(breaks, score, def, total=FALSE){
 #' @return \code{data.frame} ze statystykami.
 #' @author Micha? Danaj
 #' @export
-bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, avg=NULL,
-                     total = TRUE, sort_x=TRUE){
+bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL,
+                     avg=NULL, total = TRUE, sort_x=TRUE){
 
   #Składam dt
   if (!is.null(x))
@@ -550,6 +551,8 @@ bckt_stat2<-function(breaks, x=NULL, y=NULL, weights=rep(1,length(x)), dt=NULL, 
   bck_od=bck_od[buckety_wyn$discret]
   bck_do=bck_do[buckety_wyn$discret]
 
+  #print(buckety_wyn)
+  #print(labels)
   #Poprzednia funkcja nie wiedziała, że mamy przedziały i jak wypełnić tymi przedziałami warości
   #Robię to tutaj
   if (total)

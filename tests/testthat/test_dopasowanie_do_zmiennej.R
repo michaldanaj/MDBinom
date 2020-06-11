@@ -20,3 +20,4 @@ print (wyn_test- wyn_test2)
 test_that("dopasowanie_do_zmiennej test wyliczenia średnich predyckji na buckecie", {
   expect_equal(wyn_test, wyn_test2)
 })
+
